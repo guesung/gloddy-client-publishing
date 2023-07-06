@@ -2,9 +2,11 @@ import { clsx } from 'clsx';
 import Link from 'next/link';
 import { ButtonHTMLAttributes } from 'react';
 
+type ButtonColor = 'blue' | 'orange';
+
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
-  color?: 'blue' | 'orange';
+  color?: ButtonColor;
   onClick?: () => void;
   href?: string;
   disabled?: boolean;
