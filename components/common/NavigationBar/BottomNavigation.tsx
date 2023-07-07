@@ -49,7 +49,7 @@ const tabs: Tab[] = [
   },
 ];
 
-export default function BottomNavigation ()  {
+const BottomNavigation = () => {
   const pathname = usePathname();
   const [activeKey, setActiveKey] = useState(pathname.substring(1));
 
@@ -79,3 +79,5 @@ export default function BottomNavigation ()  {
     </div>
   );
 };
+
+export default BottomNavigation;

@@ -12,7 +12,7 @@ interface GroupingCardProps {
   onClick?: () => void;
 }
 
-export default function GroupingCard({ ...props }: GroupingCardProps) {
+const GroupingCard = ({ ...props }: GroupingCardProps) => {
   const { title, description, current, total, location, time, onClick } = props;
   return (
     <div
@@ -41,4 +41,6 @@ export default function GroupingCard({ ...props }: GroupingCardProps) {
       </div>
     </div>
   );
-}
+};
+
+export default GroupingCard;
