@@ -2,7 +2,6 @@
 
 import { useRef, useState } from 'react';
 
-import { ImageType, TimeType } from '@/@types/global';
 import Button from '@/components/common/Button';
 import Calendar from '@/components/common/Calendar';
 import ImageFrame from '@/components/common/ImageFrame/ImageFrame';
@@ -13,12 +12,14 @@ import NumberSwipePicker from '@/components/common/SwipePicker/NumberSwipePicker
 import TimeSwipePicker from '@/components/common/SwipePicker/TimeSwipePicker';
 import { useModal } from '@/hooks/useModal';
 
-interface ModalTabProps {
+import type { ImageType, TimeType } from '@/@types/global';
+
+type ModalTabType = {
   title: string;
   snap: number;
-}
+};
 
-const ModalTabList: ModalTabProps[] = [
+const ModalTabList: ModalTabType[] = [
   {
     title: '모임 일시',
     snap: 900,
@@ -34,20 +35,22 @@ const ModalTabList: ModalTabProps[] = [
 ];
 
 interface SelectValue {
-  meetingImage: ImageType;
+  image: ImageType;
   meetingDate: {
     date: Date;
     time: TimeType;
   };
-  meetingLocation: string;
-  meetingNumber: number;
+  location: string;
+  number: number;
 }
+
+const TEXT_AREA_COUNT = 0;
 
 export default function CreateMeeting() {
   const imgRef = useRef<HTMLInputElement | null>(null);
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [selectValue, setSelectValue] = useState<SelectValue>({
-    meetingImage: {
+    image: {
       imageFile: null,
       imageBlob: '',
     },
@@ -62,18 +65,16 @@ export default function CreateMeeting() {
         toAmPm: 'AM',
       },
     },
-    meetingLocation: '',
-    meetingNumber: 0,
+    location: '',
+    number: 0,
   });
 
-  const { isModalOpen, openModal, closeModal } = useModal<
-    'meetingDate' | 'meetingLocation' | 'meetingNumber'
-  >();
+  const { isModalOpen, openModal, closeModal } = useModal<'meetingDate' | 'location' | 'number'>();
 
   const setProfileImage = (value: ImageType) => {
     setSelectValue({
       ...selectValue,
-      meetingImage: value,
+      image: value,
     });
   };
 
@@ -94,12 +95,12 @@ export default function CreateMeeting() {
   const setSelectNumber = (value: number) => {
     setSelectValue({
       ...selectValue,
-      meetingNumber: value,
+      number: value,
     });
   };
 
   const handleNextButton = () => {
-    if (currentTab < 2) setCurrentTab((currentTab: number) => currentTab + 1);
+    if (currentTab < ModalTabList.length) setCurrentTab((currentTab: number) => currentTab + 1);
     else {
       closeModal();
       console.log(selectValue);
@@ -112,7 +113,7 @@ export default function CreateMeeting() {
       <ImageFrame
         setImage={setProfileImage}
         imgRef={imgRef}
-        imageBlob={selectValue.meetingImage.imageBlob}
+        imageBlob={selectValue.image.imageBlob}
         shape="square"
       />
 
@@ -126,7 +127,7 @@ export default function CreateMeeting() {
       <section>
         <div className="flex justify-between">
           <div className="font-500 mb-5 text-14">활동 소개글</div>
-          <div className="font-500 text-12 text-gray2">0/30</div>
+          <div className="font-500 text-12 text-gray2">${TEXT_AREA_COUNT}/30</div>
         </div>
         <TextArea placeholder="내용을 입력해주세요." />
       </section>
@@ -137,7 +138,7 @@ export default function CreateMeeting() {
         className="mb-15 flex flex-col"
         onClick={() => {
           setCurrentTab(0);
-          openModal('meetingNumber');
+          openModal('number');
         }}
       >
         <div className=" mb-5 text-14">모임 일시</div>
@@ -152,7 +153,7 @@ export default function CreateMeeting() {
         className="mb-15 flex flex-col"
         onClick={() => {
           setCurrentTab(1);
-          openModal('meetingNumber');
+          openModal('number');
         }}
       >
         <div className=" mb-5 text-14">모임 위치</div>
@@ -167,7 +168,7 @@ export default function CreateMeeting() {
         className="mb-15 flex flex-col"
         onClick={() => {
           setCurrentTab(2);
-          openModal('meetingNumber');
+          openModal('number');
         }}
       >
         <div className=" mb-5 text-14">모임 인원</div>
@@ -203,10 +204,7 @@ export default function CreateMeeting() {
           )}
           {currentTab === 1 && <div></div>}
           {currentTab === 2 && (
-            <NumberSwipePicker
-              numberValue={selectValue.meetingNumber}
-              setNumberValue={setSelectNumber}
-            />
+            <NumberSwipePicker numberValue={selectValue.number} setNumberValue={setSelectNumber} />
           )}
           <div className="fixed inset-x-0 bottom-20 mx-auto max-w-[23.75rem]">
             <Button text={currentTab < 2 ? '다음' : '완료'} onClick={handleNextButton} />
