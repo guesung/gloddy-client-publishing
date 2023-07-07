@@ -36,7 +36,7 @@ const mockData = [
   },
 ];
 
-export default function Grouping  ()  {
+const Grouping = () => {
   return (
     <div className="flex w-full items-center px-24">
       <div className="flex w-full flex-col">
@@ -54,3 +54,5 @@ export default function Grouping  ()  {
     </div>
   );
 };
+
+export default Grouping;
