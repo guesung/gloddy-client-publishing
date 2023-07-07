@@ -12,11 +12,11 @@ interface GroupingCardProps {
   onClick?: () => void;
 }
 
-export default function GroupingCard({ ...props }: GroupingCardProps) {
+const GroupingCard = ({ ...props }: GroupingCardProps) => {
   const { title, description, current, total, location, time, onClick } = props;
   return (
     <div
-      className="mb-18 flex h-126 w-full flex-col justify-between rounded-8 bg-white px-43 py-16 pl-14"
+      className="mb-18 flex h-126 w-full flex-col justify-between rounded-8 bg-white px-20 py-16 pl-14"
       onClick={onClick}
     >
       <div className="flex w-full flex-row">
@@ -41,4 +41,6 @@ export default function GroupingCard({ ...props }: GroupingCardProps) {
       </div>
     </div>
   );
-}
+};
+
+export default GroupingCard;

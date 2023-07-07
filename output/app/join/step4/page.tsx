@@ -1,10 +1,9 @@
 'use client';
 import { useRef, useState } from 'react';
 
-import { ImageType } from '@/@types/global';
 import Button from '@/components/common/Button';
-import ImageFrame from '@/components/common/ImageFrame/ImageFrame';
-import { Input } from '@/components/common/Input';
+import CircleImageFrame from '@/components/common/ImageFrame/CircleImageFrame';
+import AuthInput from '@/components/common/Input/AuthInput';
 import BottomUpModal from '@/components/common/Modal/BottomUpModal';
 import TopNavigationBar from '@/components/common/NavigationBar/TopNavigationBar';
 import DateSwipePicker from '@/components/common/SwipePicker/DateSwipePicker';
@@ -17,10 +16,7 @@ import type { JoinStep4InputValue } from '@/@types/inputValue';
 export default function Step4Page() {
   const imgRef = useRef<HTMLInputElement>(null);
   const [inputValue, setInputValue] = useState<JoinStep4InputValue>({
-    profileImage: {
-      imageFile: null,
-      imageBlob: '',
-    },
+    profileImage: '',
     birthday: {
       year: '',
       month: '',
@@ -30,7 +26,7 @@ export default function Step4Page() {
   });
   const { isModalOpen, modalName, openModal, closeModal } = useModal<'birthday' | 'sex'>();
 
-  const setProfileImage = (value: ImageType) => {
+  const setProfileImage = (value: string) => {
     setInputValue((prev) => ({
       ...prev,
       profileImage: value,
@@ -70,21 +66,21 @@ export default function Step4Page() {
     <div className="relative h-full">
       <TopNavigationBar text="회원가입" />
 
-      <ImageFrame
-        setImage={setProfileImage}
+      <CircleImageFrame
+        setProfileImage={setProfileImage}
         imgRef={imgRef}
-        imageBlob={inputValue.profileImage.imageBlob}
+        profileImage={inputValue.profileImage}
       />
 
       <section className="flex flex-col gap-10">
         <article className="flex flex-col gap-5">
           <p className="text-14">닉네임</p>
-          <Input placeholder="닉네임을 입력해주세요." />
+          <AuthInput placeholder="닉네임을 입력해주세요." />
         </article>
 
         <article className="flex flex-col gap-5">
           <p className="text-14">생년월일</p>
-          <Input
+          <AuthInput
             placeholder="생년월일을 선택해주세요."
             onClick={() => openModal('birthday')}
             value={
@@ -99,7 +95,7 @@ export default function Step4Page() {
 
         <article className="flex flex-col gap-5">
           <p className="text-14">성별</p>
-          <Input
+          <AuthInput
             placeholder="성별을 선택해주세요."
             onClick={() => openModal('sex')}
             value={inputValue.sex}
