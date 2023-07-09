@@ -7,8 +7,6 @@ module.exports = {
     extend: {
       colors,
       spacing: pxToRem,
-      maxWidth: pxToRem,
-      maxHeight: pxToRem,
       fontSize: pxToRem,
       borderRadius: pxToRem,
       keyframes: animations,
