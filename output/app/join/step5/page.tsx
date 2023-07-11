@@ -13,9 +13,9 @@ export default function Step5Page() {
 
       <p className="text-14 text-gray2">3개를 선택해주세요.</p>
 
-      <Spacing size={30} />
-
       <InputForm />
+
+      <Spacing size={30} />
     </div>
   );
 }

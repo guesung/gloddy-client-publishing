@@ -1,8 +1,9 @@
+import Button from '@/components/common/Button';
+import { Input } from '@/components/common/Input';
 import TopNavigationBar from '@/components/common/NavigationBar/TopNavigationBar';
 import { AuthTitleTextMessage } from '@/components/TextMessage/AuthTextMessage';
 
 import BottomModal from './BottomModal';
-import InputForm from './InputForm';
 
 const DUMMY_SEARCH_RESULT_RESULT = [
   {
@@ -29,7 +30,7 @@ export default function Step2Page() {
 
       <AuthTitleTextMessage text={`재학중인 학교\n선택해주세요`} />
 
-      <InputForm />
+      <Input label="학교" />
 
       <section>
         {DUMMY_SEARCH_RESULT_RESULT.map((searchResult) => (
@@ -38,6 +39,10 @@ export default function Step2Page() {
             <div className="text-12 text-gray2">{searchResult.address}</div>
           </div>
         ))}
+      </section>
+
+      <section className="absolute bottom-0 w-full">
+        <Button text="완료" disabled />
       </section>
 
       <BottomModal />
