@@ -2,7 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 
-import { BottomNavigationBar } from '@/components/common/NavigationBar';
+import BottomNavigation from '@/components/common/NavigationBar/BottomNavigation';
 
 export default function ProfileLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
