@@ -10,11 +10,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 const SELECT_LIST = new Array(10).fill(0).map((_, index) => index + 1);
 
 interface PickerProps {
-  setNumberValue: (value: number) => void;
-  numberValue: number;
+  numberValue?: number;
+  setNumberValue?: (value: number) => void;
 }
 
-export default function NumberSwipePicker({ numberValue, setNumberValue }: PickerProps) {
+export default function NumberSwipePicker({ numberValue = 0, setNumberValue }: PickerProps) {
   return (
     <Swiper
       freeMode={{
@@ -30,11 +30,8 @@ export default function NumberSwipePicker({ numberValue, setNumberValue }: Picke
         clickable: true,
       }}
       modules={[FreeMode]}
-      onSlideChange={(swiper) => {
-        console.log(swiper.activeIndex);
-        setNumberValue(SELECT_LIST[swiper.activeIndex]);
-      }}
-      initialSlide={SELECT_LIST.indexOf(numberValue)}
+      onSlideChange={(swiper) => setNumberValue && setNumberValue(SELECT_LIST[swiper.activeIndex])}
+      initialSlide={numberValue ? SELECT_LIST.indexOf(numberValue as never) : 0}
     >
       {SELECT_LIST.map((slideContent) => (
         <SwiperSlide key={slideContent} className="overflow-visible">

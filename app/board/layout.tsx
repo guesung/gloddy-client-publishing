@@ -1,8 +1,7 @@
 'use client';
 
+import BottomNavigation from '@/components/common/NavigationBar/BottomNavigation';
 import { usePathname } from 'next/navigation';
-
-import { BottomNavigationBar } from '@/components/common/NavigationBar';
 
 export default function BoardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
