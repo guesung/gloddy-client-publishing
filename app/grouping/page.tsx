@@ -4,7 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import GroupingCard from '@/app/grouping/GroupingCard';
-import BottomNavigation from '@/components/common/NavigationBar/BottomNavigation';
+import { BottomNavigationBar } from '@/components/common/NavigationBar';
+import Spacing from '@/components/common/Spacing';
 
 const DUMMY_GROUPING_DATA = [
   {
@@ -38,11 +39,10 @@ const DUMMY_GROUPING_DATA = [
 
 export default function Grouping() {
   return (
-    <div className="relative h-full p-20">
-      <section className="mb-17 flex justify-between text-16 font-700">
-        <p>그루핑</p>
-        <Image src="/assets/search_navbar.svg" alt="search" width={15} height={15} />
-      </section>
+    <div className="relative h-full">
+      <TopNavigationBar />
+
+      <Spacing size={18} />
 
       <section>
         {DUMMY_GROUPING_DATA.map((mocks) => (
@@ -51,12 +51,12 @@ export default function Grouping() {
       </section>
 
       <section className="absolute bottom-80 right-20">
-        <Link href="/grouping/create-meeting">
+        <Link href="/grouping/create">
           <Image src="/assets/plus.svg" alt="add_icon" width={40} height={40} />
         </Link>
       </section>
 
-      <BottomNavigation page="grouping" />
+      <BottomNavigationBar page="grouping" />
     </div>
   );
 }
