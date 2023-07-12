@@ -9,10 +9,7 @@ interface SpacingProps extends HTMLAttributes<HTMLDivElement> {
 export default memo(function Spacing({ direction = 'vertical', size, ...props }: SpacingProps) {
   return (
     <div
-      className="flex-none"
-      style={{
-        [direction === 'vertical' ? 'height' : 'width']: size + 'px',
-      }}
+      className={clsx('flex-none', direction === 'vertical' ? `h-${size}` : `w-${size}`)}
       {...props}
     />
   );
