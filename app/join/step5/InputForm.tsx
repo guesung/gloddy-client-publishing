@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Button from '@/components/common/Button';
 import PersonalityItem from '@/components/join/PersonalityItem';
 import { personalityList } from '@/constants/personalityList';
-import useJoin from '@/store/useJoin';
 
 export default function InputForm() {
   const [selectedPersonalityList, setSelectedPersonalityList] = useState<number[]>([]);
@@ -15,12 +14,6 @@ export default function InputForm() {
       return;
     }
     setSelectedPersonalityList([...selectedPersonalityList, id]);
-  };
-
-  const { phoneNumber, school, email, name, birth, gender } = useJoin();
-
-  const handleSubmit = () => {
-    console.log(phoneNumber, school, email, name, birth, gender, selectedPersonalityList);
   };
 
   return (
@@ -39,11 +32,7 @@ export default function InputForm() {
       </section>
 
       <section className="absolute bottom-0 w-full">
-        <Button
-          text="완료"
-          disabled={selectedPersonalityList.length === 0}
-          onClick={handleSubmit}
-        />
+        <Button text="완료" disabled={selectedPersonalityList.length === 0} href="/login" />
       </section>
     </div>
   );

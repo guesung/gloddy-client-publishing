@@ -22,6 +22,7 @@ export default function ImageFrame({
     const imageFile = e.target.files?.[0];
     if (imageFile === undefined) return;
     const imageBlob = await makeFileToBlob(imageFile);
+    console.log(imageFile, imageBlob);
     setImage({ imageFile, imageBlob });
   };
   return (
