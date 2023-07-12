@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import Button from '@/components/common/Button';
 import Calendar from '@/components/common/Calendar';
+import DivisionSpacing from '@/components/common/DivisionSpacing';
 import ImageFrame from '@/components/common/ImageFrame/ImageFrame';
 import { Input, TextArea } from '@/components/common/Input';
 import BottomUpModal from '@/components/common/Modal/BottomUpModal';
@@ -13,7 +14,6 @@ import NumberSwipePicker from '@/components/common/SwipePicker/NumberSwipePicker
 import TimeSwipePicker from '@/components/common/SwipePicker/TimeSwipePicker';
 import { useModal } from '@/hooks/useModal';
 
-import GroupingCreateTopNavigationBar from './GroupingCreateTopNavigationBar.server';
 import InputSection from './InputSection.server';
 
 import type { ImageType, TimeType } from '@/types';
@@ -75,6 +75,7 @@ const inputDefaultValues = {
     toAmPm: 'AM',
   },
   meetingLocation: '경희대학교',
+  // meetingNumber: 0,
 };
 
 function getDayName(dayIndex: number) {
@@ -96,14 +97,33 @@ export default function InputForm() {
   const { isModalOpen, openModal, closeModal, modalName } = useModal<ModalNameType>();
 
   const handlePreviousButton = () => {
-    if (modalName === 'meetingNumber') openModal('meetingLocation');
-    if (modalName === 'meetingLocation') openModal('meetingDate');
+    switch (modalName) {
+      case 'meetingNumber':
+        openModal('meetingLocation');
+        break;
+      case 'meetingLocation':
+        openModal('meetingDate');
+        break;
+      default:
+        console.log('No matching modalName found');
+    }
   };
 
   const handleNextButton = () => {
-    if (modalName === 'meetingDate') openModal('meetingLocation');
-    if (modalName === 'meetingLocation') openModal('meetingNumber');
-    else closeModal();
+    switch (modalName) {
+      case 'meetingDate':
+        openModal('meetingLocation');
+        break;
+      case 'meetingLocation':
+        openModal('meetingNumber');
+        break;
+      case 'meetingNumber':
+        if (watch('meetingNumber') === undefined) setValue('meetingNumber', 1);
+        closeModal();
+        break;
+      default:
+        closeModal();
+    }
   };
 
   function displayDate() {
@@ -139,7 +159,6 @@ export default function InputForm() {
 
   return (
     <div>
-      <GroupingCreateTopNavigationBar />
       <ImageFrame
         setImage={(value: ImageType) => setValue('image', value)}
         imgRef={imgRef}
@@ -213,7 +232,7 @@ export default function InputForm() {
                 dateValue={watch('date')}
                 setDateValue={(date: Date) => setValue('date', date)}
               />
-              <div className="my-10 h-15 bg-white2" />
+              <DivisionSpacing />
               <TimeSwipePicker
                 timeValue={watch('time')}
                 setTimeValue={(time: TimeType) => setValue('time', time)}
@@ -230,7 +249,7 @@ export default function InputForm() {
           <Button
             text={modalName === 'meetingNumber' ? '완료' : '다음'}
             onClick={handleNextButton}
-            className="fixed inset-x-0 bottom-20 mx-auto max-w-380 "
+            className="fixed inset-x-0 bottom-20 mx-auto max-w-380"
           />
         </div>
       </BottomUpModal>
