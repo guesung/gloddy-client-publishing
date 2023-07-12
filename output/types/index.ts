@@ -23,4 +23,3 @@ export interface BirthdayValueType {
   month: string;
   date: string;
 }
-

@@ -3,19 +3,16 @@ import { HTMLAttributes, memo } from 'react';
 
 interface SpacingProps extends HTMLAttributes<HTMLDivElement> {
   direction?: 'horizontal' | 'vertical';
-  className?: string;
   size: number;
 }
 
-export default memo(function Spacing({
-  size,
-  direction = 'vertical',
-  className,
-  ...props
-}: SpacingProps) {
+export default memo(function Spacing({ direction = 'vertical', size, ...props }: SpacingProps) {
   return (
     <div
-      className={clsx('flex-none', direction === 'vertical' ? `h-${size}` : `w-${size}`, className)}
+      className="flex-none"
+      style={{
+        [direction === 'vertical' ? 'height' : 'width']: size + 'px',
+      }}
       {...props}
     />
   );

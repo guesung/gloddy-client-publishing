@@ -14,6 +14,7 @@ interface PickerProps {
   isRangeString?: boolean;
   isFirst?: boolean;
   isLast?: boolean;
+  initialValue?: string;
   setValue?: (value: string, keyType: string) => void;
 }
 export default function SwipePicker({
@@ -23,6 +24,7 @@ export default function SwipePicker({
   isLast = false,
   isTimeZone = false,
   isRangeString = false,
+  initialValue = '',
   setValue,
 }: PickerProps) {
   return (
@@ -42,6 +44,7 @@ export default function SwipePicker({
       }}
       modules={[FreeMode]}
       onSlideChange={(swiper) => setValue && setValue(selectList[swiper.activeIndex], keyType)}
+      initialSlide={initialValue ? selectList.indexOf(initialValue as never) : 0}
     >
       {selectList.map((slideContent) => (
         <SwiperSlide
