@@ -15,10 +15,10 @@ import TimeSwipePicker from '@/components/common/SwipePicker/TimeSwipePicker';
 import { useModal } from '@/hooks/useModal';
 
 import InputSection from './InputSection.server';
+import DescriptionSection from './inputSection/DescriptionSection';
+import TitleSection from './inputSection/TitleSection';
 
 import type { ImageType, TimeType } from '@/types';
-
-const TEXT_AREA_COUNT = 30;
 
 type ModalNameType = 'meetingDate' | 'meetingLocation' | 'meetingNumber';
 type ModalTabType = {
@@ -87,6 +87,14 @@ function getMonthName(monthIndex: number) {
   return months[monthIndex];
 }
 
+function displayDate(date: Date, time: TimeType) {
+  const year = date.getFullYear();
+  const month = getMonthName(date.getMonth());
+  const day = date.getDate();
+  const dayName = getDayName(date.getDay());
+  return `${year}. ${month}. ${day} ${dayName} ${time.fromHour}:${time.fromMin} ${time.fromAmPm} ~ ${time.toHour}:${time.toMin} ${time.toAmPm}`;
+}
+
 export default function InputForm() {
   const imgRef = useRef<HTMLInputElement | null>(null);
   const { register, watch, handleSubmit, setValue } = useForm<InputType>({
@@ -125,19 +133,6 @@ export default function InputForm() {
     }
   };
 
-  function displayDate() {
-    const date = watch('date');
-    const year = date.getFullYear();
-    const month = getMonthName(date.getMonth());
-    const day = date.getDate();
-    const dayName = getDayName(date.getDay());
-    return `${year}. ${month}. ${day} ${dayName} ${watch('time').fromHour}:${
-      watch('time').fromMin
-    } ${watch('time').fromAmPm} ~ ${watch('time').toHour}:${watch('time').toMin} ${
-      watch('time').toAmPm
-    }`;
-  }
-
   const handleSubmitButton = (data: InputType) => {
     // TODO : 서버 api 전송
     console.log(data);
@@ -165,32 +160,21 @@ export default function InputForm() {
         shape="square"
       />
 
-      <section>
-        <div className="mb-5 text-14">방 제목</div>
-        <Input
-          placeholder="제목을 입력해주세요"
-          register={register('title', {
-            required: true,
-            maxLength: 20,
-          })}
-        />
-      </section>
+      <TitleSection
+        register={register('title', {
+          required: true,
+          maxLength: 20,
+        })}
+      />
 
       <Spacing size={15} />
 
-      <section>
-        <div className="flex justify-between">
-          <div className="mb-5 text-14">활동 소개글</div>
-          <div className="text-12 text-gray2">0/${TEXT_AREA_COUNT}</div>
-        </div>
-        <TextArea
-          placeholder="내용을 입력해주세요."
-          register={register('description', {
-            required: true,
-            maxLength: 20,
-          })}
-        />
-      </section>
+      <DescriptionSection
+        register={register('description', {
+          required: true,
+          maxLength: 20,
+        })}
+      />
 
       <Spacing size={15} />
 
@@ -200,7 +184,7 @@ export default function InputForm() {
           title={modalTab.title}
           value={
             modalTab.name === 'meetingDate'
-              ? displayDate()
+              ? displayDate(watch('date'), watch('time'))
               : !!watch(modalTab.name)
               ? watch(modalTab.name)
               : ''
