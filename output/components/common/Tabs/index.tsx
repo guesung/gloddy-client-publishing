@@ -1,16 +1,15 @@
 'use client';
 import clsx from 'clsx';
 import { type PropsWithChildren, createContext, useContext, useEffect, useState } from 'react';
-
 import type { StrictPropsWithChildren } from '@/types';
 
 const TabsContext = createContext<{
-  activeTab: string | number;
-  setActiveTab: (value: string | number) => void;
+  activeTab: string;
+  setActiveTab: (value: string) => void;
 } | null>(null);
 
 interface TabsProps {
-  defaultActiveTab: string | number;
+  defaultActiveTab: string;
 }
 
 export default function Tabs({ defaultActiveTab, children }: StrictPropsWithChildren<TabsProps>) {
