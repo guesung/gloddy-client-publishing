@@ -41,9 +41,7 @@ export default function InputForm() {
     defaultValues: inputDefaultValues,
   });
 
-  const { openModal, closeModal, modalName } = useModal<ModalNameType>();
-
-  const handleSubmitButton = (data: CreateMeetingRequestType) => {
+  const handleCreateMeetingSubmit = (data: CreateMeetingRequestType) => {
     // TODO : 서버 api 전송
     console.log(data);
   };
@@ -87,32 +85,14 @@ export default function InputForm() {
 
       <Spacing size={15} />
 
-      <DateSection
-        isModalOpen={modalName === 'meetingDate'}
-        openModal={openModal}
-        closeModal={closeModal}
-        value={{ date: watch('date'), time: watch('time') }}
-        setValue={setValue}
-      />
-      <LocationSection
-        isModalOpen={modalName === 'meetingLocation'}
-        openModal={openModal}
-        closeModal={closeModal}
-        value={watch('meetingLocation')}
-        setValue={setValue}
-      />
-      <NumberSection
-        isModalOpen={modalName === 'meetingNumber'}
-        openModal={openModal}
-        closeModal={closeModal}
-        value={watch('meetingNumber')}
-        setValue={setValue}
-      />
+      <DateSection value={{ date: watch('date'), time: watch('time') }} setValue={setValue} />
+      <LocationSection value={watch('meetingLocation')} setValue={setValue} />
+      <NumberSection value={watch('meetingNumber')} setValue={setValue} />
 
       <BottomFixedButton
         text="완료"
         disabled={!isAllEntered}
-        onClick={handleSubmit(handleSubmitButton)}
+        onClick={handleSubmit(handleCreateMeetingSubmit)}
       />
     </div>
   );
