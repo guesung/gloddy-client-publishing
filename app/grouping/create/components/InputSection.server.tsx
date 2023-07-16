@@ -1,14 +1,14 @@
+import type { InputHTMLAttributes } from 'react';
+
 import { Input } from '@/components/common/Input';
 import { Spacing } from '@/components/common/Spacing';
 
-import type { InputHTMLAttributes } from 'react';
-
-interface InputAreaProps extends InputHTMLAttributes<HTMLInputElement> {
+interface InputSectionProps extends InputHTMLAttributes<HTMLInputElement> {
   title: string;
   onClick: () => void;
 }
 
-export default function InputArea({ title, onClick, ...props }: InputAreaProps) {
+export default function InputSection({ title, onClick, ...props }: InputSectionProps) {
   return (
     <section onClick={onClick}>
       <p className="text-14">{title}</p>

@@ -5,7 +5,6 @@ import { makeFileToBlob } from '@/utils/makeFileToBlob';
 
 import type { ImageType } from '@/types';
 
-
 interface ImageFrameProps {
   setImage: (imageData: ImageType) => void;
   imgRef: React.RefObject<HTMLInputElement>;

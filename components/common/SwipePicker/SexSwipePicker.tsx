@@ -18,7 +18,7 @@ export default function SexSwipePicker({ sexValue, setSexValue }: SexSwipePicker
         isLast
         selectList={selectList}
         setValue={setValueByKey}
-        value={sexValue}
+        initialValue={sexValue}
       />
     </div>
   );
