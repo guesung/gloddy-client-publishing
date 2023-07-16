@@ -1,10 +1,22 @@
 import { BottomFixedButton } from '@/components/common/Button';
 import { Input } from '@/components/common/Input';
+import { BottomSheet } from '@/components/common/Modal';
 import { Spacing } from '@/components/common/Spacing';
-import { UseFormRegisterReturn } from 'react-hook-form';
+import { DateSwipePicker } from '@/components/common/SwipePicker';
+import useModalStore from '@/store/useModalStore';
+import { BirthdayValueType } from '@/types';
 
-interface BirthdayInputSectionProps {}
-export default function BirthdaySection({}: BirthdayInputSectionProps) {
+interface BirthdaySectionProps {
+  setValue: (value: BirthdayValueType) => void;
+  value: BirthdayValueType;
+}
+export default function BirthdaySection({ value, setValue }: BirthdaySectionProps) {
+  const { modalName, openModal, closeModal } = useModalStore();
+
+  const isModalOpen = modalName === 'birthday';
+
+  const isBirthDayEntered = !!value.year && !!value.month && !!value.date;
+
   return (
     <section>
       <p className="text-14">생년월일</p>
@@ -12,16 +24,11 @@ export default function BirthdaySection({}: BirthdayInputSectionProps) {
       <Input
         placeholder="생년월일을 선택해주세요."
         onClick={() => openModal('birthday')}
-        value={
-          watch('birthday').year &&
-          watch('birthday').month &&
-          watch('birthday').date &&
-          `${watch('birthday').year} ${watch('birthday').month} ${watch('birthday').date}`
-        }
+        value={isBirthDayEntered ? `${value.year} ${value.month} ${value.date}` : ''}
         readOnly
       />
 
-      <BottomUpModal
+      <BottomSheet
         isModalOpen={isModalOpen}
         snap={400}
         onClose={closeModal}
@@ -33,19 +40,16 @@ export default function BirthdaySection({}: BirthdayInputSectionProps) {
         }
         disableDrag
       >
-        {modalName === 'birthday' && (
-          <DateSwipePicker
-            birthdayValue={watch('birthday')}
-            setBirthdayValue={(value: BirthdayValueType) => setValue('birthday', value)}
-          />
-        )}
-        <BottomFixedButton
-          text={modalName === 'birthday' ? '다음' : '완료'}
-          disabled={modalName === 'birthday' && !isBirthDayEntered}
-          onClick={handleModalNextButton}
-          className="absolute bottom-0 w-full"
+        <DateSwipePicker
+          birthdayValue={value}
+          setBirthdayValue={(value: BirthdayValueType) => setValue(value)}
         />
-      </BottomUpModal>
+        <BottomFixedButton
+          text="다음"
+          disabled={!isBirthDayEntered}
+          onClick={() => openModal('gender')}
+        />
+      </BottomSheet>
     </section>
   );
 }
