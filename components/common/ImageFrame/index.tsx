@@ -1,8 +1,10 @@
-import { makeFileToBlob } from '@/utils/makeFileToBlob';
 import clsx from 'clsx';
 import Image from 'next/image';
 
+import { makeFileToBlob } from '@/utils/makeFileToBlob';
+
 import type { ImageType } from '@/types';
+
 
 interface ImageFrameProps {
   setImage: (imageData: ImageType) => void;

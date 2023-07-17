@@ -169,7 +169,7 @@ module.exports = {
       },
     ],
     'import/order': [
-      'warn',
+      'error',
       {
         groups: [
           ['builtin', 'external'],
