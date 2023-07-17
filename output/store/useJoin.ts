@@ -1,4 +1,3 @@
-import { BirthdayValueType, ImageType } from '@/types';
 import { create } from 'zustand';
 
 interface JoinState {
@@ -6,11 +5,10 @@ interface JoinState {
   school: string;
   email: string;
   name: string;
-  birth: BirthdayValueType;
+  birth: string;
   gender: string;
   password: string; // 없어질 예정
   personalities: string[];
-  profileImage: ImageType;
   setJoinValue: (values: Partial<JoinState>) => void;
   setJoinValueArray: (key: ValueStringArrayType, value: string[]) => void;
 }
@@ -27,26 +25,18 @@ type ValueStringType =
 
 type ValueStringArrayType = 'personalities';
 
-const useJoinStore = create<JoinState>((set) => ({
+const useJoin = create<JoinState>((set) => ({
   phoneNumber: '',
   school: '',
   email: '',
   name: '',
-  birth: {
-    year: '',
-    month: '',
-    date: '',
-  },
+  birth: '',
   gender: '',
   password: '', // 없어질 예정
   personalities: [''],
-  profileImage: {
-    imageFile: null,
-    imageBlob: '',
-  },
   setJoinValue: (values: Partial<JoinState>) => set((state) => ({ ...state, ...values })),
   setJoinValueArray: (key: ValueStringArrayType, value: string[]) =>
     set(() => ({ [key]: [...value] })),
 }));
 
-export default useJoinStore;
+export default useJoin;

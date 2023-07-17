@@ -3,7 +3,7 @@ import { TopNavigationBar } from '@/components/common/NavigationBar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-export default function CreateTopNavigationBar() {
+export default function GroupingCreateTopNavigationBar() {
   const router = useRouter();
   return (
     <TopNavigationBar
