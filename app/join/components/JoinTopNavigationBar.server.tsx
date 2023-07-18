@@ -1,7 +1,8 @@
 'use client';
-import { TopNavigationBar } from '@/components/common/NavigationBar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+
+import { TopNavigationBar } from '@/components/common/NavigationBar';
 
 export default function JoinTopNavigationBar() {
   const router = useRouter();

@@ -2,9 +2,10 @@
 
 import { Button } from '@/components/common/Button';
 import { CircleCheckbox } from '@/components/common/Checkbox';
-import { BottomSheet } from '@/components/common/Modal';
-import { useModals } from '@/hooks/useModals';
+import { BottomUpModal } from '@/components/common/Modal';
 import { useEffect, useState } from 'react';
+
+import { useModals } from '@/hooks/useModals';
 
 type AgreeCheckListType = {
   name: string;
@@ -49,7 +50,7 @@ export default function BottomModal() {
   };
 
   return (
-    <BottomSheet
+    <BottomUpModal
       snap={300}
       isModalOpen={isModalOpen}
       onClose={closeModal}
@@ -87,6 +88,6 @@ export default function BottomModal() {
           onClick={closeModal}
         />
       </section>
-    </BottomSheet>
+    </BottomUpModal>
   );
 }
