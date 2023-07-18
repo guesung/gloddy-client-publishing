@@ -1,28 +1,42 @@
-'use client';
-
 import FloatingBubbleSection from './components/FloatingBubbleSection.server';
 import GroupingCardList from './components/GroupingCardList.client';
 import GroupingTopNavigationBar from './components/GroupingTopNavigationBar.server';
+import { getGroupsServer, keys } from '@/apis/groups';
+import { RetryErrorBoundary } from '@/components/common/ErrorBoundary';
+import { HydrationProvider } from '@/components/common/HydrationProvider';
 import { BottomNavigationBar } from '@/components/common/NavigationBar';
-import PageTransition from '@/components/common/PageTransition';
 import { Spacing } from '@/components/common/Spacing';
+import { Suspense } from 'react';
 
-type IndexPageProps = {};
-type IndexPageRef = React.ForwardedRef<HTMLDivElement>;
+const GroupingComponent = () => {
+  const getGroupsQuery = async () => {
+    const data = await getGroupsServer();
+    return data;
+  };
 
-export default function Grouping(props: IndexPageProps, ref: IndexPageRef) {
   return (
-    <PageTransition ref={ref}>
-      <div className="relative h-full">
-        <GroupingTopNavigationBar />
+    <HydrationProvider queryKey={keys} queryFn={getGroupsQuery}>
+      <GroupingCardList />
+    </HydrationProvider>
+  );
+};
 
-        <Spacing size={18} />
+export default function Grouping() {
+  return (
+    <>
+      <GroupingTopNavigationBar />
 
-        <GroupingCardList />
+      <Spacing size={18} />
 
-        <FloatingBubbleSection />
-      </div>
+      <RetryErrorBoundary>
+        <Suspense>
+          <GroupingComponent />
+        </Suspense>
+      </RetryErrorBoundary>
+
+      <FloatingBubbleSection />
+
       <BottomNavigationBar page="grouping" />
-    </PageTransition>
+    </>
   );
 }
