@@ -1,4 +1,3 @@
-import { InputType } from '../type';
 import { BottomFixedButton } from '@/components/common/Button';
 import { Input } from '@/components/common/Input';
 import { BottomSheet } from '@/components/common/Modal';
@@ -7,9 +6,11 @@ import useModalStore from '@/store/useModalStore';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
 
+import type { Step3InputType } from '../type';
+
 interface BottomSheetFormProps {
-  register: UseFormRegister<InputType>;
-  handleSubmit: UseFormHandleSubmit<InputType>;
+  register: UseFormRegister<Step3InputType>;
+  handleSubmit: UseFormHandleSubmit<Step3InputType>;
   certificateNumber: number;
 }
 
@@ -21,16 +22,16 @@ export default function CertificationSection({
   const router = useRouter();
   const { closeModal, modalName } = useModalStore();
 
-  const isModalOpen = modalName === 'certification';
+  const isOpen = modalName === 'certification';
 
-  const onSubmitCertificateNumber: SubmitHandler<InputType> = (data: InputType) => {
+  const onSubmitCertificateNumber: SubmitHandler<Step3InputType> = (data: Step3InputType) => {
     // 인증번호 확인
     console.log(data);
     router.push('/join/step4');
   };
 
   return (
-    <BottomSheet isModalOpen={isModalOpen} onClose={closeModal} snap={400} isRightButton>
+    <BottomSheet isOpen={isOpen} onClose={closeModal} snap={400} isRightButton>
       <section className="text-20 font-700">
         <p>회원님의 이메일로 </p>
         <p>인증번호를 전송하였습니다.</p>

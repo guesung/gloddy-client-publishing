@@ -5,13 +5,14 @@ import { Spacing } from '@/components/common/Spacing';
 import { DateSwipePicker } from '@/components/common/SwipePicker';
 import useJoinStore from '@/store/useJoinStore';
 import useModalStore from '@/store/useModalStore';
-import { BirthdayValueType } from '@/types';
+
+import type { BirthdayValueType } from '@/types';
 
 export default function BirthdaySection() {
   const { modalName, openModal, closeModal } = useModalStore();
   const { birth, setJoinValue } = useJoinStore();
 
-  const isModalOpen = modalName === 'birthday';
+  const isOpen = modalName === 'birthday';
 
   const isBirthDayEntered = !!birth.year && !!birth.month && !!birth.date;
 
@@ -27,7 +28,7 @@ export default function BirthdaySection() {
       />
 
       <BottomSheet
-        isModalOpen={isModalOpen}
+        isOpen={isOpen}
         snap={400}
         onClose={closeModal}
         isRightButton
