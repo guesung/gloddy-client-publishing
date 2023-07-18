@@ -2,9 +2,10 @@
 
 import { Button } from '@/components/common/Button';
 import { CircleCheckbox } from '@/components/common/Checkbox';
-import { BottomSheet } from '@/components/common/Modal';
-import { useModals } from '@/hooks/useModals';
+import { BottomUpModal } from '@/components/common/Modal';
 import { useEffect, useState } from 'react';
+
+import { useModals } from '@/hooks/useModals';
 
 type AgreeCheckListType = {
   name: string;
@@ -13,7 +14,7 @@ type AgreeCheckListType = {
 };
 
 export default function BottomModal() {
-  const { isOpen, openModal, closeModal } = useModals<'modal'>();
+  const { isModalOpen, openModal, closeModal } = useModals<'modal'>();
   const [agreeCheckList, setAgreeCheckList] = useState<AgreeCheckListType[]>([
     {
       name: '서비스 이용약관 동의',
@@ -49,9 +50,9 @@ export default function BottomModal() {
   };
 
   return (
-    <BottomSheet
+    <BottomUpModal
       snap={300}
-      isOpen={isOpen}
+      isModalOpen={isModalOpen}
       onClose={closeModal}
       disableDrag
       text={<div className="text-center font-700">약관 동의</div>}
@@ -87,6 +88,6 @@ export default function BottomModal() {
           onClick={closeModal}
         />
       </section>
-    </BottomSheet>
+    </BottomUpModal>
   );
 }

@@ -8,11 +8,13 @@ import TitleSection from './inputSection/TitleSection.server';
 import { BottomFixedButton } from '@/components/common/Button';
 import ImageFrame from '@/components/common/ImageFrame';
 import { Spacing } from '@/components/common/Spacing';
-import { ForwardedRef, useRef } from 'react';
+import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
-import type { CreateMeetingRequestType } from '../type';
+import type { CreateMeetingRequestType, ModalNameType } from '../type';
 import type { ImageType } from '@/types';
+
+import { useModals } from '@/hooks/useModals';
 
 const inputDefaultValues = {
   title: '',
@@ -35,8 +37,7 @@ const inputDefaultValues = {
 };
 
 export default function InputForm() {
-  const imgRef = useRef<HTMLInputElement>(null);
-
+  const imgRef = useRef<HTMLInputElement | null>(null);
   const { register, watch, handleSubmit, setValue } = useForm<CreateMeetingRequestType>({
     defaultValues: inputDefaultValues,
   });
@@ -63,9 +64,9 @@ export default function InputForm() {
     <div>
       <ImageFrame
         setImage={(value: ImageType) => setValue('image', value)}
+        imgRef={imgRef}
         imageBlob={watch('image')?.imageBlob}
         shape="square"
-        ref={imgRef}
       />
 
       <TitleSection
