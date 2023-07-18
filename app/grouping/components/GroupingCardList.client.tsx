@@ -1,7 +1,6 @@
 'use client';
 
 import GroupingCard from './GroupingCard.client';
-import { useGetGroups } from '@/apis/groups';
 
 const DUMMY_GROUPING_DATA = [
   {
@@ -37,10 +36,6 @@ const DUMMY_GROUPING_DATA = [
 ];
 
 export default function GroupingCardList() {
-  const { data } = useGetGroups();
-
-  console.log(data);
-
   return (
     <section>
       {DUMMY_GROUPING_DATA.map((groupingData) => (
