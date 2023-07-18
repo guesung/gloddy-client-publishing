@@ -3,9 +3,8 @@ import { TopNavigationBar } from '@/components/common/NavigationBar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-export default function ApplyTopNavigationBar() {
+export default function CreateTopNavigationBar() {
   const router = useRouter();
-
   return (
     <TopNavigationBar
       leftNode={
@@ -14,11 +13,12 @@ export default function ApplyTopNavigationBar() {
           src="/assets/arrow_back.svg"
           width={8}
           height={30}
-          onClick={() => router.back()}
-          className="cursor-pointer"
+          onClick={() => {
+            router.back();
+          }}
         />
       }
-      text="지원서 작성"
+      text="모임 개설하기"
     />
   );
 }
