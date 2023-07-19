@@ -1,27 +1,24 @@
 'use client';
 import { BottomFixedButton } from '@/components/common/Button';
 import Tabs from '@/components/common/Tabs';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 import type { TabType } from '../type';
 
 interface ContentSectionProps {
-  groupingId: string;
   detailNode: React.ReactNode;
   boardNode: React.ReactNode;
   isLeader?: boolean;
 }
 
-export default function ContentSection({
-  groupingId,
-  detailNode,
-  boardNode,
-  isLeader,
-}: ContentSectionProps) {
+export default function ContentSection({ detailNode, boardNode, isLeader }: ContentSectionProps) {
   const searchParams = useSearchParams();
-  const router = useRouter();
 
   const currentTab = (searchParams.get('tab') ?? 'detail') as TabType;
+
+  const handleApplyClick = () => {};
+
+  const handleWriteClick = () => {};
 
   return (
     <section>
@@ -32,19 +29,11 @@ export default function ContentSection({
         </Tabs.List>
         <Tabs.Panel value="detail">
           <div className="p-20">{detailNode}</div>
-          {!isLeader && (
-            <BottomFixedButton
-              text="지원하기"
-              onClick={() => router.push(`/grouping/${groupingId}/apply`)}
-            />
-          )}
+          {!isLeader && <BottomFixedButton text="지원하기" onClick={handleApplyClick} />}
         </Tabs.Panel>
         <Tabs.Panel value="board">
           <div className="p-20">{boardNode}</div>
-          <BottomFixedButton
-            text="글쓰기"
-            onClick={() => router.push(`/grouping/${groupingId}/write`)}
-          />
+          <BottomFixedButton text="글쓰기" onClick={handleWriteClick} />
         </Tabs.Panel>
       </Tabs>
     </section>
