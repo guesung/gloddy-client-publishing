@@ -1,3 +1,1 @@
-export const Keys = {
-  getGroups: () => ['getGroups'],
-};
+export const Keys = {} as const;
