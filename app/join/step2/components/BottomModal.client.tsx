@@ -3,7 +3,6 @@
 import { Button } from '@/components/common/Button';
 import { CircleCheckbox } from '@/components/common/Checkbox';
 import { BottomSheet } from '@/components/common/Modal';
-import { Spacing } from '@/components/common/Spacing';
 import { useModals } from '@/hooks/useModals';
 import { useEffect, useState } from 'react';
 
@@ -52,7 +51,7 @@ export default function BottomModal() {
   return (
     <BottomSheet
       snap={300}
-      isModalOpen={isOpen}
+      isOpen={isOpen}
       onClose={closeModal}
       disableDrag
       text={<div className="text-center font-700">약관 동의</div>}
@@ -63,27 +62,23 @@ export default function BottomModal() {
           checked={agreeCheckList.every((agree) => agree.isAgreed)}
           onClick={() => handleAgreeAllCheckList()}
         />
-        <Spacing size={15} />
-        <div className="border-[0.5px] border-white3" />
-        <Spacing size={15} />
-        <div className="flex flex-col gap-5">
-          {agreeCheckList.map((agree) => (
-            <CircleCheckbox
-              key={agree.name}
-              text={
-                <p className="text-12">
-                  <span className="text-gray3">{agree.required && '(필수)'}</span>
-                  {agree.name}
-                </p>
-              }
-              checked={agree.isAgreed}
-              onClick={() => handleAgreeCheckList(agree.name)}
-            />
-          ))}
-        </div>
+        <div className="my-15 border-[0.5px] border-white3" />
+        {agreeCheckList.map((agree) => (
+          <CircleCheckbox
+            key={agree.name}
+            text={
+              <p>
+                <span className="text-12 text-gray3">{agree.required && '(필수)'}</span>
+                <span className="text-12">{agree.name}</span>
+              </p>
+            }
+            checked={agree.isAgreed}
+            onClick={() => handleAgreeCheckList(agree.name)}
+          />
+        ))}
       </section>
 
-      <Spacing size={30} />
+      <div className="h-30" />
 
       <section>
         <Button

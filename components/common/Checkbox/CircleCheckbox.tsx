@@ -1,23 +1,27 @@
 import Image from 'next/image';
-import { forwardRef } from 'react';
 
 interface CircleCheckboxProps {
   text?: React.ReactNode;
   checked?: boolean;
   onClick?: () => void;
 }
-
-function CircleCheckbox(
-  { text, checked = false, onClick, ...props }: CircleCheckboxProps,
-  ref: React.Ref<HTMLDivElement>
-) {
+export default function CircleCheckbox({
+  text,
+  checked = false,
+  onClick,
+  ...props
+}: CircleCheckboxProps) {
   const checkboxImageAsset = `/assets/checkbox_circle${checked ? '_checked' : ''}.svg`;
   return (
-    <div ref={ref} className="flex items-center" onClick={onClick} {...props}>
-      <Image alt="checkbox" src={checkboxImageAsset} width={15} height={30} className="mx-10" />
+    <div className="flex items-baseline" onClick={onClick} {...props}>
+      <Image
+        alt="checkbox"
+        src={checkboxImageAsset}
+        width={15}
+        height={30}
+        className="mx-10 translate-y-5"
+      />
       {text}
     </div>
   );
 }
-
-export default forwardRef(CircleCheckbox);
