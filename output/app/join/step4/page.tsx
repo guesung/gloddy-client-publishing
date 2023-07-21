@@ -5,6 +5,7 @@ export default function Step4Page() {
   return (
     <>
       <JoinTopNavigationBar />
+
       <InputForm />
     </>
   );
