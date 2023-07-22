@@ -1,5 +1,4 @@
 import clsx from 'clsx';
-import React, { useCallback } from 'react';
 
 interface PersonalityItemProps {
   personality: {
@@ -9,7 +8,7 @@ interface PersonalityItemProps {
   isSelected: boolean;
   onClick: () => void;
 }
-export default React.memo(function PersonalityItem({
+export default function PersonalityItem({
   personality,
   isSelected,
   onClick,
@@ -28,4 +27,4 @@ export default React.memo(function PersonalityItem({
       {personality.text}
     </div>
   );
-});
+}

@@ -1,6 +1,6 @@
 'use client';
 import { Spacing } from '../Spacing';
-import cn from '@/utils/cn';
+import clsx from 'clsx';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
 import type { InputHTMLAttributes } from 'react';
@@ -8,9 +8,9 @@ import type { InputHTMLAttributes } from 'react';
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   placeholder?: string;
+  register?: UseFormRegisterReturn;
   type?: string;
   className?: string;
-  register?: UseFormRegisterReturn;
 }
 
 export default function Input({ label, placeholder, register, type = 'text', className, ...props }: InputProps) {
@@ -20,14 +20,14 @@ export default function Input({ label, placeholder, register, type = 'text', cla
       {label && <p className="flex shrink-0 items-center text-gray2">{label}</p>}
       <input
         placeholder={placeholder}
-        className={cn(
+        className={clsx(
           'flex h-full grow rounded-lg border-none bg-[#f6f6f6] pr-5 text-16 outline-none placeholder:text-gray3',
           { 'indent-8': label, 'indent-10': !label },
           className
         )}
         type={type}
-        {...props}
         {...register}
+        {...props}
       />
     </div>
   );
