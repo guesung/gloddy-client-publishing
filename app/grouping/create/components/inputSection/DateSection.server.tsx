@@ -5,8 +5,9 @@ import { BottomSheet } from '@/components/common/Modal';
 import { DivisionSpacing } from '@/components/common/Spacing';
 import { TimeSwipePicker } from '@/components/common/SwipePicker';
 import useModalState from '@/store/useModalStore';
-import { useCreateMeetingContext } from '../CreateMeetingContext';
+import { UseFormSetValue } from 'react-hook-form';
 
+import type { CreateMeetingRequestType } from '../../type';
 import type { TimeType } from '@/types';
 
 function getDayName(dayIndex: number) {
@@ -20,7 +21,6 @@ function getMonthName(monthIndex: number) {
 }
 
 function displayDate(date: Date, time: TimeType) {
-  if (date === undefined || time === undefined) return;
   const year = date.getFullYear();
   const month = getMonthName(date.getMonth());
   const day = date.getDate();
@@ -28,16 +28,23 @@ function displayDate(date: Date, time: TimeType) {
   return `${year}. ${month}. ${day} ${dayName} ${time.fromHour}:${time.fromMin} ${time.fromAmPm} ~ ${time.toHour}:${time.toMin} ${time.toAmPm}`;
 }
 
-export default function DateSection() {
+interface DateSectionProps {
+  value: {
+    date: Date;
+    time: TimeType;
+  };
+  setValue: UseFormSetValue<CreateMeetingRequestType>;
+}
+
+export default function DateSection({ value, setValue }: DateSectionProps) {
   const { modalName, openModal, closeModal } = useModalState();
-  const { watch, setValue } = useCreateMeetingContext();
 
   return (
     <>
       <InputArea
         title="모임 일시"
         onClick={() => openModal('meetingDate')}
-        value={displayDate(watch('date'), watch('time'))}
+        value={displayDate(value.date, value.time)}
         placeholder="모임 시간을 설정해주세요."
       />
 
@@ -53,12 +60,12 @@ export default function DateSection() {
         <div className="relative h-full">
           <div>
             <Calendar
-              dateValue={watch('date')}
+              dateValue={value.date}
               setDateValue={(date: Date) => setValue('date', date)}
             />
             <DivisionSpacing />
             <TimeSwipePicker
-              timeValue={watch('time')}
+              timeValue={value.time}
               setTimeValue={(time: TimeType) => setValue('time', time)}
             />
           </div>

@@ -1,19 +1,24 @@
 import InputArea from './InputArea.server';
-import { useCreateMeetingContext } from '../CreateMeetingContext';
+import { CreateMeetingRequestType } from '../../type';
 import { BottomFixedButton } from '@/components/common/Button';
 import BottomSheet from '@/components/common/Modal/BottomSheet';
 import useModalState from '@/store/useModalStore';
+import { UseFormSetValue } from 'react-hook-form';
 
-export default function LocationSection() {
+interface LocationSectionProps {
+  value: string;
+  setValue: UseFormSetValue<CreateMeetingRequestType>;
+}
+
+export default function LocationSection({ value, setValue }: LocationSectionProps) {
   const { modalName, openModal, closeModal } = useModalState();
-  const { watch, setValue } = useCreateMeetingContext();
 
   return (
     <>
       <InputArea
         title="모임 장소"
         onClick={() => openModal('meetingLocation')}
-        value={watch('meetingLocation')}
+        value={value}
         placeholder="모임 장소를 설정해주세요."
       />
 
