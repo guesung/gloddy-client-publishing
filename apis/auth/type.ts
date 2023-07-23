@@ -17,8 +17,3 @@ export type SMSVerifiyRequest = {
 export type EmailRequest = {
   email: string;
 };
-
-export type EmailVerifyRequest = {
-  email: string;
-  authCode: string;
-};
