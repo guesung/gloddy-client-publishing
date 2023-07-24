@@ -1,4 +1,4 @@
-import { GroupResponse } from '.';
+import { GroupResponse } from './type';
 import privateApi from '../config/privateApi';
 
 export const getGroups = (pageNum: number) => {

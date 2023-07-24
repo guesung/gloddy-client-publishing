@@ -52,7 +52,7 @@ export default function BottomModal() {
   return (
     <BottomSheet
       snap={300}
-      isOpen={isOpen}
+      isModalOpen={isOpen}
       onClose={closeModal}
       disableDrag
       text={<div className="text-center font-700">약관 동의</div>}
