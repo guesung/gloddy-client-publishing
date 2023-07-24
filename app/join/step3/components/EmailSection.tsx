@@ -1,13 +1,15 @@
-import { postEmail, useEmailMutation } from '@/apis/auth';
+import { useEmailMutation } from '@/apis/auth';
 import BottomFixedDiv from '@/components/common/BottomFixedDiv';
 import { Button } from '@/components/common/Button';
 import { Input } from '@/components/common/Input';
 import { Spacing } from '@/components/common/Spacing';
 import { regexr } from '@/constants/regexr';
+import { TimerStatus } from '@/hooks/useTimer/type';
 import useJoinStore from '@/store/useJoinStore';
 import useModalStore from '@/store/useModalStore';
 import clsx from 'clsx';
 import Image from 'next/image';
+import React from 'react';
 import { SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
 
 import type { Step3InputType } from '../type';
@@ -17,21 +19,31 @@ interface EmailSectionProps {
   handleSubmit: UseFormHandleSubmit<Step3InputType>;
   email: string;
   isError: boolean;
+  timerStart: () => void;
+  timerStatus: TimerStatus;
 }
 
-export default function EmailSection({
+export default React.memo(function EmailSection({
   register,
   handleSubmit,
   email,
   isError,
+  timerStart,
+  timerStatus,
 }: EmailSectionProps) {
-  const { openModal } = useModalStore();
+  const { openModal, modalName } = useModalStore();
   const { setJoinValue } = useJoinStore();
   const { mutate: mutateEmail } = useEmailMutation();
+  console.log(modalName);
 
   const onSubmitEmail: SubmitHandler<Step3InputType> = (data: Step3InputType) => {
     openModal('certification');
     setJoinValue({ email: data.email });
+    if (timerStatus === 'STOPPED') {
+      timerStart();
+    } else {
+      // TODO : 인증번호 시간 끝나지 않았을 때에 대한 처리
+    }
     // mutateEmail({ email: data.email });
   };
 
@@ -72,4 +84,4 @@ export default function EmailSection({
       </BottomFixedDiv>
     </form>
   );
-}
+});
