@@ -1,5 +1,5 @@
-import { postEmail } from '@/apis/auth';
-import BomttomFixedDiv from '@/components/common/BomttomFixedDiv';
+import { postEmail, useEmailMutation } from '@/apis/auth';
+import BottomFixedDiv from '@/components/common/BottomFixedDiv';
 import { Button } from '@/components/common/Button';
 import { Input } from '@/components/common/Input';
 import { Spacing } from '@/components/common/Spacing';
@@ -27,12 +27,12 @@ export default function EmailSection({
 }: EmailSectionProps) {
   const { openModal } = useModalStore();
   const { setJoinValue } = useJoinStore();
+  const { mutate: mutateEmail } = useEmailMutation();
 
-  const onSubmitEmail: SubmitHandler<Step3InputType> = async (data: Step3InputType) => {
+  const onSubmitEmail: SubmitHandler<Step3InputType> = (data: Step3InputType) => {
     openModal('certification');
     setJoinValue({ email: data.email });
-    await postEmail({ email: data.email });
-    // 인증번호 전송
+    // mutateEmail({ email: data.email });
   };
 
   return (
@@ -59,7 +59,7 @@ export default function EmailSection({
 
       <Spacing size={10} />
 
-      <BomttomFixedDiv>
+      <BottomFixedDiv>
         <Button
           text="인증하기"
           type="submit"
@@ -69,7 +69,7 @@ export default function EmailSection({
         <Spacing size={8} />
 
         <Button text="다음에 인증하기" color="orange" href="/join/step4" />
-      </BomttomFixedDiv>
+      </BottomFixedDiv>
     </form>
   );
 }
