@@ -1,12 +1,12 @@
 import InputArea from './InputArea.server';
-import { useCreateGroupContext } from '../CreateGroupContext';
+import { useCreateMeetingContext } from '../CreateMeetingContext';
 import { BottomFixedButton } from '@/components/common/Button';
 import BottomSheet from '@/components/common/Modal/BottomSheet';
 import useModalState from '@/store/useModalStore';
 
 export default function LocationSection() {
   const { modalName, openModal, closeModal } = useModalState();
-  const { watch, setValue } = useCreateGroupContext();
+  const { watch, setValue } = useCreateMeetingContext();
 
   return (
     <>

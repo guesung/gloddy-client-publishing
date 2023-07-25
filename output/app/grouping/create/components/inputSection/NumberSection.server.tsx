@@ -1,5 +1,5 @@
 import InputArea from './InputArea.server';
-import { useCreateGroupContext } from '../CreateGroupContext';
+import { useCreateMeetingContext } from '../CreateMeetingContext';
 import { BottomFixedButton } from '@/components/common/Button';
 import { BottomSheet } from '@/components/common/Modal';
 import { NumberSwipePicker } from '@/components/common/SwipePicker';
@@ -7,7 +7,7 @@ import useModalState from '@/store/useModalStore';
 
 export default function NumberSection() {
   const { modalName, openModal, closeModal } = useModalState();
-  const { watch, setValue } = useCreateGroupContext();
+  const { watch, setValue } = useCreateMeetingContext();
 
   return (
     <>
