@@ -20,15 +20,10 @@ export type EmailRequest = {
 
 export type EmailVerifyRequest = {
   email: string;
-  authCode: number;
+  authCode: string;
 };
 
-export type VerifyType = {
-  certificateNumber: number;
-  certificateEmailNumber: number;
-};
-
-export type SignUpRequest = VerifyType & {
+export type SignUpRequest = {
   phoneNumber: string;
   imageUrl?: string;
   schoolInfo: {
