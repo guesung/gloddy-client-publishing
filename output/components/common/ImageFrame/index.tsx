@@ -5,27 +5,29 @@ import Image from 'next/image';
 import { ForwardedRef, forwardRef, useState } from 'react';
 
 interface ImageFrameProps {
-  setImageFile: (imageFile: File) => void;
+  setImageUrl: (imageFile: string) => void;
   shape?: 'circle' | 'square';
 }
 
 export default forwardRef(function ImageFrame(
-  { setImageFile, shape = 'circle' }: ImageFrameProps,
+  { setImageUrl, shape = 'circle' }: ImageFrameProps,
   imgRef: ForwardedRef<HTMLInputElement>
 ) {
   const { mutate: mutatePostFiles } = usePostFiles();
   const [imageBlog, setImageBlob] = useState<string>('');
-  console.log(setImageFile);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();
     const imageFile = e.target.files?.[0];
     if (imageFile === undefined) return;
     formData.append('fileList', imageFile);
-    mutatePostFiles(formData);
+    mutatePostFiles(formData, {
+      onSuccess: (data) => {
+        setImageUrl(data.fileUrlList[0]);
+      },
+    });
 
     const imageBlob = makeFileToBlob(imageFile);
-    setImageFile(imageFile);
     setImageBlob(imageBlob);
   };
 
