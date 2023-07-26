@@ -1,22 +1,20 @@
 'use client';
+import { useTimerContext } from './TimerContext';
 import { useJoinContext } from '../../../components/JoinContext';
 import { useFunnelContext } from '../../JoinFunnel';
 import { useEmailVerifyMutation } from '@/apis/auth';
 import { BottomFixedButton } from '@/components/common/Button';
 import { Input } from '@/components/common/Input';
 import { BottomSheet } from '@/components/common/Modal';
-import { useStep3Context } from '@/components/common/Modal/Step3Context';
+import { useModalContext } from '@/components/common/Modal/ModalContext';
 import { regexr } from '@/constants/regexr';
 import { memo } from 'react';
 
 import type { SignUpState } from '@/app/join/type';
 
-interface BottomSheetFormProps {
-  timerTime: number;
-}
-
-export default memo(function CertificationForm({ timerTime }: BottomSheetFormProps) {
-  const { closeModal, modalName } = useStep3Context();
+export default memo(function CertificationForm() {
+  const { closeModal, modalName } = useModalContext();
+  const { time: timerTime } = useTimerContext();
   const { mutate: mutateEmailVerify } = useEmailVerifyMutation();
 
   const { register, handleSubmit, watch } = useJoinContext();
@@ -25,9 +23,10 @@ export default memo(function CertificationForm({ timerTime }: BottomSheetFormPro
   const isOpen = modalName === 'certification';
 
   const onSubmit = (data: Pick<SignUpState, 'schoolInfo' | 'certificateEmailNumber'>) => {
+    if (data.certificateEmailNumber === undefined || data.schoolInfo.email === undefined) return;
     mutateEmailVerify(
       {
-        email: data.schoolInfo.email || '',
+        email: data.schoolInfo.email,
         authCode: data.certificateEmailNumber,
       },
       {
@@ -50,7 +49,7 @@ export default memo(function CertificationForm({ timerTime }: BottomSheetFormPro
         <section className="my-20">
           <Input
             label="인증번호"
-            register={register('certificateNumber', {
+            register={register('certificateEmailNumber', {
               pattern: {
                 value: regexr.certificateNumber,
                 message: '인증 번호를 다시 확인해주세요.',
