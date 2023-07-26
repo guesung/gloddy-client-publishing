@@ -3,11 +3,8 @@ import { TopNavigationBar } from '@/components/common/NavigationBar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-interface JoinTopNavigationBarProps {
-  onPrevClick?: () => void;
-}
-
-export default function JoinTopNavigationBar({ onPrevClick }: JoinTopNavigationBarProps) {
+export default function JoinTopNavigationBar() {
+  const router = useRouter();
   return (
     <TopNavigationBar
       text="회원가입"
@@ -17,7 +14,9 @@ export default function JoinTopNavigationBar({ onPrevClick }: JoinTopNavigationB
           src="/assets/arrow_back.svg"
           width={8}
           height={30}
-          onClick={onPrevClick}
+          onClick={() => {
+            router.back();
+          }}
         />
       }
     />

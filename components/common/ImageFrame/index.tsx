@@ -2,42 +2,40 @@ import { usePostFiles } from '@/apis/common';
 import { makeFileToBlob } from '@/utils/makeFileToBlob';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { ForwardedRef, forwardRef, useState } from 'react';
+import { ForwardedRef, forwardRef } from 'react';
+
+import type { ImageType } from '@/types';
 
 interface ImageFrameProps {
-  setImageUrl: (imageFile: string) => void;
+  setImage: (imageData: ImageType) => void;
+  imageBlob: string;
   shape?: 'circle' | 'square';
 }
 
 export default forwardRef(function ImageFrame(
-  { setImageUrl, shape = 'circle' }: ImageFrameProps,
+  { setImage, imageBlob, shape = 'circle' }: ImageFrameProps,
   imgRef: ForwardedRef<HTMLInputElement>
 ) {
   const { mutate: mutatePostFiles } = usePostFiles();
-  const [imageBlog, setImageBlob] = useState<string>('');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();
     const imageFile = e.target.files?.[0];
     if (imageFile === undefined) return;
     formData.append('fileList', imageFile);
-    mutatePostFiles(formData, {
-      onSuccess: (data) => {
-        setImageUrl(data.fileUrlList[0]);
-      },
-    });
+    mutatePostFiles(formData);
 
     const imageBlob = makeFileToBlob(imageFile);
-    setImageBlob(imageBlob);
+    setImage({ imageFile, imageBlob });
   };
 
   return (
     <section className="relative flex h-160 items-center justify-center">
       <label className="relative h-100 w-100" htmlFor="image">
-        {imageBlog ? (
+        {imageBlob ? (
           <Image
             alt="frameImage"
-            src={imageBlog}
+            src={imageBlob}
             priority
             fill
             className={clsx('h-full w-full object-cover', {
@@ -71,7 +69,7 @@ export default forwardRef(function ImageFrame(
         type="file"
         accept="image/*"
         id="image"
-        onChange={handleInputChange}
+        onChange={handleImageInput}
         ref={imgRef}
       />
     </section>

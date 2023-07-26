@@ -1,29 +1,29 @@
-export interface LoginResponse {
+export type LoginResponse = {
   errorCode: string;
   userId: number;
   authority: string;
   token: string;
-}
+};
 
-export interface SMSRequest {
+export type SMSRequest = {
   number: string;
-}
+};
 
-export interface SMSVerifiyRequest {
+export type SMSVerifiyRequest = {
   number: string;
   code: string;
-}
+};
 
-export interface EmailRequest {
+export type EmailRequest = {
   email: string;
-}
+};
 
-export interface EmailVerifyRequest {
+export type EmailVerifyRequest = {
   email: string;
-  authCode: number;
-}
+  authCode: string;
+};
 
-export interface SignUpRequest {
+export type SignUpRequest = {
   phoneNumber: string;
   imageUrl?: string;
   schoolInfo: {
@@ -35,9 +35,9 @@ export interface SignUpRequest {
   birth: string;
   gender: string;
   personalities: string[];
-}
+};
 
-export interface SignUpResponse {
+export type SignUpResponse = {
   authority: string;
   errorCode: string;
   token: {
@@ -45,4 +45,4 @@ export interface SignUpResponse {
     refreshToken: string;
   };
   userId: number;
-}
+};
