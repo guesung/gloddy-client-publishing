@@ -1,11 +1,12 @@
-import InputArea from './InputArea.server';
+'use client';
+import { useCreateGroupContext } from '../CreateGroupContext';
+import InputArea from '../InputArea.server';
 import { BottomFixedButton } from '@/components/common/Button';
 import Calendar from '@/components/common/Calendar';
 import { BottomSheet } from '@/components/common/Modal';
 import { DivisionSpacing } from '@/components/common/Spacing';
 import { TimeSwipePicker } from '@/components/common/SwipePicker';
 import useModalState from '@/store/useModalStore';
-import { useCreateMeetingContext } from '../CreateMeetingContext';
 
 import type { TimeType } from '@/types';
 
@@ -19,18 +20,18 @@ function getMonthName(monthIndex: number) {
   return months[monthIndex];
 }
 
-function displayDate(date: Date, time: TimeType) {
-  if (date === undefined || time === undefined) return;
-  const year = date.getFullYear();
-  const month = getMonthName(date.getMonth());
-  const day = date.getDate();
-  const dayName = getDayName(date.getDay());
-  return `${year}. ${month}. ${day} ${dayName} ${time.fromHour}:${time.fromMin} ${time.fromAmPm} ~ ${time.toHour}:${time.toMin} ${time.toAmPm}`;
-}
-
-export default function DateSection() {
+export default function MeetDateSection() {
   const { modalName, openModal, closeModal } = useModalState();
-  const { watch, setValue } = useCreateMeetingContext();
+  const { watch, setValue, getFieldState } = useCreateGroupContext();
+
+  function displayDate(date: Date, time: TimeType) {
+    if (!getFieldState('date').isDirty && !getFieldState('time').isDirty) return '';
+    const year = date.getFullYear();
+    const month = getMonthName(date.getMonth());
+    const day = date.getDate();
+    const dayName = getDayName(date.getDay());
+    return `${year}. ${month}. ${day} ${dayName} ${time.fromHour}:${time.fromMin} ${time.fromAmPm} ~ ${time.toHour}:${time.toMin} ${time.toAmPm}`;
+  }
 
   return (
     <>
@@ -54,12 +55,12 @@ export default function DateSection() {
           <div>
             <Calendar
               dateValue={watch('date')}
-              setDateValue={(date: Date) => setValue('date', date)}
+              setDateValue={(date: Date) => setValue('date', date, { shouldDirty: true })}
             />
             <DivisionSpacing />
             <TimeSwipePicker
               timeValue={watch('time')}
-              setTimeValue={(time: TimeType) => setValue('time', time)}
+              setTimeValue={(time: TimeType) => setValue('time', time, { shouldDirty: true })}
             />
           </div>
         </div>
