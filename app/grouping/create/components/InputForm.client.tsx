@@ -1,26 +1,27 @@
 'use client';
 
-import ContentSection from './inputSection/ContentSection.client';
+import CreateMeetingContextProvider from './CreateMeetingContext';
+import DateSection from './inputSection/DateSection.server';
+import DescriptionSection from './inputSection/DescriptionSection.server';
 import ImageSection from './inputSection/ImageSection.client';
-import LocationSection from './inputSection/LocationSection.client';
-import MaxUserSection from './inputSection/MaxUserSection.client';
-import MeetDateSection from './inputSection/MeetDateSection.client';
+import LocationSection from './inputSection/LocationSection.server';
+import NumberSection from './inputSection/NumberSection.server';
 import SubmitSection from './inputSection/SubmitSection';
 import TitleSection from './inputSection/TitleSection.server';
 import { Spacing } from '@/components/common/Spacing';
 
 export default function InputForm() {
   return (
-    <form>
+    <CreateMeetingContextProvider>
       <ImageSection />
       <TitleSection />
       <Spacing size={15} />
-      <ContentSection />
-      <MeetDateSection />
+      <DescriptionSection />
+      <DateSection />
       <LocationSection />
-      <MaxUserSection />
-      <Spacing size={100} />
+      <NumberSection />
+      <Spacing size={15} />
       <SubmitSection />
-    </form>
+    </CreateMeetingContextProvider>
   );
 }

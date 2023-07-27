@@ -1,43 +1,42 @@
-'use client';
-import { useCreateGroupContext } from '../CreateGroupContext';
-import InputArea from '../InputArea.server';
+import InputArea from './InputArea.server';
+import { useCreateMeetingContext } from '../CreateMeetingContext';
 import { BottomFixedButton } from '@/components/common/Button';
 import { BottomSheet } from '@/components/common/Modal';
 import { NumberSwipePicker } from '@/components/common/SwipePicker';
 import useModalState from '@/store/useModalStore';
 
-export default function MaxUserSection() {
+export default function NumberSection() {
   const { modalName, openModal, closeModal } = useModalState();
-  const { watch, setValue, getFieldState } = useCreateGroupContext();
+  const { watch, setValue } = useCreateMeetingContext();
 
   return (
     <>
       <InputArea
         title="모임 인원"
-        onClick={() => openModal('maxUser')}
-        value={getFieldState('maxUser').isDirty ? `최대 ${watch('maxUser')}명` : ''}
+        onClick={() => openModal('meetingNumber')}
+        value={watch('meetingNumber') ? watch('meetingNumber') : undefined}
         placeholder="모임 인원을 설정해주세요."
       />
 
       <BottomSheet
-        isOpen={modalName === 'maxUser'}
+        isOpen={modalName === 'meetingNumber'}
         snap={500}
-        handleLeftButtonClick={() => openModal('maxUser')}
+        handleLeftButtonClick={() => openModal('meetingNumber')}
         onClose={closeModal}
         isRightButton
-        text={<div className="text-18">모임 인원</div>}
+        text={<div className="text-18">모임 장소</div>}
         isTapOutsideToClose
       >
         <div className="relative h-full">
           <NumberSwipePicker
-            setNumberValue={(value: number) => setValue('maxUser', value, { shouldDirty: true })}
-            numberValue={watch('maxUser')}
+            setNumberValue={(value: number) => setValue('meetingNumber', value)}
+            numberValue={watch('meetingNumber')}
           />
         </div>
         <BottomFixedButton
           text="완료"
           onClick={() => {
-            if (!watch('maxUser')) setValue('maxUser', 1);
+            if (!watch('meetingNumber')) setValue('meetingNumber', 1);
             closeModal();
           }}
         />
