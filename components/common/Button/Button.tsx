@@ -46,18 +46,12 @@ export default function Button({
         </Link>
       )}
       {!!onClick && (
-        <button
-          type={type}
-          onClick={onClick}
-          className="h-full w-full"
-          disabled={disabled}
-          {...rest}
-        >
+        <button type={type} onClick={onClick} className="h-full w-full" {...rest}>
           {text}
         </button>
       )}
       {!href && !onClick && (
-        <button className="h-full w-full" type={type} disabled={disabled} {...rest}>
+        <button className="h-full w-full" type={type} {...rest}>
           {text}
         </button>
       )}
