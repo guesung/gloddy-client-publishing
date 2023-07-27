@@ -1,8 +1,8 @@
-import { useCreateGroupContext } from '../CreateGroupContext';
+import { useCreateMeetingContext } from '../CreateMeetingContext';
 import { Input } from '@/components/common/Input';
 
 export default function TitleSection() {
-  const { register } = useCreateGroupContext();
+  const { register } = useCreateMeetingContext();
 
   return (
     <section>
