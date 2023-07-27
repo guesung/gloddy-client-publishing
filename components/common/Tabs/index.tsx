@@ -1,6 +1,5 @@
 'use client';
 import clsx from 'clsx';
-import { usePathname, useRouter } from 'next/navigation';
 import { type PropsWithChildren, createContext, useContext, useEffect, useState } from 'react';
 
 import type { StrictPropsWithChildren } from '@/types';
@@ -9,16 +8,6 @@ const TabsContext = createContext<{
   activeTab: string | number;
   setActiveTab: (value: string | number) => void;
 } | null>(null);
-
-const useTabsContext = () => {
-  const ctx = useContext(TabsContext);
-
-  if (!ctx) {
-    throw new Error('Tabs 컴포넌트 내부에서만 사용할 수 있습니다.');
-  }
-
-  return ctx;
-};
 
 interface TabsProps {
   defaultActiveTab: string | number;
@@ -43,17 +32,17 @@ interface TabProps {
 }
 
 function Tab({ value, text, queryString }: TabProps) {
-  const { activeTab, setActiveTab } = useTabsContext();
-  const router = useRouter();
-  const pathname = usePathname();
+  const { activeTab, setActiveTab } = useContext(TabsContext)!;
 
   const isActive = activeTab === value;
 
   useEffect(() => {
     if (isActive) {
-      router.replace(`${pathname}?tab=${queryString ?? value}`);
+      const url = new URL(window.location.href);
+      url.searchParams.set('tab', queryString ?? value);
+      window.history.replaceState(null, '', url.toString());
     }
-  }, [isActive, pathname, queryString, router, value]);
+  }, [isActive, queryString, value]);
 
   return (
     <div
@@ -69,7 +58,7 @@ function Tab({ value, text, queryString }: TabProps) {
 }
 
 function Panel({ value, children }: PropsWithChildren<Pick<TabProps, 'value'>>) {
-  const { activeTab } = useTabsContext();
+  const { activeTab } = useContext(TabsContext)!;
 
   return <div className={activeTab === value ? 'block' : 'hidden'}>{children}</div>;
 }

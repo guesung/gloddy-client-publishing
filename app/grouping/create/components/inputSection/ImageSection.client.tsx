@@ -1,19 +1,17 @@
-'use client';
-import { useCreateGroupContext } from '../CreateGroupContext';
+import { useCreateMeetingContext } from '../CreateMeetingContext';
 import ImageFrame from '@/components/common/ImageFrame';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import type { ImageType } from '@/types';
 
 export default function ImageSection() {
-  const [image, setImage] = useState<ImageType | null>(null);
   const imgRef = useRef<HTMLInputElement>(null);
-  const { setValue, watch } = useCreateGroupContext();
+  const { setValue, watch } = useCreateMeetingContext();
 
   return (
     <ImageFrame
-      setImage={(value: ImageType) => setImage(value)}
-      imageBlob={image?.imageBlob ?? ''}
+      setImage={(value: ImageType) => setValue('image', value)}
+      imageBlob={watch('image')?.imageBlob}
       shape="square"
       ref={imgRef}
     />
