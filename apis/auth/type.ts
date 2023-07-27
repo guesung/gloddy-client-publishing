@@ -1,47 +1,43 @@
-import { GenderType } from '@/types';
-
-export interface LoginResponse {
+export type LoginResponse = {
   errorCode: string;
   userId: number;
   authority: string;
   token: string;
-}
-
-export interface SMSRequest {
-  number: string;
-}
-
-export interface SMSVerifiyRequest {
-  number: string;
-  code: string;
-}
-
-export interface EmailRequest {
-  email: string;
-}
-
-export interface EmailVerifyRequest {
-  email: string;
-  authCode: number;
-}
-
-type SchoolInfo = {
-  school: string;
-  email?: string;
-  certifiedStudent: boolean; // email이 없는 경우 false
 };
 
-export interface SignUpRequest {
+export type SMSRequest = {
+  number: string;
+};
+
+export type SMSVerifiyRequest = {
+  number: string;
+  code: string;
+};
+
+export type EmailRequest = {
+  email: string;
+};
+
+export type EmailVerifyRequest = {
+  email: string;
+  authCode: string;
+};
+
+export type SignUpRequest = {
   phoneNumber: string;
   imageUrl?: string;
-  schoolInfo: SchoolInfo;
+  schoolInfo: {
+    school: string;
+    email?: string;
+    certifiedStudent: boolean; // email이 없는 경우 false
+  };
   nickname: string;
   birth: string;
-  gender: GenderType;
+  gender: string;
   personalities: string[];
-}
+};
 
-export interface SignUpResponse {
+export type SignUpResponse = {
   authority: string;
   errorCode: string;
   token: {
@@ -49,4 +45,4 @@ export interface SignUpResponse {
     refreshToken: string;
   };
   userId: number;
-}
+};
