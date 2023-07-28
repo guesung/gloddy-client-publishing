@@ -1,6 +1,6 @@
 import { SignUpRequest } from '@/apis/auth';
 
-import type { DateType } from '@/types';
+import type { BirthdayValueType } from '@/types';
 
 export interface SignUpState extends Omit<SignUpRequest, 'personalities' | 'birth'> {
   certificateNumber?: number;
@@ -8,5 +8,5 @@ export interface SignUpState extends Omit<SignUpRequest, 'personalities' | 'birt
 
   personalityIdList: number[];
 
-  birth: DateType;
+  birth: BirthdayValueType;
 }

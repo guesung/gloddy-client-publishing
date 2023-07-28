@@ -1,4 +1,3 @@
-'use client';
 import { CreateGroupContextValue } from '../type';
 import FormDevtools from '@/components/common/FormDevTools';
 import { createContext, useContext } from 'react';

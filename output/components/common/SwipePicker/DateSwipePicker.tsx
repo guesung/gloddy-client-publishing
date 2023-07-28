@@ -1,8 +1,7 @@
-'use client';
 import SwipePicker from './SwipePicker';
 import getDate from '@/utils/date';
 
-import type { DateType } from '@/types';
+import type { BirthdayValueType } from '@/types';
 
 // 상수화
 const { todayYear } = getDate.today();
@@ -15,26 +14,38 @@ const monthList = Array.from({ length: MONTH_COUNT }, (_, i) => i + 1 + '월');
 const dateList = Array.from({ length: DATE_COUNT }, (_, i) => i + 1 + '일');
 
 interface DateSwipePickerProps {
-  dateValue: DateType;
-  setDateValue: (props: DateType) => void;
+  birthdayValue: BirthdayValueType;
+  setBirthdayValue: (args: BirthdayValueType) => void;
 }
 
-export default function DateSwipePicker({ dateValue, setDateValue }: DateSwipePickerProps) {
+export default function DateSwipePicker({ birthdayValue, setBirthdayValue }: DateSwipePickerProps) {
+  // 함수 분리
+  const setValue = (value: string, keyType: string) => {
+    const newBirthdayValue = { ...birthdayValue, [keyType]: value };
+    setBirthdayValue(newBirthdayValue);
+  };
+
   return (
     <div className="relative flex h-180">
       <SwipePicker
         selectList={yearList}
         isFirst
-        setValue={(value) => setDateValue({ ...dateValue, year: value })}
+        setValue={setValue}
+        keyType="year"
+        value={birthdayValue.year}
       />
       <SwipePicker
         selectList={monthList}
-        setValue={(value) => setDateValue({ ...dateValue, month: value })}
+        setValue={setValue}
+        keyType="month"
+        value={birthdayValue.month}
       />
       <SwipePicker
         selectList={dateList}
         isLast
-        setValue={(value) => setDateValue({ ...dateValue, date: value })}
+        setValue={setValue}
+        keyType="date"
+        value={birthdayValue.date}
       />
     </div>
   );
