@@ -22,20 +22,18 @@ interface DateSwipePickerProps {
 export default function DateSwipePicker({ dateValue, setDateValue }: DateSwipePickerProps) {
   return (
     <div className="relative flex h-180">
-      <SwipePicker.Bar />
       <SwipePicker
         selectList={yearList}
-        value={dateValue.year}
+        isFirst
         setValue={(value) => setDateValue({ ...dateValue, year: value })}
       />
       <SwipePicker
         selectList={monthList}
-        value={dateValue.month}
         setValue={(value) => setDateValue({ ...dateValue, month: value })}
       />
       <SwipePicker
         selectList={dateList}
-        value={dateValue.date}
+        isLast
         setValue={(value) => setDateValue({ ...dateValue, date: value })}
       />
     </div>

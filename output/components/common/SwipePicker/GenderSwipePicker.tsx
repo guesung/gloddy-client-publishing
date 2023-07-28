@@ -1,8 +1,7 @@
 import SwipePicker from './SwipePicker';
+import { GenderType } from '@/types';
 
-import type { GenderType } from '@/types';
-
-const selectList: GenderType[] = ['남성', '여성'];
+const selectList = ['남성', '여성'];
 
 interface GenderSwipePickerProps {
   setGenderValue: (value: GenderType) => void;
@@ -12,8 +11,13 @@ interface GenderSwipePickerProps {
 export default function GenderSwipePicker({ genderValue, setGenderValue }: GenderSwipePickerProps) {
   return (
     <div className="relative flex h-180">
-      <SwipePicker.Bar />
-      <SwipePicker selectList={selectList} setValue={setGenderValue} value={genderValue} />
+      <SwipePicker
+        isFirst
+        isLast
+        selectList={selectList}
+        setValue={setGenderValue}
+        value={genderValue}
+      />
     </div>
   );
 }

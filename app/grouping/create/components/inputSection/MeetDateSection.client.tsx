@@ -51,7 +51,6 @@ export default function MeetDateSection() {
         isRightButton
         text={<div className="text-18">모임 일시</div>}
         isTapOutsideToClose
-        disableDrag
       >
         <div className="relative h-full">
           <div>

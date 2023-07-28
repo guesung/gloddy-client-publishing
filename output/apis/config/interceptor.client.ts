@@ -3,12 +3,11 @@ import { InternalAxiosRequestConfig } from 'axios';
 
 export const onRequestClient = async (config: InternalAxiosRequestConfig) => {
   try {
-    const { token } = await postLogin({
-      phoneNumber: '01012345678',
-    });
+    const data = await postLogin();
+    const token = data.token;
 
     if (token) {
-      config.headers['X-AUTH-TOKEN'] = token.accessToken;
+      config.headers['X-AUTH-TOKEN'] = token;
       return config;
     }
     throw new Error('로그인이 필요합니다.');
