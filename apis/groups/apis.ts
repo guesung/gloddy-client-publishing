@@ -1,13 +1,8 @@
+import { CreateGroupRequest, GroupResponse } from '.';
 import privateApi from '../config/privateApi';
 
-import type { CreateGroupRequest, GroupResponse, GroupsResponse } from './type';
-
 export const getGroups = (pageNum: number) => {
-  return privateApi.get<GroupsResponse>(`/groups?size=5&page=${pageNum}`);
-};
-
-export const getGroup = (groupId: number) => {
-  return privateApi.get<GroupResponse>(`/groups/${groupId}`);
+  return privateApi.get<GroupResponse>(`/groups?size=5&page=${pageNum}`);
 };
 
 export const postCreateGroup = (CreateGroupData: CreateGroupRequest) => {

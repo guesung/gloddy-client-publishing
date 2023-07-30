@@ -1,4 +1,3 @@
-export const Keys = Object.freeze({
+export const Keys = {
   getGroups: () => ['getGroups'],
-  getGroup: (groupId: number) => ['getGroup', groupId],
-});
+};
