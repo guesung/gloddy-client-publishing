@@ -1,19 +1,16 @@
 'use client';
 import { useJoinContext } from '../../../components/JoinContext';
 import { useFunnelContext } from '../../JoinFunnel';
-import { formatWithoutHyphen, formatWithoutSpace } from '../util';
 import { LoginResponse, useLoginMutation, useSMSVerifyMutation } from '@/apis/auth';
 import { Button } from '@/components/common/Button';
 import { Input } from '@/components/common/Input';
 import { Spacing } from '@/components/common/Spacing';
 import { regexr } from '@/constants/regexr';
-import { useRouter } from 'next/navigation';
 
 import type { SignUpState } from '@/app/join/type';
 import type { SubmitHandler } from 'react-hook-form';
 
 export default function NumberVerifyForm() {
-  const router = useRouter();
   const { register, handleSubmit } = useJoinContext();
 
   const { nextStep } = useFunnelContext();
@@ -23,20 +20,20 @@ export default function NumberVerifyForm() {
   const onSubmit: SubmitHandler<Pick<SignUpState, 'phoneNumber' | 'certificateNumber'>> = (
     data
   ) => {
+    const phoneNumberWithoutHyphen = data.phoneNumber.replace(/[-\s]/g, '');
     mutateSMSVerify(
       {
-        number: formatWithoutHyphen(data.phoneNumber),
+        number: phoneNumberWithoutHyphen,
         code: '' + data.certificateNumber,
       },
       {
         onSuccess: () => {
           mutateLogin(
-            { phoneNumber: formatWithoutSpace(data.phoneNumber) },
+            { phoneNumber: data.phoneNumber },
             {
               onSuccess: (response: LoginResponse) => {
                 if (response.existUser) {
-                  // TODO : 토큰 설정
-                  router.push('/');
+                  // TODO : 토큰 설정 & home으로 이동
                 } else {
                   nextStep();
                 }
