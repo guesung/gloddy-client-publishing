@@ -27,9 +27,3 @@ export type DateType = {
 export type GenderType = '남성' | '여성';
 
 export type AMPMType = 'AM' | 'PM';
-
-export type CookieKeyType = {
-  accessToken: string;
-  refreshToken: string;
-  userId: number;
-};

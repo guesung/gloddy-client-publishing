@@ -1,31 +1,6 @@
-'use client';
-import { LoginResponse, postLogin, useLoginMutation } from '@/apis/auth';
-import { useUser } from '@/hooks/useUser';
+import { redirect } from 'next/navigation';
 
 export default function Home() {
-  const { userLogin } = useUser();
-  const { mutate: mutateLogin } = useLoginMutation();
-
-  const handleGetToken = () => {
-    mutateLogin(
-      { phoneNumber: '010-5728-9357' },
-      {
-        onSuccess: (response: LoginResponse) => {
-          console.log(response);
-          if (response.existUser) {
-            const {
-              token: { accessToken, refreshToken },
-              userId,
-            } = response;
-            userLogin({ accessToken, refreshToken, userId });
-          }
-        },
-      }
-    );
-  };
-  return (
-    <main>
-      <button onClick={handleGetToken}>Token 발급받기</button>
-    </main>
-  );
+  redirect('join?step=1');
+  return <main></main>;
 }

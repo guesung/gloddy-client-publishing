@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 import type { StrictPropsWithChildren } from '@/types';
 
-export default function QueryProvider({ children }: StrictPropsWithChildren) {
+export default function Provider({ children }: StrictPropsWithChildren) {
   const [queryClient] = useState(() => new QueryClient());
 
   queryClient.setDefaultOptions({
