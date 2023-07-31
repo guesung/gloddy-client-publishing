@@ -1,42 +1,57 @@
-import Layout from '@/app/components/Layout';
 import './globals.css';
 
-import QueryProvider from './components/QueryProvider.client';
-import { BASE_WEB_URL } from '@/constants';
+import Provider from './provider';
 
-const DEFAULT_OG_TITLE = 'Gloddy';
-const DEFAULT_OG_DESC = '조금 더 믿을 만한 모임을 할 수 있도록 준비했어요!';
-const DEFAULT_OG_IMAGE = '/assets/main_logo.png';
+import type { Metadata } from 'next';
 
-export const metadata = {
-  metadataBase: new URL(BASE_WEB_URL),
-  title: {
-    template: `${DEFAULT_OG_TITLE} / %s `,
-    default: DEFAULT_OG_TITLE,
-  },
-  description: DEFAULT_OG_DESC,
+export const metadata: Metadata = {
+  title: 'Gloddy',
+  description: '조금 더 믿을 만한 모임을 할 수 있도록 준비했어요!',
   openGraph: {
-    title: DEFAULT_OG_TITLE,
-    description: DEFAULT_OG_DESC,
-    images: [DEFAULT_OG_IMAGE],
+    title: 'Gloddy',
+    description: '조금 더 믿을 만한 모임을 할 수 있도록 준비했어요!',
+    url: '', // 웹사이트 URL
+    siteName: 'Gloddy',
+    images: [
+      {
+        url: '', // 이미지 URL
+        width: 1920,
+        height: 1080,
+      },
+    ],
+    locale: 'ko-KR',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   twitter: {
-    title: DEFAULT_OG_TITLE,
-    description: DEFAULT_OG_DESC,
-    images: [DEFAULT_OG_IMAGE],
+    title: 'Gloddy',
+    card: 'summary_large_image',
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
+  icons: {
+    shortcut: '/favicon.ico',
   },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <Layout>
-      <QueryProvider>{children}</QueryProvider>
-    </Layout>
+    <html lang="ko">
+      <body className="flex h-[100dvh] w-screen justify-center bg-slate-50">
+        <Provider>
+          <div className="relative h-full w-full max-w-450 overflow-y-scroll bg-white text-black">
+            {children}
+          </div>
+        </Provider>
+      </body>
+    </html>
   );
 }

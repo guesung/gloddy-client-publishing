@@ -1,5 +1,4 @@
-export * from './apis.client';
-export * from './apis.server';
+export * from './apis';
 export * from './keys';
 export * from './mutations';
 export * from './queries';

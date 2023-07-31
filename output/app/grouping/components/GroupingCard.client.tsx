@@ -1,4 +1,3 @@
-'use client';
 import { Spacing } from '@/components/common/Spacing';
 import Image from 'next/image';
 import React from 'react';

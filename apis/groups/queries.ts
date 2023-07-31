@@ -1,4 +1,4 @@
-import { getGroups } from './apis.server';
+import { getGroups } from './apis';
 import { Keys } from './keys';
 import { useQuery } from '@tanstack/react-query';
 
