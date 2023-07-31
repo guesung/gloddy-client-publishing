@@ -1,28 +1,21 @@
-import LocationSection from './LocationSection.server';
+import { Spacing } from '@/components/common/Spacing';
 import MemberSection from './MemberSection.server';
 import TimeSection from './TimeSection.server';
-import { Spacing } from '@/components/common/Spacing';
-
-import type { GroupResponse } from '@/apis/groups';
+import LocationSection from './LocationSection.server';
 
 interface DetailContentProps {
-  groupData: GroupResponse;
+  location: string;
+  time: string;
 }
 
-export default function DetailContent({ groupData }: DetailContentProps) {
-  const { place, placeLatitude, placeLongitude, meetDate, startTime, endTime } = groupData;
-
+export default function DetailContent({ location, time }: DetailContentProps) {
   return (
     <>
       <MemberSection />
       <Spacing size={18} />
-      <TimeSection meetDate={meetDate} startTime={startTime} endTime={endTime} />
+      <TimeSection time={time} />
       <Spacing size={18} />
-      <LocationSection
-        place={place}
-        placeLatitude={placeLatitude}
-        placeLongitude={placeLongitude}
-      />
+      <LocationSection location={location} />
       <Spacing size={100} />
     </>
   );

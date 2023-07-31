@@ -1,9 +1,10 @@
 'use client';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 
 export default function TopNavigationBar() {
-  const router = useRouter();
+  const handleLeftClick = () => {};
+
+  const handleSettingClick = () => {};
 
   return (
     <header className="fixed z-10 flex h-60 w-full max-w-450 items-center justify-between px-20">
@@ -12,7 +13,7 @@ export default function TopNavigationBar() {
         alt="left"
         width={7.5}
         height={15}
-        onClick={() => router.back()}
+        onClick={handleLeftClick}
         className="cursor-pointer"
       />
       <Image
@@ -20,7 +21,7 @@ export default function TopNavigationBar() {
         alt="setting"
         width={20}
         height={20}
-        onClick={() => router.push('/setting')}
+        onClick={handleSettingClick}
         className="cursor-pointer"
       />
     </header>
