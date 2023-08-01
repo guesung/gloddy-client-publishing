@@ -1,9 +1,10 @@
 'use client';
-import type { Grouping } from '@/apis/groups/type';
 import { Spacing } from '@/components/common/Spacing';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+
+import type { Grouping } from '@/apis/groups/type';
 
 interface GroupingCardProps {
   groupingData: Grouping;
