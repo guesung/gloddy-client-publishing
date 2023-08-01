@@ -1,16 +1,17 @@
-import { getGroups } from '@/apis/groups/apis.server';
 import FloatingBubbleSection from './components/FloatingBubbleSection.server';
 import GroupingCardList from './components/GroupingCardList.client';
+import { getGroups } from '@/apis/groups/apis.server';
+import { Keys } from '@/apis/groups/keys';
 import { RetryErrorBoundary } from '@/components/common/ErrorBoundary';
 import { HydrationProvider } from '@/components/common/HydrationProvider';
 import { BottomNavigationBar, TopNavigationBar } from '@/components/common/NavigationBar';
 import { Spacing } from '@/components/common/Spacing';
 import { Suspense } from 'react';
-import { Keys } from '@/apis/groups/keys';
 
 const GroupingComponent = () => {
   const getGroupsQuery = async () => {
     const data = await getGroups(0);
+    console.log(data);
     return data;
   };
 
