@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import React, { type PropsWithChildren, type ReactElement, useId } from 'react';
+import React, { PropsWithChildren, ReactElement, useId } from 'react';
 
 interface LoadingHandlerProps {
   isLoading: boolean;

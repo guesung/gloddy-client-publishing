@@ -1,4 +1,4 @@
-import type { GenderType } from '@/types';
+import { GenderType } from '@/types';
 
 export interface LoginRequest {
   phoneNumber: string;

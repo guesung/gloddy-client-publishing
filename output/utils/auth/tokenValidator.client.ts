@@ -1,8 +1,7 @@
 import { generateCookiesKeyValues } from '../auth';
 import { postReissue } from '@/apis/auth';
 import { ApiError } from '@/apis/config/customError';
-
-import type { CookieKeyType } from '@/types';
+import { CookieKeyType } from '@/types';
 
 export const getAccessTokenClient = async (
   authTokens: Partial<CookieKeyType>
