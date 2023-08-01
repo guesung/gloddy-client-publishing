@@ -11,7 +11,6 @@ import { Keys } from '@/apis/groups/keys';
 const GroupingComponent = () => {
   const getGroupsQuery = async () => {
     const data = await getGroups(0);
-    console.log(data);
     return data;
   };
 
