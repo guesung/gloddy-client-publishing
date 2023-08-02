@@ -1,11 +1,11 @@
-import CertificationForm from './CertificationForm.client';
 import EmailForm from './EmailForm.client';
+import VerifyForm from './VerifyForm.client';
 
 export default function InputSection() {
   return (
     <section>
       <EmailForm />
-      <CertificationForm />
+      <VerifyForm />
     </section>
   );
 }

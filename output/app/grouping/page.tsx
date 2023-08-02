@@ -1,22 +1,28 @@
 import FloatingBubbleSection from './components/FloatingBubbleSection.server';
 import GroupingCardList from './components/GroupingCardList.client';
-import { getGroups } from '@/apis/groups/apis';
-import { Keys } from '@/apis/groups/keys';
+import { getGroups } from '@/apis/groups';
 import { RetryErrorBoundary } from '@/components/common/ErrorBoundary';
 import { HydrationProvider } from '@/components/common/HydrationProvider';
 import { BottomNavigationBar, TopNavigationBar } from '@/components/common/NavigationBar';
 import { Spacing } from '@/components/common/Spacing';
+import Image from 'next/image';
+import Link from 'next/link';
 import { Suspense } from 'react';
 
 const GroupingComponent = () => {
+  const getGroupsQuery = async () => {
+    const data = await getGroups(0);
+    return data;
+  };
+
   return (
-    <HydrationProvider queryKey={Keys.getGroups()} queryFn={() => getGroups(0)}>
-      <RetryErrorBoundary>
-        <Suspense>
-          <GroupingCardList />
-        </Suspense>
-      </RetryErrorBoundary>
-    </HydrationProvider>
+    // <HydrationProvider queryKey={Keys.getGroups()} queryFn={getGroupsQuery}>
+    <RetryErrorBoundary>
+      <Suspense>
+        <GroupingCardList />
+      </Suspense>
+    </RetryErrorBoundary>
+    // </HydrationProvider>
   );
 };
 

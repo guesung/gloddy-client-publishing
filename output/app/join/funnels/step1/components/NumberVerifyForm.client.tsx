@@ -7,7 +7,6 @@ import { Button } from '@/components/common/Button';
 import { Input } from '@/components/common/Input';
 import { Spacing } from '@/components/common/Spacing';
 import { regexr } from '@/constants/regexr';
-import { setTokenAtCookie } from '@/utils/auth/tokenController';
 import { useRouter } from 'next/navigation';
 
 import type { SignUpState } from '@/app/join/type';
@@ -21,13 +20,11 @@ export default function NumberVerifyForm() {
   const { mutate: mutateSMSVerify } = useSMSVerifyMutation();
   const { mutate: mutateLogin } = useLoginMutation();
 
-  const onSubmit: SubmitHandler<Pick<SignUpState, 'phoneNumber' | 'certificateNumber'>> = (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<Pick<SignUpState, 'phoneNumber' | 'verifyNumber'>> = (data) => {
     mutateSMSVerify(
       {
         number: formatWithoutHyphen(data.phoneNumber),
-        code: '' + data.certificateNumber,
+        code: '' + data.verifyNumber,
       },
       {
         onSuccess: () => {
@@ -36,16 +33,8 @@ export default function NumberVerifyForm() {
             {
               onSuccess: (response: LoginResponse) => {
                 if (response.existUser) {
-                  const {
-                    token: { accessToken, refreshToken },
-                    userId,
-                  } = response;
-                  setTokenAtCookie({
-                    accessToken,
-                    refreshToken,
-                    userId,
-                  });
-                  router.push('/grouping');
+                  // TODO : 토큰 설정
+                  router.push('/');
                 } else {
                   nextStep();
                 }
@@ -61,10 +50,10 @@ export default function NumberVerifyForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input
         placeholder="인증 번호"
-        register={register('certificateNumber', {
+        register={register('verifyNumber', {
           required: true,
           pattern: {
-            value: regexr.certificateNumber,
+            value: regexr.verifyNumber,
             message: '인증번호 6자리를 입력해주세요.',
           },
         })}

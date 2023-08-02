@@ -10,11 +10,11 @@ export interface ImageType {
 }
 
 export interface TimeType {
-  fromHour: string;
-  fromMin: string;
+  fromHour: number;
+  fromMin: number;
   fromAmPm: AMPMType;
-  toHour: string;
-  toMin: string;
+  toHour: number;
+  toMin: number;
   toAmPm: AMPMType;
 }
 
@@ -27,9 +27,3 @@ export type DateType = {
 export type GenderType = '남성' | '여성';
 
 export type AMPMType = 'AM' | 'PM';
-
-export type CookieKeyType = {
-  accessToken: string;
-  refreshToken: string;
-  userId: number;
-};

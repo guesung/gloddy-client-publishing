@@ -1,5 +1,6 @@
+import { onResponse, onResponseError } from './interceptor';
 import { BASE_API_URL } from '@/constants';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 import type { CustomInstance } from './type';
 
@@ -8,9 +9,6 @@ const publicApi: CustomInstance = axios.create({
   withCredentials: true,
 });
 
-publicApi.interceptors.response.use(
-  (response: AxiosResponse) => response.data,
-  (response: AxiosResponse) => response.data
-);
+publicApi.interceptors.response.use(onResponse, onResponseError);
 
 export default publicApi;

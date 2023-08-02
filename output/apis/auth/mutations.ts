@@ -1,20 +1,8 @@
-import {
-  postEmail,
-  postEmailVerify,
-  postLogin,
-  postReissue,
-  postSMS,
-  postSMSVerify,
-  postSignUp,
-} from '.';
+import { postEmail, postEmailVerify, postLogin, postSMS, postSMSVerify, postSignUp } from '.';
 import { useMutation } from '@tanstack/react-query';
 
 export const useLoginMutation = () => {
   return useMutation(postLogin);
-};
-
-export const useReissueMutation = () => {
-  return useMutation(postReissue);
 };
 
 export const useSMSMutation = () => {
