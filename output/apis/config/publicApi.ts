@@ -8,6 +8,9 @@ const publicApi: CustomInstance = axios.create({
   withCredentials: true,
 });
 
-publicApi.interceptors.response.use((response: AxiosResponse) => response.data);
+publicApi.interceptors.response.use(
+  (response: AxiosResponse) => response.data,
+  (response: AxiosResponse) => response.data
+);
 
 export default publicApi;

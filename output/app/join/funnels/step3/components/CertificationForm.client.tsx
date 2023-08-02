@@ -22,12 +22,12 @@ export default memo(function CertificationForm() {
 
   const isOpen = modalName === 'certification';
 
-  const onSubmit = (data: Pick<SignUpState, 'schoolInfo' | 'verifyEmailNumber'>) => {
-    if (!data.verifyEmailNumber || !data.schoolInfo.email) return;
+  const onSubmit = (data: Pick<SignUpState, 'schoolInfo' | 'certificateEmailNumber'>) => {
+    if (!data.certificateEmailNumber || !data.schoolInfo.email) return;
     mutateEmailVerify(
       {
         email: data.schoolInfo.email,
-        authCode: data.verifyEmailNumber,
+        authCode: data.certificateEmailNumber,
       },
       {
         onSuccess: () => {
@@ -49,9 +49,9 @@ export default memo(function CertificationForm() {
         <section className="my-20">
           <Input
             label="인증번호"
-            register={register('verifyEmailNumber', {
+            register={register('certificateEmailNumber', {
               pattern: {
-                value: regexr.verifyNumber,
+                value: regexr.certificateNumber,
                 message: '인증 번호를 다시 확인해주세요.',
               },
             })}
@@ -67,7 +67,7 @@ export default memo(function CertificationForm() {
 
         <BottomFixedButton
           text="완료"
-          disabled={('' + watch('verifyNumber'))?.length < 6 || !watch('verifyNumber')}
+          disabled={('' + watch('certificateNumber'))?.length < 6 || !watch('certificateNumber')}
           type="submit"
         />
       </form>
