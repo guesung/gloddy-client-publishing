@@ -10,12 +10,12 @@ import { setTokenAtCookie } from '@/utils/auth/tokenController';
 import { useRouter } from 'next/navigation';
 
 export default function InputForm() {
-  const { handleSubmit, getValues } = useJoinContext();
+  const { handleSubmit, watch } = useJoinContext();
   const { mutate: mutateSignUp } = useSignUpMutation();
   const router = useRouter();
 
   const onSubmit = async (data: SignUpState) => {
-    const { certificateEmailNumber, certificateNumber, birth, personalityIdList, ...rest } = data;
+    const { verifyEmailNumber, verifyNumber, birth, personalityIdList, ...rest } = data;
     const signUpRequest = {
       ...rest,
       birth: `${birth.year}-${birth.month}-${birth.date}`,
@@ -43,7 +43,7 @@ export default function InputForm() {
       <PersonalitySection />
       <BottomFixedButton
         text="완료"
-        disabled={getValues().personalityIdList.length === 0}
+        disabled={watch('personalityIdList').length === 0}
         type="submit"
       />
     </form>
