@@ -7,6 +7,7 @@ import { Button } from '@/components/common/Button';
 import { Input } from '@/components/common/Input';
 import { Spacing } from '@/components/common/Spacing';
 import { regexr } from '@/constants/regexr';
+import { setTokenAtCookie } from '@/utils/auth/tokenController';
 import { useRouter } from 'next/navigation';
 
 import type { SignUpState } from '@/app/join/type';
@@ -20,11 +21,13 @@ export default function NumberVerifyForm() {
   const { mutate: mutateSMSVerify } = useSMSVerifyMutation();
   const { mutate: mutateLogin } = useLoginMutation();
 
-  const onSubmit: SubmitHandler<Pick<SignUpState, 'phoneNumber' | 'verifyNumber'>> = (data) => {
+  const onSubmit: SubmitHandler<Pick<SignUpState, 'phoneNumber' | 'certificateNumber'>> = (
+    data
+  ) => {
     mutateSMSVerify(
       {
         number: formatWithoutHyphen(data.phoneNumber),
-        code: '' + data.verifyNumber,
+        code: '' + data.certificateNumber,
       },
       {
         onSuccess: () => {
@@ -33,8 +36,16 @@ export default function NumberVerifyForm() {
             {
               onSuccess: (response: LoginResponse) => {
                 if (response.existUser) {
-                  // TODO : 토큰 설정
-                  router.push('/');
+                  const {
+                    token: { accessToken, refreshToken },
+                    userId,
+                  } = response;
+                  setTokenAtCookie({
+                    accessToken,
+                    refreshToken,
+                    userId,
+                  });
+                  router.push('/grouping');
                 } else {
                   nextStep();
                 }
@@ -50,10 +61,10 @@ export default function NumberVerifyForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Input
         placeholder="인증 번호"
-        register={register('verifyNumber', {
+        register={register('certificateNumber', {
           required: true,
           pattern: {
-            value: regexr.verifyNumber,
+            value: regexr.certificateNumber,
             message: '인증번호 6자리를 입력해주세요.',
           },
         })}

@@ -28,7 +28,7 @@ export default memo(function EmailForm() {
       { email: data.schoolInfo.email },
       {
         onSuccess: () => {
-          openModal('verify');
+          openModal('certification');
           if (timerStatus === 'STOPPED') {
             timerStart();
           } else {
