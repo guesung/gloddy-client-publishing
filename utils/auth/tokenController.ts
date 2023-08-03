@@ -1,10 +1,11 @@
 import { getLocalCookie, setLocalCookie } from '../cookieController';
+import { isServer } from '@/constants';
 import { AUTH_KEYS } from '@/constants/token';
 
 import type { CookieKeyType } from '@/types';
 
 export const getTokenFromCookie = async () => {
-  if (typeof window === 'undefined') {
+  if (isServer) {
     const { cookies } = await import('next/headers');
     const cookieStore = cookies();
     const accessToken = cookieStore.get(AUTH_KEYS.accessToken)?.value;
@@ -21,7 +22,7 @@ export const getTokenFromCookie = async () => {
 };
 
 export const setTokenAtCookie = async ({ accessToken, refreshToken, userId }: CookieKeyType) => {
-  if (typeof window === 'undefined') {
+  if (isServer) {
     const { cookies } = await import('next/headers');
     const cookieStore = cookies();
     cookieStore.set(AUTH_KEYS.accessToken, accessToken);

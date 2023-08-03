@@ -1,37 +1,11 @@
-import { getArticles, getGroupDetail, getGroups } from './apis';
+import { getGroup, getGroups } from './apis';
 import { Keys } from './keys';
-import { useSuspenseInfiniteQuery, useSuspenseQuery } from '@suspensive/react-query';
+import { useQuery } from '@tanstack/react-query';
 
-export const useGetGroups = () => {
-  const { data, ...rest } = useSuspenseInfiniteQuery(
-    Keys.getGroups(),
-    ({ pageParam = 0 }) => getGroups(pageParam),
-    {
-      getNextPageParam: (lastPage) => lastPage.currentPage + 1,
-    }
-  );
-
-  return {
-    data: data.pages?.flatMap((page) => page.contents),
-    ...rest,
-  };
+export const useGetGroups = (pageNum: number) => {
+  return useQuery(Keys.getGroups(), () => getGroups(pageNum));
 };
 
-export const useGetGroupDetail = (groupId: number) => {
-  return useSuspenseQuery(Keys.getGroupDetail(groupId), () => getGroupDetail(groupId));
-};
-
-export const useGetArticles = (groupId: number) => {
-  const { data, ...rest } = useSuspenseInfiniteQuery(
-    Keys.getArticles(groupId),
-    ({ pageParam = 0 }) => getArticles(groupId, pageParam),
-    {
-      getNextPageParam: (lastPage) => lastPage.currentPage + 1,
-    }
-  );
-
-  return {
-    data: data.pages?.flatMap((page) => page.contents),
-    ...rest,
-  };
+export const useGetGroup = (groupId: number) => {
+  return useQuery(Keys.getGroup(groupId), () => getGroup(groupId));
 };
