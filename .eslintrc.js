@@ -118,6 +118,13 @@ module.exports = {
         ],
       },
     ],
+    'no-warning-comments': [
+      'warn',
+      {
+        terms: ['TODO', 'FIXME', 'XXX', 'BUG'],
+        location: 'anywhere',
+      },
+    ],
     'object-shorthand': ['error', 'always'],
     'prefer-const': 'error',
     'no-var': 'error',
