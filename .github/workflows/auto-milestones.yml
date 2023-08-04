@@ -1,4 +1,4 @@
-name: Auto Milestone
+name: 'Auto Milestone Assign'
 
 on:
   pull_request:
