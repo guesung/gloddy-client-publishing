@@ -7,21 +7,21 @@ import { UseFormReturn, useForm } from 'react-hook-form';
 import type { StrictPropsWithChildren } from '@/types';
 
 const inputDefaultValues: CreateGroupContextValue = {
-  imageUrl: '',
+  fileUrl: '',
   title: '',
   content: '',
   date: new Date(),
   time: {
-    fromHour: '1',
-    fromMin: '0',
+    fromHour: 1,
+    fromMin: 0,
     fromAmPm: 'AM',
-    toHour: '1',
-    toMin: '0',
+    toHour: 1,
+    toMin: 0,
     toAmPm: 'AM',
   },
   place: '',
-  placeLatitude: 0,
-  placeLongitude: 0,
+  place_latitude: '',
+  place_longitude: '', // TODO : 지도 api 연동 후 추가
   maxUser: 0,
 };
 const CreateGroupContext = createContext<UseFormReturn | null>(null);
