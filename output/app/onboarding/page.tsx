@@ -1,6 +1,6 @@
 'use client';
 import OnboardingSpeechBubble from '@/app/onboarding/components/OnboardingSpeechBubble';
-import { Button } from '@/components/common/Button';
+import { BottomFixedButton, Button } from '@/components/common/Button';
 import { PageIndicator, Swiper } from 'antd-mobile';
 import Image from 'next/image';
 
@@ -31,7 +31,7 @@ const onboardingMessageList: OnboardingMessage[] = [
 export default function Onboarding() {
   return (
     <div className="flex items-center">
-      <Swiper>
+      <Swiper indicator={() => <></>}>
         {onboardingMessageList.map((onboardingMessage: OnboardingMessage) => {
           return onboardingMessage.id < 3 ? (
             <Swiper.Item key={onboardingMessage.id}>
