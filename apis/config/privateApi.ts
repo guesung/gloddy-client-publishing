@@ -2,8 +2,9 @@ import { ApiError } from './customError';
 import { postReissue } from '../auth';
 import { BASE_API_URL } from '@/constants';
 import { AUTH_ERROR_CODES } from '@/constants/errorCode';
-import { getTokenFromCookie } from '@/utils/auth/tokenController';
+import { getTokenFromCookie, setTokenAtCookie } from '@/utils/auth/tokenController';
 import axios, { AxiosError, AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
+import { redirect } from 'next/navigation';
 
 import type { CustomInstance, ErrorType } from './type';
 
@@ -37,12 +38,10 @@ privateApi.interceptors.response.use(
   async (error: AxiosError<ErrorType, InternalAxiosRequestConfig>) => {
     try {
       if (!error.response) return Promise.reject(error);
-      if (
-        error.response.status === AUTH_ERROR_CODES.EXPIRED_TOKEN_ERROR ||
-        error.response.status === AUTH_ERROR_CODES.TOKEN_ERROR
-      ) {
+      if (error.response.status === AUTH_ERROR_CODES.EXPIRED_TOKEN_ERROR) {
         try {
-          const { refreshToken, accessToken } = await getTokenFromCookie();
+          const { refreshToken, accessToken, userId } = await getTokenFromCookie();
+
           if (!refreshToken || !accessToken)
             throw new ApiError(
               '에러 발생',
@@ -63,6 +62,11 @@ privateApi.interceptors.response.use(
               new Date()
             );
           }
+          setTokenAtCookie({
+            accessToken: reIssuedAccessToken,
+            refreshToken: reIssuedRefreshToken,
+            userId,
+          });
 
           const prevRequest = error.config;
           if (!prevRequest) {
@@ -73,10 +77,10 @@ privateApi.interceptors.response.use(
               new Date()
             );
           }
-
           prevRequest.headers['X-AUTH-TOKEN'] = reIssuedAccessToken;
           return privateApi(prevRequest);
         } catch (e) {
+          redirect('/join');
           return Promise.reject(e);
         }
       }

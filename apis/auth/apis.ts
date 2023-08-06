@@ -1,4 +1,3 @@
-import { privateFetch } from '../config/privateFetch';
 import publicApi from '../config/publicApi';
 
 import type {
@@ -17,11 +16,8 @@ import type {
 export const postLogin = (loginData: LoginRequest) =>
   publicApi.post<LoginResponse>('/auth/login', loginData);
 
-export const postReissue = async (ReissueData: ReissueRequest, requestInit?: RequestInit) =>
-  privateFetch.post<ReissueResponse>('/auth/token-reissue', {
-    body: JSON.stringify(ReissueData),
-    ...requestInit,
-  });
+export const postReissue = (ReissueData: ReissueRequest) =>
+  publicApi.post<ReissueResponse>('/auth/token-reissue', ReissueData);
 
 export const postSMS = (SMSData: SMSRequest) => publicApi.post('/auth/sms', SMSData);
 
