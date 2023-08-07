@@ -1,23 +1,24 @@
 'use client';
-
 import { TopNavigationBar } from '@/components/common/NavigationBar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-export default function ProfileMatesTopNavigationBar() {
+export default function MembersTopNavigationBar() {
   const router = useRouter();
+
   return (
     <TopNavigationBar
-      text="모임 후기"
       leftNode={
         <Image
           alt="back"
           src="/assets/arrow_back.svg"
-          width={10}
-          height={10}
+          width={8}
+          height={30}
           onClick={() => router.back()}
+          className="cursor-pointer"
         />
       }
+      text="모임 멤버"
     />
   );
 }
