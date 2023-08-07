@@ -1,5 +1,3 @@
-import type { MatesResponse } from '@/apis/profile';
-
 import type { Article, CreateGroupRequest, GroupDetailResponse, Grouping } from '@/apis/groups';
 
 export const DUMMY_GROUPING_DATA: Grouping[] = [
@@ -126,40 +124,26 @@ export const DETAIL_DUMMY_DATA: GroupDetailResponse = {
   myGroup: true,
 };
 
-export const DUMMY_PROFILE_MATES_DATA: MatesResponse['mates'] = [
+export const MEMBER_DUMMY_DATA = [
   {
-    mateImageUrl: '/assets/avatar.svg',
-    mateName: 'John Doe',
-    school: 'Harvard University',
-    createdAt: '2023-08-06T12:34:56Z',
-    selectionReason: `글로디 어플을 사용하면서 첫 모임을 해보았던 건데 어색함 없이 모임을 잘 이끌어주시고 너무 친절하셔서 덕분에 거리낌 없이 즐거운 모임을 한 것 같습니다.좋은 추억 만들어 주셔서 감사합니다~`,
+    imageUrl: '/assets/avatar.svg',
+    name: '김지환',
+    isCaptain: true,
+    isCertified: true,
+    personality: 'SOUL MATE',
   },
   {
-    mateImageUrl: '/assets/avatar.svg',
-    mateName: 'Jane Smith',
-    school: 'Stanford University',
-    createdAt: '2023-08-05T11:22:33Z',
-    selectionReason: 'Both love hiking and nature.',
+    imageUrl: '/assets/avatar.svg',
+    name: 'david',
+    isCaptain: false,
+    isCertified: true,
+    personality: 'MATE',
   },
   {
-    mateImageUrl: '/assets/avatar.svg',
-    mateName: 'Alice Johnson',
-    school: 'MIT',
-    createdAt: '2023-08-04T09:45:12Z',
-    selectionReason: 'Connected through mutual friends.',
-  },
-  {
-    mateImageUrl: '/assets/avatar.svg',
-    mateName: 'Bob Brown',
-    school: 'UCLA',
-    createdAt: '2023-08-03T14:56:22Z',
-    selectionReason: 'Met at a conference.',
-  },
-  {
-    mateImageUrl: '/assets/avatar.svg',
-    mateName: 'Charlie Green',
-    school: 'Oxford University',
-    createdAt: '2023-08-02T10:15:25Z',
-    selectionReason: 'Worked on a project together.',
+    imageUrl: '/assets/avatar.svg',
+    name: 'alice',
+    isCaptain: false,
+    isCertified: false,
+    personality: 'MATE',
   },
 ];
