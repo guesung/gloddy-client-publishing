@@ -24,15 +24,6 @@ export interface Article {
   images: string[];
 }
 
-export interface Comment {
-  commentId: number;
-  userImageUrl: string;
-  name: string;
-  date: string;
-  content: string;
-  writer: boolean;
-}
-
 export interface GroupsResponse {
   totalCount: number;
   currentCount: number;
@@ -56,8 +47,4 @@ export interface ArticlesResponse {
   currentPage: number;
   totalPage: number;
   contents: Article[];
-}
-
-export interface CommentsReponse {
-  comments: Comment[];
 }
