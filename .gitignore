@@ -1,3 +1,4 @@
+# yarn berry
 .yarn/*
 !.yarn/releases
 !.yarn/patches
@@ -6,11 +7,19 @@
 !.yarn/versions
 !.yarn/cache
 
+# testing
+/coverage
+
+# Cypress
+cypress/screenshots
+cypress/videos
+cypress/log
+
+# etc
 /node_modules
 /.pnp
 .pnp.js
 /.next/
 /build
 .DS_Store
-
 .env
