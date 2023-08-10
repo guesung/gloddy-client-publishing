@@ -1,4 +1,4 @@
-const { colors, pxToRemTailwind, animations, fontSizes } = require('./style/theme');
+const { colors, pxToRemTailwind, animations } = require('./style/theme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -20,6 +20,5 @@ module.exports = {
       700: '700',
       900: '900',
     },
-    fontSize: fontSizes,
   },
 };
