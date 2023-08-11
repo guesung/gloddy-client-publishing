@@ -1,4 +1,4 @@
-const { colors, boxShadow, pxToRemTailwind, animations, fontSizes } = require('./src/style/theme');
+const { colors, pxToRemTailwind, animations, fontSizes } = require('./src/style/theme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -7,7 +7,6 @@ module.exports = {
     extend: {
       ...pxToRemTailwind,
       colors,
-      boxShadow,
       keyframes: animations,
       animation: {
         slideUp: 'slideUp 0.5s ease-in-out',
