@@ -1,11 +1,11 @@
 import MemeberList from './components/MemberList.client';
-import MembersHeader from './components/MembersHeader.client';
+import MembersTopNavigationBar from './components/MembersTopNavigationBar.client';
 import { Spacing } from '@/components/common/Spacing';
 
 export default function GroupingMembersPage() {
   return (
     <main>
-      <MembersHeader />
+      <MembersTopNavigationBar />
       <Spacing size={20} />
       <MemeberList />
     </main>

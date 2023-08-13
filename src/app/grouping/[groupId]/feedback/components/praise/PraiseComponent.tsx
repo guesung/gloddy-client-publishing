@@ -1,7 +1,7 @@
 'use client';
 import PraiseCardList from './PraiseCardList';
 import { BottomFixedButton } from '@/components/common/Button';
-import { Header } from '@/components/Header';
+import { TopNavigationBar } from '@/components/common/NavigationBar';
 import { Spacing } from '@/components/common/Spacing';
 import Image from 'next/image';
 
@@ -36,7 +36,7 @@ interface PraiseComponentProps {
 export default function PraiseComponent({ onPrevClick, onNextClick }: PraiseComponentProps) {
   return (
     <main className="bg-white">
-      <Header
+      <TopNavigationBar
         text="칭찬합시다"
         leftNode={
           <Image
