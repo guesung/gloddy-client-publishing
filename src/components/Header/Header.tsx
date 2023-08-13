@@ -1,12 +1,12 @@
-import { Spacing } from '../Spacing';
+import { Spacing } from '../common/Spacing';
 
-interface TopNavigationBarProps {
+interface HeaderProps {
   leftNode?: React.ReactNode;
   rightNode?: React.ReactNode;
   isSpacing?: boolean;
 }
 
-export default function TopNavigationBar({ leftNode, rightNode, isSpacing = true }: TopNavigationBarProps) {
+export default function Header({ leftNode, rightNode, isSpacing = true }: HeaderProps) {
   return (
     <>
       <div className="fixed inset-x-0 z-50 mx-auto max-w-450 bg-transparent px-20">
@@ -16,7 +16,7 @@ export default function TopNavigationBar({ leftNode, rightNode, isSpacing = true
         </header>
       </div>
 
-      {isSpacing && <Spacing size={60} />}
+      {isSpacing && <Spacing size={48} />}
     </>
   );
 }
