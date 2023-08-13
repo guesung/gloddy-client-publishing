@@ -1,6 +1,8 @@
 import TextField, { type TextFieldProps } from './TextField';
+import { useOnClickInside } from '@/hooks/useOnClickInside';
+import { useOnClickOutside } from '@/hooks/useOnClickOutside';
 import Image from 'next/image';
-import { forwardRef } from 'react';
+import { forwardRef, useRef, useState } from 'react';
 
 import type { UseFormRegisterReturn, UseFormReturn } from 'react-hook-form';
 
@@ -22,7 +24,7 @@ interface TextFieldControllerProps extends TextFieldProps {
   timer?: number;
 }
 
-export default forwardRef(function TextFieldController({
+export default function TextFieldController({
   register,
   hookForm,
   caption,
@@ -30,19 +32,32 @@ export default forwardRef(function TextFieldController({
   timer,
   ...TextFieldProps
 }: TextFieldControllerProps) {
+  const textFieldRef = useRef<HTMLDivElement>(null);
+
+  const [isFocus, setIsFocus] = useState(false);
+  const [isUserTouchOutsideOnce, setIsUserTouchOutsideOnce] = useState(false);
+
   const { formState, watch, setValue } = hookForm;
   const inputName = register.name;
   const errorMessage = formState.errors[inputName]?.message;
   const isRightError = maxCount ? watch(inputName).length > maxCount : false;
-  const isLeftError = !!errorMessage || isRightError;
+  const isLeftError = isUserTouchOutsideOnce && (!!errorMessage || isRightError);
 
   const isError = isRightError || isLeftError;
 
   const rightInputIconName = isError ? 'warning' : watch(inputName).length > 0 ? 'backspace' : '';
 
+  useOnClickOutside(textFieldRef, () => {
+    setIsUserTouchOutsideOnce(true);
+    setIsFocus(false);
+  });
+
+  useOnClickInside(textFieldRef, () => {
+    setIsFocus(true);
+  });
+
   return (
     <TextField
-      isSuccess={formState.isValid}
       leftCaption={caption ?? String(errorMessage) ?? ''}
       rightCaption={
         maxCount ? `${watch(inputName).length}/${maxCount}` : timer ? `${timer}초 후 재전송` : ''
@@ -58,10 +73,12 @@ export default forwardRef(function TextFieldController({
           />
         )
       }
+      isFocus={isFocus}
       isLeftError={isLeftError}
       isRightError={isRightError}
+      register={register}
+      ref={textFieldRef}
       {...TextFieldProps}
-      {...register}
     />
   );
-});
+}
