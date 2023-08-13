@@ -27,10 +27,9 @@ export default forwardRef(function TextField(
     isSuccess = false,
     isLeftError = false,
     isRightError = false,
-    register,
     ...props
   }: TextFieldProps,
-  inputRef
+  inputRef: React.ForwardedRef<HTMLInputElement>
 ) {
   const [isFocus, setIsFocus] = useState(false);
   const textFieldRef = useRef<HTMLDivElement>(null);
