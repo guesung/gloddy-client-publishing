@@ -3,9 +3,8 @@ import { formatNumber, formatNumberBackSpace } from '../util';
 import { useSMSMutation } from '@/apis/auth';
 import { type SignUpState } from '@/app/join/type';
 import { Button } from '@/components/common/Button';
+import { Input } from '@/components/common/Input';
 import { Spacing } from '@/components/common/Spacing';
-import { TextField } from '@/components/TextField';
-import TextFieldInput from '@/components/TextField/TextFieldInput';
 import { regexr } from '@/constants/regexr';
 import { useTimer } from '@/hooks/useTimer';
 
@@ -18,8 +17,7 @@ interface NumberSectionProps {
 }
 
 export default function NumberForm({ inputStatus, setInputStatus }: NumberSectionProps) {
-  const hookForm = useJoinContext();
-  const { setValue, handleSubmit, register } = hookForm;
+  const { register, handleSubmit, setValue } = useJoinContext();
   const { mutate: mutateSMS } = useSMSMutation();
   const {
     status: timerStatus,
@@ -65,20 +63,18 @@ export default function NumberForm({ inputStatus, setInputStatus }: NumberSectio
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <TextFieldInput
-        label="휴대폰 번호"
+      <Input
+        placeholder="휴대폰 번호"
         register={register('phoneNumber', {
           required: true,
           pattern: {
             value: regexr.phoneNumber,
-            message: '* 올바른 휴대폰 번호를 입력해주세요.',
+            message: '올바른 휴대폰 번호를 입력해주세요.',
           },
           onChange: handleInputChange,
         })}
         onKeyDown={handleInputChange}
         maxLength={17}
-        hookForm={hookForm}
-        placeholder="010-0000-0000"
       />
 
       <Spacing size={18} />
