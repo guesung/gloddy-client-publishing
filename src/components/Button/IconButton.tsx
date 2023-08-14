@@ -1,7 +1,5 @@
 import cn from '@/utils/cn';
 
-import type { StrictPropsWithChildren } from '@/types';
-
 interface IconButtonProps {
   /**
    * 버튼의 크기를 설정합니다. small: 24px, medium: 40px, large: 48px (default: small)
@@ -11,12 +9,9 @@ interface IconButtonProps {
    * 버튼의 클릭 이벤트를 설정합니다.
    */
   onClick?: () => void;
+  children: React.ReactNode;
 }
-export default function IconButton({
-  onClick,
-  children,
-  size = 'small',
-}: StrictPropsWithChildren<IconButtonProps>) {
+export default function IconButton({ onClick, children, size = 'small' }: IconButtonProps) {
   return (
     <button
       className={cn('flex items-center justify-center', {
