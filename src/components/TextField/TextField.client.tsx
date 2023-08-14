@@ -1,6 +1,7 @@
 'use client';
+import { Spacing } from '../common/Spacing';
 import cn from '@/utils/cn';
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 
 import type { StrictPropsWithChildren } from '@/types';
 import type { UseFormRegisterReturn } from 'react-hook-form';
@@ -11,31 +12,28 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
   rightCaption?: string;
   leftInputIcon?: React.ReactNode;
   rightInputIcon?: React.ReactNode;
-  isFocus?: boolean;
   isSuccess?: boolean;
   isLeftError?: boolean;
   isRightError?: boolean;
   register?: UseFormRegisterReturn<string>;
 }
-export default forwardRef(function TextField(
-  {
-    label,
-    leftCaption,
-    rightCaption,
-    leftInputIcon,
-    rightInputIcon,
-    isFocus = false,
-    isLeftError = false,
-    isRightError = false,
-    register,
-    ...props
-  }: TextFieldProps,
-  textFieldRef: React.ForwardedRef<HTMLDivElement>
-) {
+export default forwardRef(function TextField({
+  label,
+  leftCaption,
+  rightCaption,
+  leftInputIcon,
+  rightInputIcon,
+  isLeftError = false,
+  isRightError = false,
+  register,
+  ...props
+}: TextFieldProps) {
   const isError = isLeftError || isRightError;
 
+  const [isFocus, setIsFocus] = useState(false);
+
   return (
-    <div ref={textFieldRef}>
+    <div>
       <section
         className={cn('w-full rounded-8 border-1 p-16', {
           'border-border-pressed bg-white': isFocus,
@@ -44,6 +42,7 @@ export default forwardRef(function TextField(
         })}
       >
         <Label>{label}</Label>
+        <Spacing size={2} />
         <div className="relative flex h-24 w-full items-center justify-around">
           {leftInputIcon}
           <input
@@ -55,6 +54,10 @@ export default forwardRef(function TextField(
                 'bg-warning-color': isError,
               }
             )}
+            onFocus={() => setIsFocus(true)}
+            onBlur={() => {
+              setIsFocus(false);
+            }}
             {...register}
             {...props}
           />
@@ -70,7 +73,7 @@ export default forwardRef(function TextField(
 });
 function Label({ children }: StrictPropsWithChildren) {
   if (!children) return;
-  return <label className="mb-2 text-caption text-sign-tertiary">{children}</label>;
+  return <label className="text-caption text-sign-tertiary">{children}</label>;
 }
 
 interface LeftCaptionProps {
