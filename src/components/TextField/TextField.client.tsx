@@ -29,13 +29,10 @@ export default forwardRef(function TextField(
     register,
     ...props
   }: TextFieldProps,
-  textFieldRef: React.ForwardedRef<HTMLDivElement>
+  textFieldRef: React.ForwardedRef<HTMLLabelElement>
 ) {
   const isError = isLeftError || isRightError;
-
   const [isFocus, setIsFocus] = useState(false);
-
-  console.log(isFocus);
 
   return (
     <label ref={textFieldRef} htmlFor="textField">
@@ -61,11 +58,9 @@ export default forwardRef(function TextField(
             )}
             onFocusCapture={() => {
               setIsFocus(true);
-              console.log('focus');
             }}
             onBlurCapture={() => {
               setIsFocus(false);
-              console.log('blur');
             }}
             id="textField"
             {...register}
@@ -74,7 +69,7 @@ export default forwardRef(function TextField(
           {rightInputIcon}
         </div>
       </section>
-      <section className="flex justify-between px-8 pt-4 text-caption text-sign-tertiary">
+      <section className="absolute flex h-18 justify-between px-8 pt-4 text-caption text-sign-tertiary">
         <LeftCaption isError={isLeftError}>{leftCaption}</LeftCaption>
         <RightCaption isError={isRightError}>{rightCaption}</RightCaption>
       </section>

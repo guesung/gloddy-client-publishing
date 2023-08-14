@@ -45,7 +45,7 @@ export default function TextFieldController({
 
   return (
     <TextField
-      leftCaption={caption ?? String(errorMessage) ?? ''}
+      leftCaption={caption ?? (errorMessage as string) ?? ''}
       rightCaption={
         maxCount ? `${watch(inputName).length}/${maxCount}` : timer ? `${timer}초 후 재전송` : ''
       }
