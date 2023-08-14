@@ -5,7 +5,7 @@ import Step2Component from './step2/Step2Component.server';
 import Step3Component from './step3/Step3Component.server';
 import Step4Component from './step4/Step4Component.server';
 import Step5Component from './step5/Step5Component.server';
-import JoinHeader from '../components/JoinHeader.server';
+import JoinTopNavigationBar from '../components/JoinTopNavigationBar.server';
 import { useFunnel } from '@/hooks/useFunnel';
 import { createContext, useContext } from 'react';
 
@@ -19,7 +19,7 @@ export default function JoinFunnel() {
   return (
     <FunnelContext.Provider value={{ nextStep }}>
       <Funnel>
-        <JoinHeader onPrevClick={prevStep} />
+        <JoinTopNavigationBar onPrevClick={prevStep} />
         <Funnel.Step name="1">
           <Step1Component />
         </Funnel.Step>

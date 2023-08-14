@@ -1,25 +1,24 @@
 'use client';
-
-import { Header } from '@/components/Header';
+import { TopNavigationBar } from '@/components/common/NavigationBar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-export default function BoardHeader() {
+export default function CreateTopNavigationBar() {
   const router = useRouter();
-
   return (
-    <Header
+    <TopNavigationBar
       leftNode={
         <Image
           alt="back"
           src="/assets/arrow_back.svg"
           width={8}
           height={30}
-          onClick={() => router.back()}
-          className="cursor-pointer"
+          onClick={() => {
+            router.back();
+          }}
         />
       }
-      text="게시판"
+      text="모임 개설하기"
     />
   );
 }
