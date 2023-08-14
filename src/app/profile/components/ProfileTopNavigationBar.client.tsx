@@ -1,10 +1,10 @@
 'use client';
-import { Header } from '@/components/Header';
+import { TopNavigationBar } from '@/components/common/NavigationBar';
 import Image from 'next/image';
 
-export default function ProfileHeader() {
+export default function ProfileTopNavigationBar() {
   return (
-    <Header
+    <TopNavigationBar
       isSpacing={false}
       rightNode={<Image src="/assets/setting_black.svg" width={24} height={24} alt="setting" />}
     />

@@ -1,24 +1,23 @@
 'use client';
-import { Header } from '@/components/Header';
+
+import { TopNavigationBar } from '@/components/common/NavigationBar';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-export default function MembersHeader() {
+export default function ProfilePraiseTopNavigationBar() {
   const router = useRouter();
-
   return (
-    <Header
+    <TopNavigationBar
+      text="받은 칭찬"
       leftNode={
         <Image
           alt="back"
           src="/assets/arrow_back.svg"
-          width={8}
-          height={30}
+          width={10}
+          height={10}
           onClick={() => router.back()}
-          className="cursor-pointer"
         />
       }
-      text="모임 멤버"
     />
   );
 }
