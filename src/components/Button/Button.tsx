@@ -1,9 +1,6 @@
 import cn from '@/utils/cn';
 
-import type { StrictPropsWithChildren } from '@/types';
-
-interface ButtonProps<T extends React.ElementType> extends React.HTMLAttributes<T> {
-  as?: T;
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * 버튼의 크기를 설정합니다. small: 48px, medium: 56px (default: medium)
    */
@@ -17,21 +14,19 @@ interface ButtonProps<T extends React.ElementType> extends React.HTMLAttributes<
     | 'solid-secondary'
     | 'outline-warning'
     | 'solid-warning';
+  children: React.ReactNode;
 }
 
-export default function Button<T extends React.ElementType>({
-  as,
+export default function Button({
   size = 'medium',
   variant = 'solid-primary',
   className,
   disabled,
   children,
   ...props
-}: StrictPropsWithChildren<ButtonProps<T> & React.ComponentPropsWithoutRef<T>>) {
-  const Element = as ?? 'button';
-
+}: ButtonProps) {
   return (
-    <Element
+    <button
       className={cn(
         'flex items-center justify-center rounded-8 px-24 py-16 text-subtitle-2',
         {
@@ -52,6 +47,6 @@ export default function Button<T extends React.ElementType>({
       {...props}
     >
       {children}
-    </Element>
+    </button>
   );
 }
