@@ -4,6 +4,7 @@ import cn from '@/utils/cn';
 import { forwardRef, useState } from 'react';
 
 import type { StrictPropsWithChildren } from '@/types';
+import type { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -14,6 +15,8 @@ export interface TextFieldProps extends React.InputHTMLAttributes<HTMLInputEleme
   isSuccess?: boolean;
   isLeftError?: boolean;
   isRightError?: boolean;
+  register?: UseFormRegisterReturn<string>;
+  isSpacing?: boolean;
 }
 export default forwardRef(function TextField(
   {
@@ -24,7 +27,8 @@ export default forwardRef(function TextField(
     rightInputIcon,
     isLeftError = false,
     isRightError = false,
-    value,
+    register,
+    isSpacing = true,
     ...props
   }: TextFieldProps,
   textFieldRef: React.ForwardedRef<HTMLLabelElement>
@@ -61,13 +65,18 @@ export default forwardRef(function TextField(
               setIsFocus(false);
             }}
             id="textField"
-            value={value === 0 ? '' : value}
+            {...register}
             {...props}
           />
           {rightInputIcon}
         </div>
       </section>
-      <section className="flex h-18 w-full justify-between px-8 pt-4 text-caption text-sign-tertiary">
+      <section
+        className={cn(
+          'flex h-18 w-full justify-between px-8 pt-4 text-caption text-sign-tertiary',
+          { absolute: !isSpacing }
+        )}
+      >
         <LeftCaption isError={isLeftError}>{leftCaption}</LeftCaption>
         <RightCaption isError={isRightError}>{rightCaption}</RightCaption>
       </section>
