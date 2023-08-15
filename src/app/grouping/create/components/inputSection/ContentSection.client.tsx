@@ -1,13 +1,12 @@
 'use client';
 import { useCreateGroupContext } from '../CreateGroupContext';
-import { TextFieldController } from '@/components/TextField';
+import { TextArea } from '@/components/common/Input';
 import cn from '@/utils/cn';
 
 const TEXT_AREA_COUNT = 30;
 
 export default function ContentSection() {
-  const hookForm = useCreateGroupContext();
-  const { watch, register } = hookForm;
+  const { register, watch } = useCreateGroupContext();
   const isTextOver = watch('content').length > TEXT_AREA_COUNT;
 
   return (
@@ -19,14 +18,11 @@ export default function ContentSection() {
           {TEXT_AREA_COUNT}
         </div>
       </div>
-      <TextFieldController
+      <TextArea
         placeholder="내용을 입력해주세요."
         register={register('content', {
           required: true,
         })}
-        hookForm={hookForm}
-        as="textarea"
-        maxCount={500}
       />
     </section>
   );
