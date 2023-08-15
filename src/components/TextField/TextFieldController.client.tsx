@@ -2,14 +2,27 @@
 import TextField, { type TextFieldProps } from './TextField.client';
 import Image from 'next/image';
 import { useRef } from 'react';
+import {
+  Control,
+  FieldPath,
+  FieldValues,
+  RegisterOptions,
+  UseFormSetValue,
+  useController,
+} from 'react-hook-form';
 
-import type { UseFormRegisterReturn, UseFormReturn } from 'react-hook-form';
-
-interface TextFieldControllerProps extends TextFieldProps {
-  register: UseFormRegisterReturn<string>;
-  hookForm: UseFormReturn<any>;
-  /**  
-
+interface TextFieldControllerProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+> extends TextFieldProps {
+  control: Control<TFieldValues>;
+  name: TName;
+  rules?: Omit<
+    RegisterOptions<TFieldValues, TName>,
+    'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+  >;
+  setValue: UseFormSetValue<TFieldValues>;
+  /**
    * leftCaption에 문구를 표기하는 경우
    */
   caption?: string;
@@ -23,32 +36,39 @@ interface TextFieldControllerProps extends TextFieldProps {
   timer?: number;
 }
 
-export default function TextFieldController({
-  register,
-  hookForm,
+export default function TextFieldController<TFieldValues extends FieldValues>({
+  control,
+  name,
+  rules,
+  setValue,
   caption,
   maxCount,
   timer,
   ...TextFieldProps
-}: TextFieldControllerProps) {
+}: TextFieldControllerProps<TFieldValues>) {
   const textFieldRef = useRef<HTMLLabelElement>(null);
 
-  const { formState, watch, setValue } = hookForm;
-  const inputName = register.name;
+  const {
+    field: { value, onChange, onBlur },
+    fieldState: { invalid, isTouched, isDirty },
+    formState: { errors, touchedFields, dirtyFields },
+  } = useController<TFieldValues>({
+    name,
+    control,
+    rules,
+  });
 
-  const errorMessage = formState.errors[inputName]?.message;
-  const isRightError = maxCount ? watch(inputName).length > maxCount : false;
+  const errorMessage = errors[name]?.message;
+  const isRightError = maxCount ? value?.length > maxCount : false;
   const isLeftError = !!errorMessage || isRightError;
   const isError = isRightError || isLeftError;
 
-  const rightInputIconName = isError ? 'warning' : watch(inputName).length > 0 ? 'backspace' : '';
+  const rightInputIconName = isError ? 'warning' : value?.length > 0 ? 'backspace' : '';
 
   return (
     <TextField
       leftCaption={caption ?? (errorMessage as string) ?? ''}
-      rightCaption={
-        maxCount ? `${watch(inputName).length}/${maxCount}` : timer ? `${timer}초 후 재전송` : ''
-      }
+      rightCaption={maxCount ? `${value?.length}/${maxCount}` : timer ? `${timer}초 후 재전송` : ''}
       rightInputIcon={
         rightInputIconName && (
           <Image
@@ -56,14 +76,16 @@ export default function TextFieldController({
             width={24}
             height={24}
             alt={rightInputIconName}
-            onClick={() => rightInputIconName === 'backspace' && setValue(inputName, '')}
+            onClick={() => rightInputIconName === 'backspace' && setValue(name, 0)}
           />
         )
       }
       isLeftError={isLeftError}
       isRightError={isRightError}
-      register={register}
       ref={textFieldRef}
+      value={value}
+      onChange={onChange}
+      onBlur={onBlur}
       {...TextFieldProps}
     />
   );
