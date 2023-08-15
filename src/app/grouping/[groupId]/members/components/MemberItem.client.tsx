@@ -1,5 +1,4 @@
 'use client';
-import { Avatar } from '@/components/Avatar';
 import { Spacing } from '@/components/common/Spacing';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -21,7 +20,23 @@ export default function MemberItem({
 }: MemberItemProps) {
   return (
     <div className="flex items-center rounded-8 bg-gray6 p-16">
-      <Avatar imageUrl={imageUrl} isCertified={isCertified} />
+      <div className="relative h-38 w-38">
+        <Image
+          src={imageUrl ?? '/assets/avatar.svg'}
+          alt="member"
+          className="rounded-full object-cover"
+          fill
+        />
+        {isCertified && (
+          <Image
+            src="/assets/check_mark.svg"
+            alt="certified"
+            width={16}
+            height={16}
+            className="absolute -right-8 -top-8"
+          />
+        )}
+      </div>
       <Spacing size={13} direction="horizontal" />
       <p className={clsx('font-700', isCaptain ? 'text-blue' : 'text-gray')}>{name}</p>
       <div className="flex-grow" />
