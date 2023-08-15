@@ -1,5 +1,5 @@
 'use client';
-import { Tabs } from '@/components/Tabs';
+import Tabs from '@/components/common/Tabs';
 import { useSearchParams } from 'next/navigation';
 
 import type { TabType } from '../type';

@@ -1,5 +1,4 @@
 'use client';
-import cn from '@/utils/cn';
 import clsx from 'clsx';
 import { usePathname, useRouter } from 'next/navigation';
 import { type PropsWithChildren, createContext, useContext, useEffect, useState } from 'react';
@@ -58,9 +57,10 @@ function Tab({ value, text, queryString }: TabProps) {
 
   return (
     <div
-      className={cn('flex flex-1 cursor-pointer items-center justify-center', {
-        'border-b-1 border-primary text-subtitle-2 text-primary': isActive,
-      })}
+      className={clsx(
+        'flex flex-1 cursor-pointer items-center justify-center',
+        isActive && 'border-b-4 border-blue3'
+      )}
       onClick={() => setActiveTab(value)}
     >
       {text}
