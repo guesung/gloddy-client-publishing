@@ -3,6 +3,7 @@ import { Spacing } from '../common/Spacing';
 import cn from '@/utils/cn';
 import { forwardRef, useState } from 'react';
 
+import type { StrictPropsWithChildren } from '@/types';
 import type { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface TextFieldProps<T extends React.ElementType> {
@@ -30,6 +31,7 @@ function TextField<T extends React.ElementType = 'input'>(
     rightIcon,
     isLeftError = false,
     isRightError = false,
+    value,
     register,
     isSpacing = true,
     readOnly = false,
@@ -73,6 +75,7 @@ function TextField<T extends React.ElementType = 'input'>(
             onFocusCapture={() => !readOnly && setIsFocus(true)}
             onBlurCapture={() => setIsFocus(false)}
             id="textField"
+            value={value === 0 ? '' : value}
             readOnly={readOnly}
             {...register}
             {...props}
