@@ -18,5 +18,4 @@ const useModalContext = () => {
   if (!ctx) throw new Error('Cannot find Context. It should be wrapped within ContextProvider.');
   return ctx;
 };
-
 export { useModalContext };

@@ -12,9 +12,6 @@ module.exports = {
       animation: {
         slideUp: 'slideUp 0.5s ease-in-out',
       },
-      zIndex: {
-        modal: '100',
-      },
     },
     fontSize: fontSizes,
   },
