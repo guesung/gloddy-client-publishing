@@ -7,7 +7,6 @@ import type { UseFormRegisterReturn } from 'react-hook-form';
 
 export interface TextFieldProps<T extends React.ElementType> {
   as?: T;
-  register?: UseFormRegisterReturn<string>;
   label?: string;
   leftCaption?: string;
   rightCaption?: string;
@@ -16,6 +15,7 @@ export interface TextFieldProps<T extends React.ElementType> {
   isSuccess?: boolean;
   isLeftError?: boolean;
   isRightError?: boolean;
+  register?: UseFormRegisterReturn<string>;
   isSpacing?: boolean;
   readOnly?: boolean;
 }
@@ -23,7 +23,6 @@ export interface TextFieldProps<T extends React.ElementType> {
 function TextField<T extends React.ElementType = 'input'>(
   {
     as,
-    register,
     label,
     leftCaption,
     rightCaption,
@@ -31,8 +30,9 @@ function TextField<T extends React.ElementType = 'input'>(
     rightIcon,
     isLeftError = false,
     isRightError = false,
+    register,
     isSpacing = true,
-    readOnly,
+    readOnly = false,
     ...props
   }: TextFieldProps<T> & React.ComponentPropsWithoutRef<T>,
   textFieldRef: React.ForwardedRef<HTMLLabelElement>
@@ -56,13 +56,13 @@ function TextField<T extends React.ElementType = 'input'>(
         <div
           className={cn('relative flex h-142 w-full items-center justify-around', {
             'h-142': Element === 'textarea',
-            'h-22': Element === 'input',
+            'h-24': Element === 'input',
           })}
         >
           {leftIcon}
           <Element
             className={cn(
-              'h-full w-full resize-none text-paragraph-2 outline-none placeholder:text-paragraph-2 placeholder:text-sign-caption',
+              'h-full w-full resize-none text-paragraph-1 outline-none placeholder:text-paragraph-1',
               {
                 'bg-white': isFocus,
                 'bg-sub': !isFocus,
