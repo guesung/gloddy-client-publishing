@@ -1,5 +1,3 @@
-'use client';
-
 import { useTimer } from '@/hooks/useTimer';
 import { createContext, useContext } from 'react';
 

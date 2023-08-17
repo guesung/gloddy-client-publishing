@@ -1,9 +1,7 @@
-'use client';
-
-import FormSection from './components/FormSection.client';
-import NoticeSection from './components/NoticeSection.client';
-import TimerContext from './components/TimerContext.client';
-import JoinTitleTextMessage from '../../components/JoinTitleTextMessage.client';
+import FormSection from './components/FormSection.server';
+import NoticeSection from './components/NoticeSection';
+import TimerContext from './components/TimerContext';
+import JoinTitleTextMessage from '../../components/JoinTitleTextMessage.server';
 import ModalContextProvider from '@/components/Modal/ModalContext.client';
 
 export default function Step3Component() {

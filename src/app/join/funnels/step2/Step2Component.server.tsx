@@ -1,8 +1,6 @@
-'use client';
-
 import InputForm from './components/InputForm.client';
 import SubmitSection from './components/SubmitSection.client';
-import JoinTitleTextMessage from '../../components/JoinTitleTextMessage.client';
+import JoinTitleTextMessage from '../../components/JoinTitleTextMessage.server';
 
 export default function Step2Component() {
   return (
