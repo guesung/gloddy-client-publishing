@@ -1,9 +1,7 @@
-'use client';
-
 import AgreeSection from './AgreeForm.client';
 import SchoolSection from './SchoolSection.client';
 import { useFunnelContext } from '../../JoinFunnel';
-import { useJoinContext } from '@/app/join/components/JoinContext.client';
+import { useJoinContext } from '@/app/join/components/JoinContext';
 import { SignUpState } from '@/app/join/type';
 
 export default function InputForm() {

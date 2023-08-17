@@ -1,6 +1,6 @@
 'use client';
-import { useTimerContext } from './TimerContext.client';
-import { useJoinContext } from '../../../components/JoinContext.client';
+import { useTimerContext } from './TimerContext';
+import { useJoinContext } from '../../../components/JoinContext';
 import { useFunnelContext } from '../../JoinFunnel';
 import { useEmailVerifyMutation } from '@/apis/auth';
 import { BottomFixedButton } from '@/components/common/Button';
@@ -26,7 +26,7 @@ export default memo(function CertificationForm() {
     mutateEmailVerify(
       {
         email: data.schoolInfo.email,
-        authCode: +data.verifyEmailNumber,
+        authCode: data.verifyEmailNumber,
       },
       {
         onSuccess: () => {
