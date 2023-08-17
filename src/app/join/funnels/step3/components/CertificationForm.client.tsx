@@ -1,12 +1,11 @@
 'use client';
-import { useTimerContext } from './TimerContext.client';
-import { useJoinContext } from '../../../components/JoinContext.client';
+import { useTimerContext } from './TimerContext';
+import { useJoinContext } from '../../../components/JoinContext';
 import { useFunnelContext } from '../../JoinFunnel';
 import { useEmailVerifyMutation } from '@/apis/auth';
 import { BottomFixedButton } from '@/components/common/Button';
 import { Input } from '@/components/common/Input';
 import { BottomSheet, useModalContext } from '@/components/Modal';
-import { TextFieldController } from '@/components/TextField';
 import { regexr } from '@/constants/regexr';
 import { memo } from 'react';
 
@@ -15,8 +14,7 @@ import type { SignUpState } from '@/app/join/type';
 export default memo(function CertificationForm() {
   const { closeModal, modalName } = useModalContext();
   const { time: timerTime } = useTimerContext();
-  const hookForm = useJoinContext();
-  const { register, handleSubmit, setValue, formState } = hookForm;
+  const { register, handleSubmit, setValue, formState } = useJoinContext();
   const { nextStep } = useFunnelContext();
 
   const { mutate: mutateEmailVerify } = useEmailVerifyMutation();
@@ -28,7 +26,7 @@ export default memo(function CertificationForm() {
     mutateEmailVerify(
       {
         email: data.schoolInfo.email,
-        authCode: +data.verifyEmailNumber,
+        authCode: data.verifyEmailNumber,
       },
       {
         onSuccess: () => {
@@ -48,9 +46,8 @@ export default memo(function CertificationForm() {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="my-20">
-          <TextFieldController
+          <Input
             label="인증번호"
-            hookForm={hookForm}
             register={register('verifyEmailNumber', {
               pattern: {
                 value: regexr.verifyNumber,
