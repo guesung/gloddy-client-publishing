@@ -2,7 +2,7 @@
 import LocationSection from './LocationSection.client';
 import MemberSection from './MemberSection.client';
 import TimeSection from './TimeSection.client';
-
+import { BottomFixedButton } from '@/components/common/Button';
 import { Spacing } from '@/components/common/Spacing';
 
 import type { GroupDetailResponse } from '@/apis/groups/type';
@@ -12,29 +12,26 @@ interface DetailContentProps {
 }
 
 export default function DetailContent({ groupDetailData }: DetailContentProps) {
-  const {
-    place,
-    placeLatitude,
-    placeLongitude,
-    meetDate,
-    startTime,
-    endTime,
-    maxUser,
-    memberCount,
-  } = groupDetailData;
+  const { place, placeLatitude, placeLongitude, meetDate, startTime, endTime, myGroup } =
+    groupDetailData;
 
   return (
     <>
-      <Spacing size={20} />
-      <MemberSection maxUser={maxUser} memberCount={memberCount} />
-      <Spacing size={36} />
+      <MemberSection />
+      <Spacing size={18} />
       <TimeSection meetDate={meetDate} startTime={startTime} endTime={endTime} />
-      <Spacing size={28} />
+      <Spacing size={18} />
       <LocationSection
         place={place}
         placeLatitude={placeLatitude}
         placeLongitude={placeLongitude}
       />
+      {!myGroup && (
+        <>
+          <Spacing size={100} />
+          <BottomFixedButton text="모임 가입하기" />
+        </>
+      )}
     </>
   );
 }

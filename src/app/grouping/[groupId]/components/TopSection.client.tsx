@@ -13,16 +13,20 @@ export default function TopSection({ groupDetailData }: TopSectionProps) {
 
   return (
     <section>
-      <div className="relative aspect-[8/5]">
-        <Image src={imageUrl ?? '/dummy_image.png'} alt="thumbnail" fill />
+      <div className="relative h-350">
+        <Image
+          src={imageUrl ?? '/assets/main_logo.png'}
+          alt="thumbnail"
+          className="w-full rounded-b-35"
+          fill
+        />
       </div>
-      <Spacing size={24} />
-      <div className="px-20">
-        <h4 className="text-h4 text-sign-cto">{title}</h4>
+      <div className="p-20">
+        <Spacing size={16} />
+        <h1 className="font-700 text-18 text-gray">{title}</h1>
         <Spacing size={8} />
-        <p className="text-paragraph-2 text-sign-secondary">{content}</p>
+        <p className="font-400 text-12 text-gray2">{content}</p>
       </div>
-      <Spacing size={20} />
     </section>
   );
 }

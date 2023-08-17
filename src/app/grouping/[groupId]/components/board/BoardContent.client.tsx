@@ -1,32 +1,25 @@
 'use client';
 import ArticleList from './ArticleList.client';
-import NoticeList from './NoticeList.client';
-import { FloatAddButton } from '@/components/Button';
-import BottomFixedDiv from '@/components/common/BottomFixedDiv';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
-
-import type { GroupDetailResponse } from '@/apis/groups/type';
+import Notice from './Notice.client';
+import { GroupDetailResponse } from '@/apis/groups/type';
+import { BottomFixedButton } from '@/components/common/Button';
+import { Spacing } from '@/components/common/Spacing';
 
 interface BoardContentProps {
-  groupDetailData: GroupDetailResponse;
+  myGroup: GroupDetailResponse['myGroup'];
 }
 
-export default function BoardContent({ groupDetailData }: BoardContentProps) {
-  const params = useParams() as { groupId: string };
-  const groupId = Number(params.groupId);
-  const { isCaptain, myGroup } = groupDetailData;
-
+export default function BoardContent({ myGroup }: BoardContentProps) {
   return (
     <>
-      <NoticeList isCaptain={isCaptain} />
-      <ArticleList isCaptain={isCaptain} />
+      <Notice />
+      <Spacing size={15} />
+      <ArticleList />
       {myGroup && (
-        <BottomFixedDiv className="flex justify-end">
-          <Link href={`/grouping/${groupId}/write`}>
-            <FloatAddButton />
-          </Link>
-        </BottomFixedDiv>
+        <>
+          <Spacing size={100} />
+          <BottomFixedButton text="글쓰기" />
+        </>
       )}
     </>
   );
