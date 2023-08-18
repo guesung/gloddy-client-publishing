@@ -47,7 +47,6 @@ export default function GroupingCard({ groupingData }: GroupingCardProps) {
           <Image src="/icons/16/date_range.svg" width={16} height={16} alt="location" />
           {formatDate(meetDate)}
         </p>
-        <StatusBadge status="NEW" />
       </section>
     </Flex>
   );
