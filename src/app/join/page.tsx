@@ -1,9 +1,9 @@
-import JoinContextProvider from './components/JoinContext.client';
+import JoinContextProvider from './components/JoinContext';
 import JoinFunnel from './funnels/JoinFunnel';
 
 export default function JoinPage() {
   return (
-    <main className="h-full px-20">
+    <main className="h-full p-20">
       <JoinContextProvider>
         <JoinFunnel />
       </JoinContextProvider>

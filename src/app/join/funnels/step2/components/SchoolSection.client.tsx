@@ -1,7 +1,7 @@
 'use client';
 import SearchResultSection from './SearchResultSection.client';
-import { useJoinContext } from '../../../components/JoinContext.client';
-import { TextField } from '@/components/TextField';
+import { useJoinContext } from '../../../components/JoinContext';
+import { Input } from '@/components/common/Input';
 
 import type { SearchResultType } from '../type';
 
@@ -28,7 +28,7 @@ export default function SchoolSection() {
 
   return (
     <section>
-      <TextField
+      <Input
         label="학교"
         register={register('schoolInfo.school', {
           required: true,

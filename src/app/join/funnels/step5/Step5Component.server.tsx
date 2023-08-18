@@ -1,8 +1,6 @@
-'use client';
-
 import InputForm from './components/InputForm.client';
-import JoinContentTextMessage from '../../components/JoinContentTextMessage.client';
-import JoinTitleTextMessage from '../../components/JoinTitleTextMessage.client';
+import JoinContentTextMessage from '../../components/JoinContentTextMessage.server';
+import JoinTitleTextMessage from '../../components/JoinTitleTextMessage.server';
 import { Spacing } from '@/components/common/Spacing';
 
 export default function Step5Component() {
