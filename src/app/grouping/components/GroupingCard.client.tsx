@@ -29,14 +29,14 @@ export default function GroupingCard({ groupingData }: GroupingCardProps) {
         ) : (
           <div className="h-full rounded-8 bg-white3" />
         )}
-        <Badge maxUser={maxUser} memberCount={memberCount} />
+        <MemberCountBadge maxUser={maxUser} memberCount={memberCount} />
       </section>
 
       <Spacing size={12} direction="horizontal" />
 
-      <section>
+      <section className="relative">
         <p className="w-250 truncate text-subtitle-1">{title}</p>
-        {/* <p className="w-250 truncate text-paragraph-2 text-sign-secondary">{content}</p> */}
+        <p className="w-250 truncate text-paragraph-2 text-sign-secondary">{content}</p>
         <Spacing size={8} />
         <p className="flex text-caption text-sign-tertiary">
           <Image src="/icons/16/location.svg" width={16} height={16} alt="location" />
@@ -52,18 +52,18 @@ export default function GroupingCard({ groupingData }: GroupingCardProps) {
   );
 }
 
-interface BadgeProps {
+interface MemberCountBadgeProps {
   maxUser: number;
   memberCount: number;
 }
 
-function Badge({ maxUser, memberCount }: BadgeProps) {
+function MemberCountBadge({ maxUser, memberCount }: MemberCountBadgeProps) {
   const leftUser = maxUser - memberCount;
 
   return (
     <Flex
       align="center"
-      className={clsx('absolute bottom-0 left-0 h-22 w-45 rounded-8 p-4', {
+      className={clsx('absolute bottom-0 left-0 h-22 w-45 rounded-4 p-4', {
         'bg-brand-color': leftUser >= 2,
         'bg-warning-color': leftUser === 1,
         'bg-sub': leftUser === 0,
@@ -88,6 +88,29 @@ function Badge({ maxUser, memberCount }: BadgeProps) {
       >
         {memberCount}/{maxUser}
       </span>
+    </Flex>
+  );
+}
+
+interface StatusBadgeProps {
+  status: '재학생 인증 필요' | 'NEW' | '심사중' | '거절됨' | '모집중';
+}
+
+function StatusBadge({ status }: StatusBadgeProps) {
+  return (
+    <Flex
+      className={clsx(
+        'absolute right-0 top-2 inline h-22 rounded-4 border-1 px-4 py-2 text-caption',
+        {
+          'border-warning bg-warning-color text-warning':
+            status === '재학생 인증 필요' || status === '거절됨',
+          'border-sign-tertiary bg-sub text-sign-tertiary':
+            status === '심사중' || status === '모집중',
+          'border-primary bg-brand-color text-primary': status === 'NEW',
+        }
+      )}
+    >
+      {status}
     </Flex>
   );
 }
