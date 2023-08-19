@@ -4,10 +4,9 @@ import Image from 'next/image';
 
 export default function ProfileHeader() {
   return (
-    <Header>
-      <Header.Right>
-        <Image src="/icons/48/action_button.svg" width={48} height={48} alt="action" />
-      </Header.Right>
-    </Header>
+    <Header
+      isSpacing={false}
+      rightNode={<Image src="/assets/setting_black.svg" width={24} height={24} alt="setting" />}
+    />
   );
 }

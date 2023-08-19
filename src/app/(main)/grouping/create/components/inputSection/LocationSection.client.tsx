@@ -22,7 +22,7 @@ export default function LocationSection() {
         handleLeftButtonClick={() => openModal('meetingLocation')}
         onClose={closeModal}
         isRightButton
-        title="모임 장소"
+        text={<div className="text-18">모임 장소</div>}
         isTapOutsideToClose
       >
         <div className="relative h-full">

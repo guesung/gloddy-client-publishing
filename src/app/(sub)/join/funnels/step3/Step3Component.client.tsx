@@ -1,7 +1,6 @@
 'use client';
 
-import CertificationForm from './components/CertificationForm.client';
-import EmailForm from './components/EmailForm.client';
+import FormSection from './components/FormSection.client';
 import NoticeSection from './components/NoticeSection.client';
 import TimerContext from './components/TimerContext.client';
 import JoinTitleTextMessage from '../../components/JoinTitleTextMessage.client';
@@ -18,8 +17,7 @@ export default function Step3Component() {
 
       <ModalContextProvider>
         <TimerContext>
-          <EmailForm />
-          <CertificationForm />
+          <FormSection />
         </TimerContext>
       </ModalContextProvider>
 
