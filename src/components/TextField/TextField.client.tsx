@@ -5,8 +5,7 @@ import { forwardRef, useState } from 'react';
 
 import type { UseFormRegisterReturn } from 'react-hook-form';
 
-export interface TextFieldProps<T extends React.ElementType = 'input'>
-  extends React.HTMLAttributes<T> {
+export interface TextFieldProps<T extends React.ElementType> {
   as?: T;
   register?: UseFormRegisterReturn<string>;
   label?: string;
@@ -22,7 +21,7 @@ export interface TextFieldProps<T extends React.ElementType = 'input'>
   className?: string;
 }
 
-function TextField<T extends React.ElementType = 'input'>(
+function TextField<T extends React.ElementType>(
   {
     as,
     register,
@@ -38,14 +37,14 @@ function TextField<T extends React.ElementType = 'input'>(
     className,
     ...props
   }: TextFieldProps<T> & React.ComponentPropsWithoutRef<T>,
-  ref: React.ForwardedRef<HTMLLabelElement>
+  textFieldRef: React.ForwardedRef<HTMLLabelElement>
 ) {
   const isError = isLeftError || isRightError;
   const [isFocus, setIsFocus] = useState(false);
   const Element = as || 'input';
 
   return (
-    <label ref={ref} htmlFor="textField" className="relative">
+    <label ref={textFieldRef} htmlFor="textField" className="relative">
       <section
         className={cn('w-full rounded-8 border-1 p-16', {
           'border-border-pressed bg-white': isFocus,
@@ -130,7 +129,6 @@ function RightCaption({ isError, text }: RightCaptionProps) {
   return <span className={isError ? 'text-warning' : ''}>{text}</span>;
 }
 
-export default forwardRef(TextField) as <T extends React.ElementType = 'input'>(
-  props: TextFieldProps<T> &
-    React.ComponentPropsWithoutRef<T> & { ref?: React.ForwardedRef<HTMLLabelElement> }
+export default forwardRef(TextField) as <T extends React.ElementType = 'input' | 'textarea'>(
+  props: TextFieldProps<T> & { ref?: React.ForwardedRef<HTMLLabelElement> }
 ) => React.ReactElement;

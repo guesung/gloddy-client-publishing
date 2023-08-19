@@ -121,7 +121,7 @@ function Panel({ value, children }: PropsWithChildren<Pick<TabProps, 'value'>>) 
   const searchParams = useSearchParams();
   const isActive = searchParams.get('tab') === value;
 
-  return isActive && children;
+  return <div className={isActive ? 'block' : 'hidden'}>{children}</div>;
 }
 
 Tabs.List = List;
