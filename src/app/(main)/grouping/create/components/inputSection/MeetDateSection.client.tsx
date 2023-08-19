@@ -49,7 +49,7 @@ export default function MeetDateSection() {
         handleLeftButtonClick={() => openModal('meetingDate')}
         onClose={closeModal}
         isRightButton
-        title="모임 일시"
+        text={<div className="text-18">모임 일시</div>}
         isTapOutsideToClose
         disableDrag
       >

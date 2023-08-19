@@ -9,8 +9,8 @@ interface JoinHeaderProps {
 
 export default function JoinHeader({ onPrevClick }: JoinHeaderProps) {
   return (
-    <Header className="px-4">
-      <Header.Left>
+    <Header
+      leftNode={
         <IconButton size="large">
           <Image
             alt="back"
@@ -20,8 +20,9 @@ export default function JoinHeader({ onPrevClick }: JoinHeaderProps) {
             onClick={onPrevClick}
           />
         </IconButton>
-        회원가입
-      </Header.Left>
-    </Header>
+      }
+      text="회원가입"
+      className="px-4"
+    />
   );
 }
