@@ -52,15 +52,17 @@ export default function ButtonGroup({
   isSpacing = true,
   children,
 }: StrictPropsWithChildren<ButtonGroupProps>) {
-  const validChildren = Children.toArray(children).filter(
-    (child) =>
-      isValidElement(child) &&
-      (
-        child.type as {
-          name: string;
-        }
-      ).name === 'Button'
-  ) as ReactElement[];
+  const validChildren = Children.toArray(children).filter((child) => {
+    console.log(child);
+    console.log(isValidElement(child));
+    // (
+    //   child.type as {
+    //     name: string;
+    //   }
+    // ).name === 'Button'
+  }) as ReactElement[];
+
+  console.log(validChildren);
 
   if (validChildren.length === 0) {
     throw new Error('ButtonGroup 컴포넌트는 Button 컴포넌트를 포함해야 합니다.');
