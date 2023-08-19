@@ -3,7 +3,7 @@ import { useTimerContext } from './TimerContext.client';
 import { useJoinContext } from '../../../components/JoinContext.client';
 import { useFunnelContext } from '../../JoinFunnel';
 import { useEmailVerifyMutation } from '@/apis/auth';
-import { Button, ButtonGroup } from '@/components/Button';
+import { BottomFixedButton } from '@/components/common/Button';
 import { BottomSheet, useModalContext } from '@/components/Modal';
 import { TextFieldController } from '@/components/TextField';
 import { regexr } from '@/constants/regexr';
@@ -15,13 +15,7 @@ export default memo(function CertificationForm() {
   const { closeModal, modalName } = useModalContext();
   const { time: timerTime } = useTimerContext();
   const hookForm = useJoinContext();
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { isValid },
-    setError,
-  } = hookForm;
+  const { register, handleSubmit, setValue, formState } = hookForm;
   const { nextStep } = useFunnelContext();
 
   const { mutate: mutateEmailVerify } = useEmailVerifyMutation();
@@ -40,24 +34,17 @@ export default memo(function CertificationForm() {
           setValue('schoolInfo.certifiedStudent', true);
           nextStep();
         },
-        onError: () => {
-          setError('verifyEmailNumber', {
-            type: 'manual',
-            message: '인증 번호를 다시 확인해주세요.',
-          });
-        },
       }
     );
   };
 
   return (
-    <BottomSheet
-      isOpen={isOpen}
-      onClose={closeModal}
-      snap={300}
-      isRightButton
-      title="인증번호 입력"
-    >
+    <BottomSheet isOpen={isOpen} onClose={closeModal} snap={400} isRightButton>
+      <section className="font-700 text-20">
+        <p>회원님의 이메일로 </p>
+        <p>인증번호를 전송하였습니다.</p>
+      </section>
+
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="my-20">
           <TextFieldController
@@ -70,16 +57,16 @@ export default memo(function CertificationForm() {
               },
             })}
             maxLength={6}
-            timer={timerTime}
           />
+          <div className="flex justify-between p-10">
+            <p className="text-14 text-gray3 underline ">재전송하기</p>
+            <p className="text-orange">
+              {Math.floor(timerTime / 60)} : {timerTime % 60}
+            </p>
+          </div>
         </section>
 
-        <ButtonGroup>
-          <Button type="button">재전송</Button>
-          <Button type="submit" disabled={!isValid}>
-            확인
-          </Button>
-        </ButtonGroup>
+        <BottomFixedButton text="완료" disabled={!formState.isValid} type="submit" />
       </form>
     </BottomSheet>
   );

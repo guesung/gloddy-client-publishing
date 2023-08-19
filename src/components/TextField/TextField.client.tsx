@@ -73,8 +73,7 @@ function TextField<T extends React.ElementType = 'input'>(
                 'bg-white': isFocus,
                 'bg-sub': !isFocus,
                 'bg-warning-color': isError,
-                'bg-divider placeholder:text-sign-tertiary': readOnly,
-                'indent-8': !!leftIcon,
+                'bg-divider': readOnly,
               },
               className
             )}
@@ -119,7 +118,7 @@ interface LeftCaptionProps {
 
 function LeftCaption({ isError, text }: LeftCaptionProps) {
   if (!text) return <div />;
-  return <span className={cn({ 'text-warning': isError })}>{text}</span>;
+  return <span className={isError ? 'text-warning' : ''}>{text}</span>;
 }
 interface RightCaptionProps {
   isError?: boolean;
@@ -128,7 +127,7 @@ interface RightCaptionProps {
 
 function RightCaption({ isError, text }: RightCaptionProps) {
   if (!text) return <div />;
-  return <span className={cn({ 'text-warning': isError })}>{text}</span>;
+  return <span className={isError ? 'text-warning' : ''}>{text}</span>;
 }
 
 export default forwardRef(TextField) as <T extends React.ElementType = 'input'>(

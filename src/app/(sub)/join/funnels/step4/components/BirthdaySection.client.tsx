@@ -35,7 +35,11 @@ export default function BirthdaySection() {
         snap={400}
         onClose={closeModal}
         isRightButton
-        title={modalName === 'birthday' ? '생년월일' : '성별'}
+        text={
+          <p className="font-500 text-18 text-gray7">
+            {modalName === 'birthday' ? '생년월일' : '성별'}
+          </p>
+        }
         disableDrag
       >
         <DateSwipePicker

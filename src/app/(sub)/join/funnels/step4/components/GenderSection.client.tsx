@@ -25,7 +25,7 @@ export default function GenderSection() {
         snap={400}
         onClose={closeModal}
         isRightButton
-        title="성별"
+        text={<p className="font-500 text-18 text-gray7">성별</p>}
         disableDrag
       >
         <div className="relative h-full">
