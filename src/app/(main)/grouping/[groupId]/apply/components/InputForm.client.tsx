@@ -1,78 +1,50 @@
 'use client';
 
-import { Button, ButtonGroup } from '@/components/Button';
+import { BottomFixedButton } from '@/components/common/Button';
+import { TextArea } from '@/components/common/Input';
 import { Spacing } from '@/components/common/Spacing';
-import { Modal } from '@/components/Modal';
-import { TextFieldController } from '@/components/TextField';
-import Image from 'next/image';
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 type ApplyFormType = {
-  introduce: string;
+  introduction: string;
   reason: string;
 };
 
 export default function InputForm() {
-  const hookForm = useForm({
+  const { register, handleSubmit, formState } = useForm({
     mode: 'onChange',
     defaultValues: {
-      introduce: '',
+      introduction: '',
       reason: '',
     },
   });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const { register, handleSubmit, formState } = hookForm;
 
   const onSubmit = (data: ApplyFormType) => {
     console.log(data);
   };
 
   return (
-    <>
-      <Spacing size={8} />
-      <p className="pl-4 text-subtitle-3 text-sign-secondary">나는 이런 사람이에요!</p>
-      <Spacing size={4} />
-      <TextFieldController
-        as="textarea"
-        hookForm={hookForm}
-        register={register('introduce', { required: true })}
-        placeholder="내용을 입력해주세요."
-        maxCount={150}
+    <form className="text-14" onSubmit={handleSubmit(onSubmit)}>
+      <p>나는 이런 사람이에요!</p>
+      <Spacing size={10} />
+      <TextArea
+        placeholder="제목을 입력해주세요."
+        className="h-135 text-14"
+        register={register('introduction', { required: true })}
       />
-      <Spacing size={18} />
-      <p className="pl-4 text-subtitle-3 text-sign-secondary">모임에 함께 하고 싶은 이유</p>
-      <Spacing size={4} />
-      <TextFieldController
-        as="textarea"
-        hookForm={hookForm}
+      <Spacing size={25} />
+      <p>모임에 함께 하고 싶은 이유</p>
+      <Spacing size={10} />
+      <TextArea
+        placeholder="제목을 입력해주세요."
+        className="h-135 text-14"
         register={register('reason', { required: true })}
-        placeholder="내용을 입력해주세요."
-        maxCount={150}
       />
-      <ButtonGroup>
-        <Button onClick={() => setIsModalOpen(true)} disabled={!formState.isValid}>
-          지원하기
-        </Button>
-      </ButtonGroup>
-      <Modal
-        isOpen={isModalOpen}
-        onOkClick={handleSubmit(onSubmit)}
-        onCancelClick={() => setIsModalOpen(false)}
-        variant="success"
-      >
-        <Spacing size={32} />
-        <Image src="/icons/48/check.svg" alt="check" width={48} height={48} />
-        <Spacing size={12} />
-        <p>지원서를 제출하시겠습니까?</p>
-        <Spacing size={4} />
-        <p className="text-paragraph-1 text-sign-tertiary">
-          지원서를 제출하면
-          <br />
-          다시 수정할 수 없어요.
-        </p>
-        <Spacing size={16} />
-      </Modal>
-    </>
+      <BottomFixedButton
+        text="지원하기"
+        type="submit"
+        disabled={!formState.isValid || !formState.isDirty}
+      />
+    </form>
   );
 }
