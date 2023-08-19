@@ -57,8 +57,14 @@ function SegmentGroup<T extends ValueType>({
   children,
   ...props
 }: StrictPropsWithChildren<SegmentGroupProps<T>>) {
-  const validChildren = Children.toArray(children).filter((child) =>
-    isValidElement(child)
+  const validChildren = Children.toArray(children).filter(
+    (child) =>
+      isValidElement(child) &&
+      (
+        child.type as {
+          name: string;
+        }
+      ).name === 'Segment'
   ) as ReactElement[];
 
   if (validChildren.length === 0) {

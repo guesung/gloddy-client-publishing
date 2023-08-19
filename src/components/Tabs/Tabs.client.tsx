@@ -13,11 +13,23 @@ import {
 import type { StrictPropsWithChildren } from '@/types';
 
 export default function Tabs({ children }: StrictPropsWithChildren) {
-  const validListChildren = Children.toArray(children).filter((child) =>
-    isValidElement(child)
+  const validListChildren = Children.toArray(children).filter(
+    (child) =>
+      isValidElement(child) &&
+      (
+        child.type as {
+          name: string;
+        }
+      ).name === 'List'
   ) as ReactElement[];
-  const validPanelChildren = Children.toArray(children).filter((child) =>
-    isValidElement(child)
+  const validPanelChildren = Children.toArray(children).filter(
+    (child) =>
+      isValidElement(child) &&
+      (
+        child.type as {
+          name: string;
+        }
+      ).name === 'Panel'
   ) as ReactElement[];
 
   if (validListChildren.length !== 1) throw new Error('List 컴포넌트는 1개이어야 합니다.');
@@ -53,8 +65,14 @@ interface ListProps {
 }
 
 function List({ isStretch = true, children }: StrictPropsWithChildren<ListProps>) {
-  const validChildren = Children.toArray(children).filter((child) =>
-    isValidElement(child)
+  const validChildren = Children.toArray(children).filter(
+    (child) =>
+      isValidElement(child) &&
+      (
+        child.type as {
+          name: string;
+        }
+      ).name === 'Tab'
   ) as ReactElement[];
 
   if (validChildren.length === 0) {
@@ -103,7 +121,7 @@ function Panel({ value, children }: PropsWithChildren<Pick<TabProps, 'value'>>) 
   const searchParams = useSearchParams();
   const isActive = searchParams.get('tab') === value;
 
-  return isActive && children;
+  return <div className={isActive ? 'block' : 'hidden'}>{children}</div>;
 }
 
 Tabs.List = List;

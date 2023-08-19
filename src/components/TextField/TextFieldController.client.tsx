@@ -24,6 +24,14 @@ interface TextFieldControllerProps<T extends React.ElementType> extends TextFiel
   timer?: number;
 }
 
+function getErrorMessage(error: any, name: string) {
+  if (name.includes('.')) {
+    const [parentName, childName] = name.split('.');
+    return error[parentName]?.[childName]?.message;
+  }
+  return error[name]?.message;
+}
+
 export default function TextFieldController<T extends React.ElementType>({
   as,
   hookForm,
@@ -39,7 +47,7 @@ export default function TextFieldController<T extends React.ElementType>({
   const { formState, watch, resetField } = hookForm;
   const inputName = register.name;
 
-  const errorMessage = formState.errors[inputName]?.message;
+  const errorMessage = getErrorMessage(formState.errors, inputName);
   const isRightError =
     (maxCount ? watch(inputName).length > maxCount : false) && !formState.isValid;
   const isLeftError = (!!errorMessage || isRightError) && !formState.isValid;
@@ -47,10 +55,11 @@ export default function TextFieldController<T extends React.ElementType>({
 
   const rightInputIconName = isError ? 'warning' : watch(inputName).length > 0 ? 'backspace' : '';
 
+  console.log(formState.errors);
+  console.log(inputName);
+
   return (
     <TextField
-      ref={textFieldRef}
-      as={as || 'input'}
       register={register}
       leftCaption={(errorMessage as string) ?? leftCaption ?? ''}
       rightCaption={
@@ -69,9 +78,11 @@ export default function TextFieldController<T extends React.ElementType>({
           />
         )
       }
+      readOnly={readOnly}
       isLeftError={isLeftError}
       isRightError={isRightError}
-      readOnly={readOnly}
+      ref={textFieldRef}
+      as={as}
       {...props}
     />
   );

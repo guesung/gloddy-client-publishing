@@ -1,8 +1,6 @@
 import { Spacing } from '../common/Spacing';
-import { StrictPropsWithChildren } from '@/types';
 import cn from '@/utils/cn';
-
-import type { HtmlHTMLAttributes, PropsWithChildren } from 'react';
+import { HtmlHTMLAttributes } from 'react';
 
 interface HeaderProps extends HtmlHTMLAttributes<HTMLHeadElement> {
   leftNode?: React.ReactNode;
@@ -18,9 +16,8 @@ export default function Header({
   isSpacing = true,
   text,
   className,
-  children,
   ...props
-}: PropsWithChildren<HeaderProps>) {
+}: HeaderProps) {
   return (
     <>
       <header
@@ -30,24 +27,13 @@ export default function Header({
         )}
         {...props}
       >
-        {children}
+        <div className="flex items-center">
+          {leftNode ? leftNode : <div />}
+          {text && <div>{text}</div>}
+        </div>
+        {rightNode ? rightNode : <div />}
       </header>
       {isSpacing && <Spacing size={48} />}
     </>
   );
 }
-
-interface SideProps {
-  className?: string;
-}
-
-function Left({ children, className }: StrictPropsWithChildren<SideProps>) {
-  return <div className={className}>{children}</div>;
-}
-
-function Right({ children, className }: StrictPropsWithChildren<SideProps>) {
-  return <div className={className}>{children}</div>;
-}
-
-Header.Left = Left;
-Header.Right = Right;
