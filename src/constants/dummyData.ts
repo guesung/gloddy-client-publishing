@@ -1,3 +1,5 @@
+import { SchoolSearchResponse } from '@/apis/auth';
+
 import type {
   Article,
   Comment,
@@ -67,16 +69,14 @@ export const CREATE_GROUP_DUMMY_DATA: CreateGroupRequest = {
 };
 
 export const DUMMY_SIGN_UP_DATA = {
-  phoneNumber: '010-5728-9353',
-  imageUrl:
-    'https://gloddy.s3.ap-northeast-2.amazonaws.com/file/87d8b6c4-fcda-4588-8334-b3ca96e635a0.png',
+  phoneNumber: '010-5728-9310',
   schoolInfo: {
-    school: '가천대학교',
-    email: 'gueit214@gachon.ac.kr',
+    school: '경희대학교',
+    email: 'gueit201@gachon.ac.kr',
     certifiedStudent: true,
   },
-  nickname: 'string',
-  birth: '2023-07-22',
+  nickname: '박규리',
+  birth: '2000-02-14',
   gender: 'MAIL',
   personalities: ['OUTGOING'],
 };
@@ -237,5 +237,23 @@ export const DUMMY_COMMENTS_DATA: Comment[] = [
     content: '안녕하세요',
     date: '2021.09.01',
     writer: false,
+  },
+];
+
+export const DUMMY_SEARCH_RESULT_LIST = [
+  {
+    id: 1,
+    name: '경희대학교 서울캠퍼스',
+    address: '서울특별시 동대문구 경희대로 26',
+  },
+  {
+    id: 2,
+    name: '경희주유소',
+    address: '서울특별시 동대문구 경희대로 26',
+  },
+  {
+    id: 3,
+    name: '경희주유소',
+    address: '서울특별시 동대문구 경희대로 26',
   },
 ];
