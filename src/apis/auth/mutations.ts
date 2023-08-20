@@ -1,5 +1,4 @@
 import {
-  SignUpResponse,
   postEmail,
   postEmailVerify,
   postLogin,
@@ -8,9 +7,7 @@ import {
   postSMSVerify,
   postSignUp,
 } from '.';
-import { setTokenAtCookie } from '@/utils/auth/tokenController';
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 
 export const useLoginMutation = () => {
   return useMutation(postLogin);
@@ -53,16 +50,7 @@ export const useEmailVerifyMutation = () => {
 };
 
 export const useSignUpMutation = () => {
-  const router = useRouter();
   return useMutation(postSignUp, {
-    onSuccess: (data: SignUpResponse) => {
-      const {
-        userId,
-        token: { accessToken, refreshToken },
-      } = data;
-      setTokenAtCookie({ accessToken, refreshToken, userId });
-      router.push('grouping');
-    },
     onError: (error) => {
       // TODO : 회원가입 에러에 대한 처리
     },

@@ -6,6 +6,8 @@ import { useSignUpMutation } from '@/apis/auth';
 import { Button, ButtonGroup } from '@/components/Button';
 import { Tag } from '@/components/Tag';
 import { personalityList } from '@/constants/personalityList';
+import { setTokenAtCookie } from '@/utils/auth/tokenController';
+import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 
 import type { SignUpState } from '../../../type';
@@ -14,6 +16,7 @@ import type { GenderType } from '@/types';
 export default function InputForm() {
   const { handleSubmit, watch } = useJoinContext();
   const { mutate: mutateSignUp } = useSignUpMutation();
+  const router = useRouter();
 
   const onSubmit = async (data: SignUpState) => {
     const { verifyEmailNumber, verifyNumber, birth, personalityIdList, gender, ...rest } = data;
@@ -23,7 +26,20 @@ export default function InputForm() {
       personalities: personalityIdList.map((id) => personalityList[id].keywordInEnglish),
       gender: (gender === '남성' ? 'MAIL' : 'FEMAIL') as GenderType,
     };
-    mutateSignUp(signUpRequest);
+    mutateSignUp(signUpRequest, {
+      onSuccess: (data) => {
+        const {
+          token: { accessToken, refreshToken },
+          userId,
+        } = data;
+        setTokenAtCookie({
+          accessToken,
+          refreshToken,
+          userId,
+        });
+        router.push('/grouping');
+      },
+    });
   };
 
   return (
