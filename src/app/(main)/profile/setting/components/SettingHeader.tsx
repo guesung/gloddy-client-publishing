@@ -3,7 +3,7 @@ import { Header } from '@/components/Header';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function MatesHeader() {
+export default function SettingHeader() {
   return (
     <Header>
       <Header.Left className="px-4">
@@ -12,7 +12,7 @@ export default function MatesHeader() {
             <Image src="/icons/24/arrow_back.svg" width={24} height={24} alt="back" />
           </IconButton>
         </Link>
-        <p className="text-subtitle-1">모임 후기</p>
+        <p className="text-subtitle-1">환경설정</p>
       </Header.Left>
     </Header>
   );

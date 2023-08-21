@@ -2,13 +2,12 @@
 
 import { PraisesResponse, useGetPraises } from '@/apis/profile';
 import { Spacing } from '@/components/common/Spacing';
-import { Flex } from '@/components/Layout';
 import Image from 'next/image';
 
 interface Praise {
   id: number;
   title: string;
-  imagePath: 'happy' | 'kind' | 'active' | 'humor';
+  imagePath: 'calm' | 'kind' | 'active' | 'humor';
   dataPath: keyof PraisesResponse;
 }
 
@@ -16,7 +15,7 @@ const praises: Praise[] = [
   {
     id: 1,
     title: '차분해요.',
-    imagePath: 'happy',
+    imagePath: 'calm',
     dataPath: 'totalCalmCount',
   },
   {
@@ -41,14 +40,13 @@ const praises: Praise[] = [
 
 export default function ProfilePraiseDetail() {
   const { data: praisesData } = useGetPraises();
-  console.log(praisesData);
 
   return (
-    <Flex as="main" direction="column" className="gap-8 px-20 py-16">
+    <main className="flex flex-col gap-20 px-20">
       {praises.map((praise) => (
         <PraiseItem key={praise.id} praise={praise} count={praisesData[praise.dataPath]} />
       ))}
-    </Flex>
+    </main>
   );
 }
 
@@ -59,23 +57,22 @@ interface PraiseItemProps {
 
 function PraiseItem({ praise, count }: PraiseItemProps) {
   return (
-    <Flex align="center" justify="between" className="rounded-8 bg-sub py-8">
+    <div className="flex h-68 items-center justify-between rounded-8 bg-gray6 px-18 py-10">
       <div className="flex items-center">
         <Image
-          src={`/icons/48/${praise.imagePath}.svg`}
+          src={`/assets/${praise.imagePath}_selected.svg`}
           alt={praise.title}
-          width={48}
-          height={48}
+          width={50}
+          height={50}
         />
-        <Spacing size={12} direction="horizontal" />
-        <p className="text-subtitle">{praise.title}</p>
+        <Spacing size={5} direction="horizontal" />
+        <div>{praise.title}</div>
       </div>
-      <div className="text-secondary flex items-center">
-        <h4 className="text-h4">{count}</h4>
-        <Spacing size={8} direction="horizontal" />
-        <span className="text-subtitle">명</span>
-        <Spacing size={20} direction="horizontal" />
+      <div className="font-700 flex">
+        {count}
+        <Spacing size={5} direction="horizontal" />
+        <span>명</span>
       </div>
-    </Flex>
+    </div>
   );
 }
