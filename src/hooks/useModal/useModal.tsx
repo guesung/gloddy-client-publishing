@@ -1,11 +1,15 @@
 'use client';
-import ModalController, { ModalControlRef } from './ModalController';
-import { ModalContext } from './ModalProvider';
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useModalContext } from './ModalProvider';
+import { useDidMount } from '../common/useDidMount';
+import { useEffect, useMemo, useState } from 'react';
 
 import type { ModalElementType } from './type';
 
 let elementId = 1;
+
+interface ModalControllerProps {
+  modalElement: ModalElementType;
+}
 
 interface UseModalProps {
   exitOnUnmount?: boolean;
@@ -13,16 +17,10 @@ interface UseModalProps {
 }
 
 export default function useModal({ exitOnUnmount = true, delay }: UseModalProps = {}) {
-  const context = useContext(ModalContext);
-
-  if (context == null) {
-    throw new Error('useModal is only available within ModalProvider.');
-  }
-
+  const context = useModalContext();
   const { mount, unmount } = context;
-  const [id] = useState(() => String(elementId++));
 
-  const modalRef = useRef<ModalControlRef | null>(null);
+  const [id] = useState(() => String(elementId++));
 
   useEffect(() => {
     return () => {
@@ -35,17 +33,7 @@ export default function useModal({ exitOnUnmount = true, delay }: UseModalProps 
   return useMemo(
     () => ({
       open: (modalElement: ModalElementType) => {
-        mount(
-          id,
-          <ModalController
-            key={Date.now()}
-            ref={modalRef}
-            modalElement={modalElement}
-            onExit={() => {
-              unmount(id);
-            }}
-          />
-        );
+        mount(id, <ModalController modalElement={modalElement} />);
         if (delay) {
           setTimeout(() => {
             unmount(id);
@@ -53,12 +41,19 @@ export default function useModal({ exitOnUnmount = true, delay }: UseModalProps 
         }
       },
       close: () => {
-        modalRef.current?.close();
-      },
-      exit: () => {
         unmount(id);
       },
     }),
     [delay, id, mount, unmount]
   );
+}
+
+function ModalController({ modalElement: ModalElement }: ModalControllerProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useDidMount(() => {
+    requestAnimationFrame(() => setIsOpen(true));
+  });
+
+  return <ModalElement isOpen={isOpen} />;
 }
