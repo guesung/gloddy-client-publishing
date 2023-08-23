@@ -1,9 +1,7 @@
-'use client';
 import { useJoinContext } from '../../../components/JoinContext.client';
 import { useEmailVerifyMutation } from '@/apis/auth';
 import { Button, ButtonGroup } from '@/components/Button';
-import { BottomSheet } from '@/components/Modal';
-import { ModalProps } from '@/components/Modal';
+import { BottomSheet, type ModalProps } from '@/components/Modal';
 import { TextFieldController } from '@/components/TextField';
 import { regexr } from '@/constants/regexr';
 import { useTimer } from '@/hooks/useTimer';
@@ -12,13 +10,13 @@ import { memo } from 'react';
 import type { SignUpState } from '../../../type';
 
 interface VerifyBottomSheetProps extends ModalProps {
-  close: () => void;
+  onClose: () => void;
   hookForm: ReturnType<typeof useJoinContext>;
   onOkClick: () => void;
 }
 
 export default memo(function VerifyBottomSheet({
-  close,
+  onClose,
   hookForm,
   onOkClick,
 }: VerifyBottomSheetProps) {
@@ -61,7 +59,7 @@ export default memo(function VerifyBottomSheet({
   };
 
   return (
-    <BottomSheet onClose={close} snap={300} isRightButton title="인증번호 입력">
+    <BottomSheet onClose={onClose} snap={300} isRightButton title="인증번호 입력">
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="my-20">
           <TextFieldController
