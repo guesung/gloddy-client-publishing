@@ -1,14 +1,17 @@
+'use client';
+
 import { Button, ButtonGroup } from '@/components/Button';
 import { DateSwipePicker } from '@/components/common/SwipePicker';
 import { BottomSheet } from '@/components/Modal';
 
+import type { SignUpState } from '../../../type';
 import type { DateType } from '@/types';
 import type { UseFormSetValue } from 'react-hook-form';
 
 interface BirthdayBottomSheetProps {
   onClose: () => void;
   dateValue: DateType;
-  setValue: UseFormSetValue<any>;
+  setValue: UseFormSetValue<SignUpState>;
   isBirthDayEntered: boolean;
 }
 export default function BirthdayBottomSheet({
