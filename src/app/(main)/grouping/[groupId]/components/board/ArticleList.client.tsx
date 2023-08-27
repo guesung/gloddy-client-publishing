@@ -15,9 +15,11 @@ export default function ArticleList() {
 
   const { data: articlesData } = useGetArticles(groupId);
 
+  if (!articlesData.length) return <p>게시글이 없습니다.</p>;
+
   return (
     <Flex direction="column">
-      {articlesData.map((article) => (
+      {DUMMY_ARTICLES_DATA.map((article) => (
         <>
           <ArticleItem
             key={article.articleId}

@@ -52,11 +52,6 @@ export interface CreateGroupRequest extends Omit<Grouping, 'groupId' | 'memberCo
   imageUrl: string;
 }
 
-export interface ArticleRequest {
-  groupId: number;
-  article: Pick<Article, 'content' | 'notice' | 'images'>;
-}
-
 export interface ArticlesResponse {
   totalCount: number;
   currentCount: number;

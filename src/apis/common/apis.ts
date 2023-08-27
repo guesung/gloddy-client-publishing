@@ -1,17 +1,5 @@
 import publicApi from '../config/publicApi';
 
-import type { FilesRequest, FilesResponse } from './type';
+import type { FilesResponse } from './type';
 
-export const postFiles = ({ fileList }: FilesRequest) => {
-  const formData = new FormData();
-
-  fileList.forEach((file) => {
-    formData.append('fileList', file);
-  });
-
-  return publicApi.post<FilesResponse>('/files', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
-};
+export const postFiles = (fileList: FormData) => publicApi.post<FilesResponse>('/files', fileList);

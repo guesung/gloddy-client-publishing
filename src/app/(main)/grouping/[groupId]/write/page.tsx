@@ -1,11 +1,14 @@
-import InputForm from './components/InputForm.client';
-import WriteHeader from './components/WriteHeader.client';
+import InputForm from './components/InputForm';
+import WriteHeader from './components/WriteHeader';
+import { WriteContextProvider } from './WriteContext';
 
 export default function WritePage() {
   return (
-    <main>
-      <WriteHeader />
-      <InputForm />
+    <main className="h-full px-20">
+      <WriteContextProvider>
+        <WriteHeader />
+        <InputForm />
+      </WriteContextProvider>
     </main>
   );
 }
