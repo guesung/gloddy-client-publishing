@@ -15,6 +15,7 @@ export default function QueryProvider({ children }: StrictPropsWithChildren) {
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       refetchOnReconnect: false,
+      suspense: true,
     },
   });
 

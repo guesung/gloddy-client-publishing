@@ -1,7 +1,6 @@
 import {
   getArticle,
   getArticles,
-  getComments,
   getGroupDetail,
   getGroupMembers,
   getGroups,
@@ -52,7 +51,7 @@ export const useGetArticle = (groupId: number, articleId: number) => {
 
 export const useGetComments = (groupId: number, articleId: number) => {
   return useSuspenseQuery(Keys.getComments(groupId, articleId), () =>
-    getComments(groupId, articleId)
+    getArticle(groupId, articleId)
   );
 };
 

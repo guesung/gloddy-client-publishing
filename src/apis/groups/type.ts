@@ -65,12 +65,6 @@ export interface ArticlesResponse {
   contents: Article[];
 }
 
-export interface CommentRequest {
-  groupId: number;
-  articleId: number;
-  content: string;
-}
-
 export interface CommentsReponse {
   comments: Comment[];
 }

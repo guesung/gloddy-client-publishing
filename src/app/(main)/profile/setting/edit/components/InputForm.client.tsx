@@ -1,8 +1,8 @@
 'use client';
 import { useEditContext } from './EditProvider.client';
 import { useGetProfile, usePatchProfile } from '@/apis/profile';
+import { Avatar } from '@/components/Avatar';
 import { Button, ButtonGroup } from '@/components/Button';
-import ImageFrame from '@/components/common/ImageFrame';
 import { Spacing } from '@/components/common/Spacing';
 import { Flex } from '@/components/Layout';
 import BirthdayBottomSheet from '@/components/Modal/BirthdayBottomSheet.client';
@@ -12,19 +12,31 @@ import { TextField, TextFieldController } from '@/components/TextField';
 import { personalityList } from '@/constants/personalityList';
 import { useDidMount } from '@/hooks/common/useDidMount';
 import useBottomSheet from '@/hooks/useBottomSheet';
+import { useFileUpload } from '@/hooks/useFileUpload';
 import { formatDateDTO } from '@/utils/formatDateDTO';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useController } from 'react-hook-form';
 
 import type { ProfileEditState } from '../type';
 
 export default function InputForm() {
   const hookForm = useEditContext();
+  const { control } = hookForm;
   const {
-    data: { imageUrl, introduce, name, personalities, gender },
+    data: { imageUrl, introduce, name, personalities, gender, birth },
   } = useGetProfile();
 
-  const { watch, handleSubmit, setValue, register, formState, getValues } = hookForm;
+  const {
+    field: { value, onChange },
+  } = useController({
+    name: 'imageUrl',
+    control,
+  });
+
+  const { handleFileUploadClick } = useFileUpload((files) => onChange(files[0]));
+
+  const { watch, handleSubmit, setValue, register, formState } = hookForm;
   const {
     isOpen,
     open: openBirthdayBottomSheet,
@@ -38,6 +50,7 @@ export default function InputForm() {
     setValue('name', name || '');
     setValue('introduce', introduce || '');
     setValue('gender', gender || 'MAIL');
+    setValue('birth', birth || {});
   });
 
   const onSubmit = (data: ProfileEditState) => {
@@ -53,13 +66,21 @@ export default function InputForm() {
     mutate(profileData);
   };
 
-  const birth = watch('birth');
   const isBirthDayEntered = !!birth.year && !!birth.month && !!birth.date;
   const isAllTyped = formState.isValid && isBirthDayEntered && !!watch('gender');
 
   return (
     <Flex as="form" direction="column" onSubmit={handleSubmit(onSubmit)} className="px-20">
-      <ImageFrame setImageUrl={(imageUrl: string) => setValue('imageUrl', imageUrl)} />
+      <Spacing size={20} />
+      <Flex justify="center">
+        <Avatar
+          imageUrl={imageUrl}
+          size="large"
+          iconVariant="education"
+          onClick={handleFileUploadClick}
+        />
+      </Flex>
+      <Spacing size={16} />
 
       <p className="text-subtitle-3">닉네임</p>
       <Spacing size={4} />
