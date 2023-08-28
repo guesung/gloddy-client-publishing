@@ -12,8 +12,8 @@ import Image from 'next/image';
 import { Fragment } from 'react';
 
 export default function CommentList() {
-  const { articleId, groupId } = useNumberParams<['articleId', 'groupId']>();
-  const { data: commentsData } = useGetComments(groupId, articleId);
+  const { boardId, groupId } = useNumberParams<['boardId', 'groupId']>();
+  const { data: commentsData } = useGetComments(groupId, boardId);
 
   if (commentsData.comments.length === 0)
     return (
@@ -28,7 +28,7 @@ export default function CommentList() {
     <div>
       {commentsData.comments.map((comment) => (
         <Fragment key={comment.commentId}>
-          <CommentItem comment={comment} groupId={groupId} articleId={articleId} />
+          <CommentItem comment={comment} groupId={groupId} boardId={boardId} />
           <Divider thickness="thin" />
         </Fragment>
       ))}
@@ -38,14 +38,14 @@ export default function CommentList() {
 interface CommentItemProps {
   comment: Comment;
   groupId: number;
-  articleId: number;
+  boardId: number;
 }
 
-function CommentItem({ comment, articleId, groupId }: CommentItemProps) {
+function CommentItem({ comment, boardId, groupId }: CommentItemProps) {
   const { name, date, content, userImageUrl, writer, commentId } = comment;
 
   const { open, close } = useModal();
-  const { mutate: mutateDeleteComment } = useDeleteComment(groupId, articleId, commentId);
+  const { mutate: mutateDeleteComment } = useDeleteComment(groupId, boardId, commentId);
 
   const handleDeleteClick = () => {
     mutateDeleteComment();

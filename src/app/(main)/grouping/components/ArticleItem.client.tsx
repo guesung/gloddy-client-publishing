@@ -15,14 +15,14 @@ interface ArticleItemProps {
   article: Article;
   isCaptain: boolean;
   groupId: number;
-  isArticleDetailPage?: boolean;
+  isBoardDetail?: boolean;
 }
 
 export default function ArticleItem({
   article,
   isCaptain,
   groupId,
-  isArticleDetailPage = false,
+  isBoardDetail = false,
 }: ArticleItemProps) {
   const {
     userImageUrl,
@@ -51,7 +51,7 @@ export default function ArticleItem({
         <Avatar
           imageUrl={userImageUrl ?? '/images/dummy_avatar.png'}
           size="small"
-          isCertified={isCertifiedStudent}
+          iconVariant={isCertifiedStudent ? 'education' : 'none'}
         />
         <div className="grow">
           <Flex align="center">
@@ -65,7 +65,7 @@ export default function ArticleItem({
           <p className="text-caption text-sign-tertiary">{date}</p>
         </div>
         {/* TODO: 내 게시글 여부 api 추가 시 변경 */}
-        {isCaptain && !isArticleDetailPage && (
+        {isCaptain && !isBoardDetail && (
           <Image
             src="/icons/24/more_secondary.svg"
             alt="more"
@@ -94,14 +94,14 @@ export default function ArticleItem({
           ))}
         </Flex>
       )}
-      {!isArticleDetailPage && (
+      {!isBoardDetail && (
         <>
           <Spacing size={16} />
           <Button
             variant="solid-secondary"
             as="a"
             href={`
-                ${pathname}/articles/${articleId}
+                ${pathname}/board/${articleId}
               `}
           >
             댓글 {commentCount}개

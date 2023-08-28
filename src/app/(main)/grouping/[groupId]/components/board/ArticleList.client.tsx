@@ -5,7 +5,6 @@ import ArticleItem from '@/app/(main)/grouping/components/ArticleItem.client';
 import { Divider } from '@/components/Divider';
 import { Flex } from '@/components/Layout';
 import { useNumberParams } from '@/hooks/useNumberParams';
-import { Fragment } from 'react';
 
 export default function ArticleList() {
   const { groupId } = useNumberParams<['groupId']>();
@@ -17,7 +16,7 @@ export default function ArticleList() {
   return (
     <Flex direction="column">
       {articlesData.map((article) => (
-        <Fragment key={article.articleId}>
+        <>
           <ArticleItem
             key={article.articleId}
             article={article}
@@ -25,7 +24,7 @@ export default function ArticleList() {
             groupId={groupId}
           />
           <Divider />
-        </Fragment>
+        </>
       ))}
     </Flex>
   );
