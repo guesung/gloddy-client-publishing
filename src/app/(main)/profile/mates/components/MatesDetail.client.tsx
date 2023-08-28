@@ -1,13 +1,12 @@
 'use client';
 
-import MoreBottomSheet from './MoreBottomSheet.client';
+import MatesModal from './MatesModal.client';
 import { formatRelativeDate } from '../util';
 import { type Mate, useGetMates } from '@/apis/profile';
 import { Avatar } from '@/components/Avatar';
 import { Spacing } from '@/components/common/Spacing';
 import { Flex } from '@/components/Layout';
 import { DUMMY_PROFILE_MATES_DATA } from '@/constants/dummyData';
-import useBottomSheet from '@/hooks/useBottomSheet';
 import { useModal } from '@/hooks/useModal';
 import Image from 'next/image';
 
@@ -31,15 +30,14 @@ interface MatesProps {
 
 function Mates({ mateData }: MatesProps) {
   const { mateImageUrl, mateName, school, createdAt, selectionReason } = mateData;
-  const { isOpen, open, close } = useBottomSheet();
+  const { open, close } = useModal();
 
   const handleMateDelete = () => {
-    open();
+    open(<MatesModal mateData={mateData} close={close} />);
   };
 
   return (
     <Flex direction="column" className="border-1 border-divider px-24">
-      {isOpen && <MoreBottomSheet onCloseBottomSheet={close} mateData={mateData} />}
       <Spacing size={16} />
       <Flex>
         <Avatar imageUrl={mateImageUrl} size="small" />
@@ -47,7 +45,7 @@ function Mates({ mateData }: MatesProps) {
         <Flex direction="column">
           <p className="text-paragraph-2 text-sign-secondary">{mateName}</p>
           <p className="text-caption text-sign-tertiary">
-            {school ?? formatRelativeDate(createdAt)}
+            {school}|{formatRelativeDate(createdAt)}
           </p>
         </Flex>
         <Image

@@ -14,21 +14,24 @@ interface AvatarProps {
    */
   size?: 'small' | 'medium' | 'large';
   /**
-   * 우측 상단 아이콘에 대한 변수를 지정합니다. (기본값: none)
+   * 인증된 사용자면 우측 상단에 인증 아이콘이 표시됩니다.
    */
-  iconVariant?: 'none' | 'add' | 'draft_orders' | 'education';
+  isCertified?: boolean;
+  /**
+   * 아바타를 클릭했을 때 실행할 함수를 지정합니다.
+   */
   onClick?: () => void;
 }
 export default function Avatar({
   imageUrl,
+  isCertified,
   onClick,
   size = 'medium',
   children,
-  iconVariant = 'none',
 }: PropsWithChildren<AvatarProps>) {
   return (
     <span
-      className={cn('relative flex flex-col items-center gap-1', {
+      className={cn('flex flex-col items-center gap-1', {
         'w-40': size === 'small',
         'w-56': size === 'medium',
         'w-96': size === 'large',
@@ -41,10 +44,10 @@ export default function Avatar({
           className="cursor-pointer rounded-full bg-sub object-cover"
           fill
         />
-        {iconVariant !== 'none' && (
+        {isCertified && (
           <Image
-            src={`/icons/32/${iconVariant}.svg`}
-            alt={iconVariant}
+            src="/icons/24/education.svg"
+            alt="education"
             width={size === 'large' ? 32 : 24}
             height={size === 'large' ? 32 : 24}
             className={cn('absolute', {
