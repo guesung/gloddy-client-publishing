@@ -23,10 +23,6 @@ export interface Article {
   commentCount: number;
   isCertifiedStudent: boolean;
   isCaptain: boolean;
-  isWriter: boolean;
-  isWriterCaptain: boolean;
-  isWriterCertifiedStudent: boolean;
-  writerReliabilityLevel: string;
   images: string[];
 }
 
