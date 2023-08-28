@@ -13,7 +13,7 @@ module.exports = {
         slideUp: 'slideUp 0.5s ease-in-out',
       },
       zIndex: {
-        modal: '10000000',
+        modal: '100',
       },
     },
     fontSize: fontSizes,
