@@ -19,7 +19,7 @@ export interface ProfileRequest {
   birth: string;
   gender: 'MAIL' | 'FEMAIL';
   introduce: string;
-  personalities: Array<PersonalityType['keywordInEnglish']>;
+  personalities: string[];
 }
 
 export interface PraisesResponse {
