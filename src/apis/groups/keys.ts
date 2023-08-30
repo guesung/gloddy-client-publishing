@@ -6,5 +6,4 @@ export const Keys = Object.freeze({
   getComments: (groupId: number, articleId: number) => ['getComments', groupId, articleId],
   getGroupMembers: (groupId: number) => ['getGroupMembers', groupId],
   getNotice: (groupId: number) => ['getNotice', groupId],
-  getApplies: (groupId: number) => ['getApplies', groupId],
 });

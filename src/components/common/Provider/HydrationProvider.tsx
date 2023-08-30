@@ -4,18 +4,18 @@ import { cache } from 'react';
 import type { StrictPropsWithChildren } from '@/types';
 import type { QueryFunction, QueryKey } from '@tanstack/react-query';
 
-interface HydrationProviderProps {
+type HydrationProviderProps = {
   queryKey: QueryKey;
   queryFn: QueryFunction;
   isInfiniteQuery?: boolean;
-}
+};
 
-export default async function HydrationProvider({
+export const HydrationProvider = async ({
   children,
   queryKey,
   queryFn,
   isInfiniteQuery = false,
-}: StrictPropsWithChildren<HydrationProviderProps>) {
+}: StrictPropsWithChildren<HydrationProviderProps>) => {
   const getQueryClient = cache(() => new QueryClient());
 
   const queryClient = getQueryClient();
@@ -26,4 +26,4 @@ export default async function HydrationProvider({
   const dehydratedState = dehydrate(queryClient);
 
   return <Hydrate state={dehydratedState}>{children}</Hydrate>;
-}
+};

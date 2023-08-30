@@ -1,7 +1,7 @@
 import GroupingDetail from './components/GroupingDetail.client';
 import { Keys, getGroupDetail } from '@/apis/groups';
 import { RejectedFallback } from '@/components/common/ErrorBoundary';
-import { HydrationProvider } from '@/components/common/Provider';
+import { HydrationProvider } from '@/components/common/Provider/HydrationProvider';
 import { QueryAsyncBoundary } from '@suspensive/react-query';
 import { redirect } from 'next/navigation';
 
