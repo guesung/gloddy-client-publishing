@@ -2,7 +2,6 @@ import {
   deleteArticle,
   deleteComment,
   deleteScrap,
-  patchApply,
   postApply,
   postArticle,
   postComment,
@@ -12,11 +11,8 @@ import {
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
-import type { ApplyStatusType } from '@/types';
-
 export const usePostCreateGroup = () => {
   const router = useRouter();
-
   return useMutation(postCreateGroup, {
     onSuccess: (data) => {
       router.push(`/grouping/${data.groupId}`);
@@ -74,16 +70,6 @@ export const usePostApply = () => {
   return useMutation(postApply, {
     onSuccess: () => {
       router.push('/meeting?tab=waiting');
-    },
-  });
-};
-
-export const usePatchApply = (groupId: number, applyId: number, status: ApplyStatusType) => {
-  const queryClient = useQueryClient();
-
-  return useMutation(() => patchApply(groupId, applyId, status), {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['getApplies', groupId]);
     },
   });
 };
