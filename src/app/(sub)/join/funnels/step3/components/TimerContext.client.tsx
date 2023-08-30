@@ -9,14 +9,14 @@ interface TimerContextProps extends ReturnType<typeof useTimer> {}
 
 const TimerContext = createContext<TimerContextProps | null>(null);
 
-export default function TimerProvider({ children }: StrictPropsWithChildren) {
-  const timer = useTimer({
+export default function TimerContextProvider({ children }: StrictPropsWithChildren) {
+  const timerValue = useTimer({
     initialTime: 180,
     timerType: 'DECREMENTAL',
     endTime: 0,
   });
 
-  return <TimerContext.Provider value={timer}>{children}</TimerContext.Provider>;
+  return <TimerContext.Provider value={timerValue}>{children}</TimerContext.Provider>;
 }
 
 const useTimerContext = () => {
@@ -24,5 +24,4 @@ const useTimerContext = () => {
   if (!ctx) throw new Error('Cannot find Context. It should be wrapped within ContextProvider.');
   return ctx;
 };
-
 export { useTimerContext };
