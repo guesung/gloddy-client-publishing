@@ -3,5 +3,9 @@
 import InputForm from './components/InputForm.client';
 
 export default function Step4Component() {
-  return <InputForm />;
+  return (
+    <main>
+      <InputForm />
+    </main>
+  );
 }
