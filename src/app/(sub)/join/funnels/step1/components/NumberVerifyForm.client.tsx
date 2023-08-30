@@ -1,7 +1,7 @@
 'use client';
 import { useJoinContext } from '../../../components/JoinContext.client';
 import { useFunnelContext } from '../../JoinFunnel';
-import { formatWithoutHyphen } from '../util';
+import { formatWithoutHyphen, formatWithoutSpace } from '../util';
 import { LoginResponse, useLoginMutation, useSMSVerifyMutation } from '@/apis/auth';
 import { Button, ButtonGroup } from '@/components/Button';
 import { TextFieldController } from '@/components/TextField';
@@ -30,7 +30,7 @@ export default function NumberVerifyForm() {
       {
         onSuccess: () => {
           mutateLogin(
-            { phoneNumber: data.phoneNumber },
+            { phoneNumber: formatWithoutSpace(data.phoneNumber) },
             {
               onSuccess: (response: LoginResponse) => {
                 if (response.existUser) {
