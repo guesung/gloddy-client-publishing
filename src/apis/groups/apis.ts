@@ -2,8 +2,6 @@ import privateApi from '../config/privateApi';
 
 import type {
   AppliesResponse,
-  ApplyRequest,
-  ApplyResponse,
   Article,
   ArticleRequest,
   ArticlesResponse,
@@ -67,16 +65,4 @@ export const getNotice = (groupId: number) => {
 
 export const getApplies = (groupId: number) => {
   return privateApi.get<AppliesResponse>(`/groups/${groupId}/applies`);
-};
-
-export const postApply = ({ groupId, apply }: ApplyRequest) => {
-  return privateApi.post<ApplyResponse>(`/groups/${groupId}/apply`, apply);
-};
-
-export const postScrap = (groupId: number) => {
-  return privateApi.post(`/groups/${groupId}/scrap`);
-};
-
-export const deleteScrap = (groupId: number) => {
-  return privateApi.delete(`/groups/${groupId}/scrap`);
 };
