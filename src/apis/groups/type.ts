@@ -121,14 +121,7 @@ export interface Apply {
   reason: string;
 }
 
-export interface ApplyRequest {
-  groupId: number;
-  apply: Pick<Apply, 'introduce' | 'reason'>;
-}
-
-export interface ApplyResponse {
-  applyId: number;
-}
+export interface ApplyRequest extends Pick<Apply, 'introduce' | 'reason'> {}
 
 export interface AppliesResponse {
   totalCount: number;
