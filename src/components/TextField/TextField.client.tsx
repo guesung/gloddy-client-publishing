@@ -64,7 +64,11 @@ function TextField<T extends React.ElementType = 'input'>(
             <Spacing size={2} />
           </>
         )}
-        <div className="relative flex w-full items-center justify-around">
+        <div
+          className={cn('relative flex w-full items-center justify-around', {
+            'h-142': Element === 'textarea',
+          })}
+        >
           {leftIcon}
           <Element
             className={cn(
@@ -75,7 +79,6 @@ function TextField<T extends React.ElementType = 'input'>(
                 'bg-warning-color': isError,
                 'bg-divider placeholder:text-sign-tertiary': readOnly,
                 'indent-8': !!leftIcon,
-                'h-142': Element === 'textarea',
               }
             )}
             onFocusCapture={() => !readOnly && setIsFocus(true)}
