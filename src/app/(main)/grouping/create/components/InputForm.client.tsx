@@ -55,7 +55,7 @@ export default function InputForm() {
             placeLongitude: '127.001285',
             content: data.content,
             maxUser: data.maxUser,
-            meetDate: '2023-11-20',
+            meetDate: format(new Date(data.meetDate), 'yyyy-MM-dd'),
             startTime: '14:00',
             endTime: '16:00',
             // startTime:
