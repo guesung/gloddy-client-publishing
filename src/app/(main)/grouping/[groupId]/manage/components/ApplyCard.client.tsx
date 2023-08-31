@@ -30,28 +30,14 @@ export default function ApplyCard({ apply, groupId }: ApplyCardProps) {
 
   const router = useRouter();
   const { open, close } = useModal();
-  const { mutate: mutatePatchApply } = usePatchApply(groupId);
+  const { mutate: mutateApproveApply } = usePatchApply(groupId, applyId, 'APPROVE');
+  const { mutate: mutateRefuseApply } = usePatchApply(groupId, applyId, 'REFUSE');
 
   const handleApproveClick = () => {
-    mutatePatchApply(
-      { groupId, applyId, status: 'APPROVE' },
-      {
-        onSuccess: () => {
-          close();
-        },
-      }
-    );
+    mutateApproveApply();
   };
-
   const handleRefuseClick = () => {
-    mutatePatchApply(
-      { groupId, applyId, status: 'REFUSE' },
-      {
-        onSuccess: () => {
-          close();
-        },
-      }
-    );
+    mutateRefuseApply();
   };
 
   return (

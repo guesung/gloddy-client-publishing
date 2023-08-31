@@ -31,18 +31,11 @@ export default function InputForm() {
   const hookForm = useCreateGroupContext();
   const { watch, setValue, getFieldState, register, handleSubmit, formState } = hookForm;
 
-  const { handleFileUploadClick } = useFileUpload((files: File[]) => {
-    mutatePostFiles(
-      { fileList: files },
-      {
-        onSuccess: ({ fileUrlList }) => {
-          setValue('imageUrl', fileUrlList[0]);
-        },
-      }
-    );
-  });
+  const { handleFileUploadClick } = useFileUpload((files: File[]) =>
+    setValue('imageFile', files[0])
+  );
 
-  const { mutate: mutatePostFiles } = usePostFiles();
+  const { mutateAsync: mutateAsyncPostFiles } = usePostFiles();
   const { mutate: mutateCreateGroup } = usePostCreateGroup();
 
   const isMeetingDateDirty = getFieldState('meetDate').isDirty || getFieldState('time').isDirty;
@@ -53,7 +46,8 @@ export default function InputForm() {
     openCreateModal(
       <CreateModal
         onCancelClick={closeCreateModal}
-        onOkClick={() => {
+        onOkClick={async () => {
+          const { fileUrlList } = await mutateAsyncPostFiles({ fileList: [data.imageFile] });
           mutateCreateGroup({
             placeName: '스타벅스 동대문공원점',
             placeAddress: '서울 중구 장충단로 229',
@@ -61,7 +55,7 @@ export default function InputForm() {
             placeLongitude: '127.001285',
             content: data.content,
             maxUser: data.maxUser,
-            meetDate: '2023-11-20',
+            meetDate: format(new Date(data.meetDate), 'yyyy-MM-dd'),
             startTime: '14:00',
             endTime: '16:00',
             // startTime:
@@ -69,7 +63,7 @@ export default function InputForm() {
             // endTime: data.time.toHour.padStart(2, '0') + ':' + data.time.toMin.padStart(2, '0'),
             title: data.title,
 
-            imageUrl: data.imageUrl,
+            imageUrl: fileUrlList[0],
           });
 
           closeCreateModal();
@@ -86,8 +80,13 @@ export default function InputForm() {
         className="relative mx-20 h-180 overflow-hidden rounded-8 bg-sub"
         onClick={handleFileUploadClick}
       >
-        {!!watch('imageUrl') ? (
-          <Image src={watch('imageUrl')} alt="group_image" className="object-cover" fill />
+        {!!watch('imageFile') ? (
+          <Image
+            src={makeFileToBlob(watch('imageFile'))}
+            alt="group_image"
+            className="object-cover"
+            fill
+          />
         ) : (
           <Image src="/icons/48/add_photo_white.svg" alt="add_photo" width={48} height={48} />
         )}
