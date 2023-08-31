@@ -1,5 +1,6 @@
 'use client';
 
+import { Spacing } from '../common/Spacing';
 import cn from '@/utils/cn';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -45,35 +46,28 @@ export default function Footer({ page, isSpacing = true }: FooterProps) {
           <Link
             href={'/' + tab.name}
             key={tab.id}
-            className="flex w-full flex-col items-center text-center text-caption"
+            className="flex h-50 w-full flex-col items-center"
           >
-            <div
-              className={cn('text-10', {
+            <Image
+              src={`/icons/32/footer/${tab.name}${
+                tab.name === page ? '_selected' : '_default'
+              }.svg`}
+              alt={tab.title}
+              width={32}
+              height={32}
+            />
+            <p
+              className={cn('text-caption', {
                 'text-sign-brand': isSelected(tab),
                 'text-sign-tertiary': !isSelected(tab),
               })}
             >
-              <Image
-                src={`/icons/32/footer/${tab.name}${
-                  tab.name === page ? '_selected' : '_default'
-                }.png`}
-                alt={tab.title}
-                width={32}
-                height={32}
-              />
-              <p
-                className={cn('text-10', {
-                  'text-sign-brand': isSelected(tab),
-                  'text-sign-tertiary': !isSelected(tab),
-                })}
-              >
-                {tab.title}
-              </p>
-            </div>
+              {tab.title}
+            </p>
           </Link>
         ))}
       </footer>
-      {isSpacing && <div className="h-70" />}
+      {isSpacing && <Spacing size={70} />}
     </>
   );
 }
