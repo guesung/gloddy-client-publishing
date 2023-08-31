@@ -29,7 +29,7 @@ export default function GroupingDetail({ groupId }: GroupingDetailProps) {
       <Tabs>
         <Tabs.List>
           <Tabs.Tab value="detail" text="상세정보" />
-          <Tabs.Tab value="articles" text="게시판" disabled={!myGroup} />
+          <Tabs.Tab value="articles" text="게시판" />
         </Tabs.List>
         <Tabs.Panel value="detail">
           <div className="px-20">
@@ -44,11 +44,13 @@ export default function GroupingDetail({ groupId }: GroupingDetailProps) {
         <Tabs.Panel value="articles">
           <NoticeList />
           <ArticleList />
-          <BottomFixedDiv className="flex justify-end">
-            <Link href={`/grouping/${groupId}/write`}>
-              <FloatAddButton />
-            </Link>
-          </BottomFixedDiv>
+          {myGroup && (
+            <BottomFixedDiv className="flex justify-end">
+              <Link href={`/grouping/${groupId}/write`}>
+                <FloatAddButton />
+              </Link>
+            </BottomFixedDiv>
+          )}
         </Tabs.Panel>
       </Tabs>
 
