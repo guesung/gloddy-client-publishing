@@ -1,4 +1,4 @@
-import type { ReliabilityType } from '@/types';
+import type { ApplyStatusType, ReliabilityType } from '@/types';
 
 export interface Grouping {
   groupId: number;
@@ -25,8 +25,10 @@ export interface Article {
   content: string;
   notice: boolean;
   commentCount: number;
-  isCertifiedStudent: boolean;
-  isCaptain: boolean;
+  isWriter: boolean;
+  isWriterCertifiedStudent: boolean;
+  writerReliabilityLevel: ReliabilityType;
+  isWriterCaptain: boolean;
   images: string[];
 }
 
@@ -36,7 +38,10 @@ export interface Comment {
   name: string;
   date: string;
   content: string;
-  writer: boolean;
+  isWriter: boolean;
+  isWriterCaptain: boolean;
+  isWriterCertifiedStudent: boolean;
+  writerReliabilityLevel: ReliabilityType;
 }
 
 export interface GroupsResponse {
@@ -48,8 +53,10 @@ export interface GroupsResponse {
 }
 
 export interface GroupDetailResponse extends Grouping {
-  myGroup: true;
-  isCaptain: true;
+  myGroup: boolean;
+  isCaptain: boolean;
+  isScraped: boolean;
+  isApplyWaited: boolean;
 }
 
 export interface CreateGroupRequest {
@@ -125,6 +132,12 @@ export interface Apply {
 export interface ApplyRequest {
   groupId: number;
   apply: Pick<Apply, 'introduce' | 'reason'>;
+}
+
+export interface ApplyPatchRequest {
+  groupId: number;
+  applyId: number;
+  status: ApplyStatusType;
 }
 
 export interface ApplyResponse {

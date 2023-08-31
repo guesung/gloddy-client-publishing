@@ -46,8 +46,12 @@ export const useGetArticles = (groupId: number) => {
 };
 
 export const useGetArticle = (groupId: number, articleId: number) => {
-  return useSuspenseQuery(Keys.getArticle(groupId, articleId), () =>
-    getArticle(groupId, articleId)
+  return useSuspenseQuery(
+    Keys.getArticle(groupId, articleId),
+    () => getArticle(groupId, articleId),
+    {
+      cacheTime: 0,
+    }
   );
 };
 

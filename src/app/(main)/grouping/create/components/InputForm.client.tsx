@@ -31,12 +31,19 @@ export default function InputForm() {
   const hookForm = useCreateGroupContext();
   const { watch, setValue, getFieldState, register, handleSubmit, formState } = hookForm;
 
-  const { handleFileUploadClick } = useFileUpload((files: File[]) =>
-    setValue('imageFile', files[0])
-  );
-
-  const { mutateAsync: mutateAsyncPostFiles } = usePostFiles();
+  const { mutate: mutatePostFiles } = usePostFiles();
   const { mutate: mutateCreateGroup } = usePostCreateGroup();
+
+  const { handleFileUploadClick } = useFileUpload((files: File[]) => {
+    mutatePostFiles(
+      { fileList: files },
+      {
+        onSuccess: ({ fileUrlList }) => {
+          setValue('imageUrl', fileUrlList[0]);
+        },
+      }
+    );
+  });
 
   const isMeetingDateDirty = getFieldState('meetDate').isDirty || getFieldState('time').isDirty;
 
@@ -46,8 +53,7 @@ export default function InputForm() {
     openCreateModal(
       <CreateModal
         onCancelClick={closeCreateModal}
-        onOkClick={async () => {
-          const { fileUrlList } = await mutateAsyncPostFiles({ fileList: [data.imageFile] });
+        onOkClick={() => {
           mutateCreateGroup({
             placeName: '스타벅스 동대문공원점',
             placeAddress: '서울 중구 장충단로 229',
@@ -55,7 +61,7 @@ export default function InputForm() {
             placeLongitude: '127.001285',
             content: data.content,
             maxUser: data.maxUser,
-            meetDate: format(new Date(data.meetDate), 'yyyy-MM-dd'),
+            meetDate: '2023-11-20',
             startTime: '14:00',
             endTime: '16:00',
             // startTime:
@@ -63,7 +69,7 @@ export default function InputForm() {
             // endTime: data.time.toHour.padStart(2, '0') + ':' + data.time.toMin.padStart(2, '0'),
             title: data.title,
 
-            imageUrl: fileUrlList[0],
+            imageUrl: data.imageUrl,
           });
 
           closeCreateModal();
@@ -77,16 +83,11 @@ export default function InputForm() {
       <Flex
         justify="center"
         align="center"
-        className="relative mx-20 h-180 overflow-hidden rounded-8 bg-sub"
+        className="relative mx-20 aspect-[8/5] overflow-hidden rounded-8 bg-sub"
         onClick={handleFileUploadClick}
       >
-        {!!watch('imageFile') ? (
-          <Image
-            src={makeFileToBlob(watch('imageFile'))}
-            alt="group_image"
-            className="object-cover"
-            fill
-          />
+        {!!watch('imageUrl') ? (
+          <Image src={watch('imageUrl')} alt="group_image" className="object-cover" fill />
         ) : (
           <Image src="/icons/48/add_photo_white.svg" alt="add_photo" width={48} height={48} />
         )}
@@ -96,13 +97,13 @@ export default function InputForm() {
         <p className="px-4 text-subtitle-3 text-sign-secondary">방제목</p>
         <Spacing size={4} />
         <TextFieldController
-          placeholder="제목을 입력해주세요"
+          placeholder="제목을 입력해주세요."
           hookForm={hookForm}
           register={register('title', {
             required: true,
-            maxLength: 20,
+            maxLength: 30,
           })}
-          maxCount={20}
+          maxCount={30}
         />
         <Spacing size={8} />
       </section>

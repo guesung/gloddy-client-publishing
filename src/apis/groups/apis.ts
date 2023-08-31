@@ -2,6 +2,7 @@ import privateApi from '../config/privateApi';
 
 import type {
   AppliesResponse,
+  ApplyPatchRequest,
   ApplyRequest,
   ApplyResponse,
   Article,
@@ -16,7 +17,6 @@ import type {
   GroupsResponse,
   Notice,
 } from './type';
-import type { ApplyStatusType } from '@/types';
 
 export const getGroups = (page: number) => {
   return privateApi.get<GroupsResponse>(`/groups?size=5&page=${page}`);
@@ -74,7 +74,7 @@ export const postApply = ({ groupId, apply }: ApplyRequest) => {
   return privateApi.post<ApplyResponse>(`/groups/${groupId}/apply`, apply);
 };
 
-export const patchApply = (groupId: number, applyId: number, status: ApplyStatusType) => {
+export const patchApply = ({ groupId, applyId, status }: ApplyPatchRequest) => {
   return privateApi.patch(`/groups/${groupId}/applies/${applyId}?status=${status}`);
 };
 
