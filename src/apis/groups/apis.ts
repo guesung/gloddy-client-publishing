@@ -1,4 +1,5 @@
 import privateApi from '../config/privateApi';
+import type { ApplyStatusType } from '@/types';
 
 import type {
   AppliesResponse,
@@ -16,7 +17,6 @@ import type {
   GroupsResponse,
   Notice,
 } from './type';
-import type { ApplyStatusType } from '@/types';
 
 export const getGroups = (page: number) => {
   return privateApi.get<GroupsResponse>(`/groups?size=5&page=${page}`);

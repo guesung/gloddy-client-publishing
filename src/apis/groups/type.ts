@@ -3,11 +3,12 @@ import type { ReliabilityType } from '@/types';
 export interface Grouping {
   groupId: number;
   imageUrl: string;
-  fileUrl?: string;
   title: string;
   content: string;
   memberCount: number;
   maxMemberCount: number;
+  maxUser: number; // 삭제 예정
+  place: string;
   meetDate: string; // '2021-08-01'
   startTime: string; // '19:00'
   endTime: string; // '21:00'
@@ -47,7 +48,7 @@ export interface GroupsResponse {
   contents: Grouping[];
 }
 
-export interface GroupDetailResponse extends Grouping {
+export interface GroupDetailResponse extends Omit<Grouping, 'groupId'> {
   myGroup: true;
   isCaptain: true;
 }
@@ -61,8 +62,8 @@ export interface CreateGroupRequest {
   endTime: string;
   placeName: string;
   placeAddress: string;
-  placeLatitude: string;
-  placeLongitude: string;
+  place_latitude: string;
+  place_longitude: string;
   maxUser: number;
 }
 
@@ -116,7 +117,6 @@ export interface Apply {
   userId: number;
   userNickname: string;
   userImageUrl: string;
-  isCertifiedStudent: boolean;
   reliabilityLevel: ReliabilityType;
   introduce: string;
   reason: string;

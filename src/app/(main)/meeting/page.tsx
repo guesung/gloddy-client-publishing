@@ -15,7 +15,6 @@ export default function MeetingPage({ searchParams }: MeetingPageProps) {
 
   return (
     <div>
-      {/* TODO : Header 뺴기 */}
       <Header>
         <Header.Left>
           <div className="flex gap-16 px-20">
