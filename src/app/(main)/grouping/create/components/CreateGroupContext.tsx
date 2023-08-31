@@ -11,7 +11,7 @@ const CreateGroupContext = createContext<UseFormReturn | null>(null);
 export default function CreateGroupContextProvider({ children }: StrictPropsWithChildren) {
   const methods = useForm<CreateGroupContextValue>({
     defaultValues: {
-      imageUrl: '',
+      imageFile: undefined,
       title: '',
       content: '',
       meetDate: undefined,

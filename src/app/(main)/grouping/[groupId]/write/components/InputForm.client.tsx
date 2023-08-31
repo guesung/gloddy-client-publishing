@@ -2,6 +2,7 @@
 
 import ImageSection from './ImageSection.client';
 import WriteModal from './WriteModal';
+import { usePostFiles } from '@/apis/common';
 import { usePostArticle } from '@/apis/groups';
 import { Button, ButtonGroup } from '@/components/Button';
 import { CircleCheckbox } from '@/components/common/Checkbox';
@@ -26,14 +27,20 @@ export default function InputForm() {
   });
   const { register, handleSubmit, watch, setValue, control } = hookForm;
 
-  const { mutate: mutateArticle, isLoading } = usePostArticle(groupId);
+  const { mutateAsync: mutateFilesAsync } = usePostFiles();
+  const { mutate: mutateArticle } = usePostArticle(groupId);
 
   const onSubmit = async (data: WriteFormValues) => {
-    if (isLoading) return;
+    const { fileUrlList } = await mutateFilesAsync({
+      fileList: data.images,
+    });
 
     mutateArticle({
       groupId,
-      article: data,
+      article: {
+        ...data,
+        images: fileUrlList,
+      },
     });
   };
 
@@ -62,7 +69,7 @@ export default function InputForm() {
               <WriteModal type="write" onCancelClick={close} onOkClick={handleSubmit(onSubmit)} />
             )
           }
-          disabled={watch('content').length < 20}
+          disabled={watch('content').length < 20 || watch('images').length === 0}
         >
           글쓰기
         </Button>
