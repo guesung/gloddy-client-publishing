@@ -1,24 +1,13 @@
 'use client';
+import { formatDate } from '../../app/(main)/grouping/util';
 import { Spacing } from '@/components/common/Spacing';
 import { Flex } from '@/components/Layout';
-import { DAY_OF_WEEK } from '@/constants';
 import clsx from 'clsx';
-import { format, getDay, parseISO } from 'date-fns';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import type { Grouping } from '@/apis/groups/type';
 import type { PropsWithChildren } from 'react';
-
-function formatMeetingDate(meetDate: string, startTime: string) {
-  const startDate = parseISO(meetDate);
-  const dayOfWeekIndex = getDay(startDate);
-  const formattedDayOfWeek = DAY_OF_WEEK[dayOfWeekIndex];
-
-  const formattedTime = format(parseISO(meetDate + ' ' + startTime), 'hh:mma');
-
-  return `${format(startDate, 'MM.dd')} ${formattedDayOfWeek} ${formattedTime}`;
-}
 
 interface GroupingCardProps {
   groupingData: Grouping;
@@ -28,16 +17,7 @@ export default function GroupingCard({
   groupingData,
   children,
 }: PropsWithChildren<GroupingCardProps>) {
-  const {
-    title,
-    content,
-    imageUrl,
-    startTime,
-    memberCount,
-    maxMemberCount,
-    meetDate,
-    placeAddress,
-  } = groupingData;
+  const { title, content, imageUrl, memberCount, maxUser, meetDate, place } = groupingData;
   const router = useRouter();
 
   return (
@@ -49,7 +29,7 @@ export default function GroupingCard({
           ) : (
             <div className="h-full rounded-8 bg-white3" />
           )}
-          <MemberCountBadge maxMemeberCount={maxMemberCount} memberCount={memberCount} />
+          <MemberCountBadge maxUser={maxUser} memberCount={memberCount} />
         </section>
 
         <Spacing size={12} direction="horizontal" />
@@ -61,13 +41,13 @@ export default function GroupingCard({
           <div className="flex text-caption text-sign-tertiary">
             <Image src="/icons/16/location.svg" width={16} height={16} alt="location" />
             <Spacing size={4} direction="horizontal" />
-            {placeAddress}
+            {place}
           </div>
           <Spacing size={4} />
           <div className="flex text-caption text-sign-tertiary">
             <Image src="/icons/16/date_range.svg" width={16} height={16} alt="location" />
             <Spacing size={4} direction="horizontal" />
-            {formatMeetingDate(meetDate, startTime)}
+            {formatDate(meetDate)}
           </div>
         </section>
       </Flex>
@@ -77,12 +57,12 @@ export default function GroupingCard({
 }
 
 interface MemberCountBadgeProps {
-  maxMemeberCount: number;
+  maxUser: number;
   memberCount: number;
 }
 
-function MemberCountBadge({ maxMemeberCount, memberCount }: MemberCountBadgeProps) {
-  const leftUser = maxMemeberCount - memberCount;
+function MemberCountBadge({ maxUser, memberCount }: MemberCountBadgeProps) {
+  const leftUser = maxUser - memberCount;
 
   return (
     <Flex
@@ -110,7 +90,7 @@ function MemberCountBadge({ maxMemeberCount, memberCount }: MemberCountBadgeProp
           'text-sign-tertiary': leftUser === 0,
         })}
       >
-        {memberCount}/{maxMemeberCount}
+        {memberCount}/{maxUser}
       </span>
     </Flex>
   );
