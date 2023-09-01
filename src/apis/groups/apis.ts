@@ -12,12 +12,11 @@ import type {
   CommentsReponse,
   CreateGroupRequest,
   CreateGroupResponse,
-  EstimateResponse,
   GroupDetailResponse,
   GroupMembersResponse,
   GroupsResponse,
   Notice,
-} from '.';
+} from './type';
 
 export const getGroups = (page: number) => {
   return privateApi.get<GroupsResponse>(`/groups?size=5&page=${page}`);
@@ -86,6 +85,3 @@ export const postScrap = (groupId: number) => {
 export const deleteScrap = (groupId: number) => {
   return privateApi.delete(`/groups/${groupId}/scrap`);
 };
-
-export const getEstimate = (groupId: number) =>
-  privateApi.get<EstimateResponse>(`/groups/${groupId}/estimate`);
