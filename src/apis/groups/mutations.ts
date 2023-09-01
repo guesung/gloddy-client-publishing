@@ -13,13 +13,13 @@ import { Keys } from './keys';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
+import type { ApplyStatusType } from '@/types';
+
 export const usePostCreateGroup = () => {
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   return useMutation(postCreateGroup, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries([Keys.getGroupDetail, data.groupId]);
       router.push(`/grouping/${data.groupId}`);
     },
   });
@@ -31,7 +31,7 @@ export const usePostArticle = (groupId: number) => {
 
   return useMutation(postArticle, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries([Keys.getArticles, groupId]);
+      queryClient.invalidateQueries(['getArticles', groupId]);
       queryClient.invalidateQueries([Keys.getNotice, groupId]);
       router.push(`/grouping/${groupId}/articles/${data.articleId}`);
     },
@@ -43,8 +43,7 @@ export const useDeleteArticle = (groupId: number, articleId: number) => {
 
   return useMutation(() => deleteArticle(groupId, articleId), {
     onSuccess: () => {
-      queryClient.invalidateQueries([Keys.getArticles, groupId]);
-      queryClient.invalidateQueries([Keys.getNotice, groupId]);
+      queryClient.invalidateQueries(['getArticles', groupId]);
     },
   });
 };
@@ -54,8 +53,8 @@ export const usePostComment = (groupId: number, articleId: number) => {
 
   return useMutation(postComment, {
     onSuccess: () => {
-      queryClient.invalidateQueries([Keys.getComments, groupId, articleId]);
-      queryClient.invalidateQueries([Keys.getArticle, groupId, articleId]);
+      queryClient.invalidateQueries(['getComments', groupId, articleId]);
+      queryClient.invalidateQueries(['getArticle', groupId, articleId]);
     },
   });
 };
@@ -78,7 +77,6 @@ export const usePostApply = (groupId: number) => {
   return useMutation(postApply, {
     onSuccess: () => {
       queryClient.invalidateQueries([Keys.getGroupDetail, groupId]);
-      queryClient.invalidateQueries([Keys.getGroupMembers, groupId]);
       router.push('/meeting/participate?tab=waiting');
     },
   });
@@ -97,9 +95,21 @@ export const usePatchApply = (groupId: number) => {
 };
 
 export const usePostScrap = (groupId: number) => {
-  return useMutation(() => postScrap(groupId));
+  const queryClient = useQueryClient();
+
+  return useMutation(() => postScrap(groupId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['getGroupDetail', groupId]);
+    },
+  });
 };
 
 export const useDeleteScrap = (groupId: number) => {
-  return useMutation(() => deleteScrap(groupId));
+  const queryClient = useQueryClient();
+
+  return useMutation(() => deleteScrap(groupId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(['getGroupDetail', groupId]);
+    },
+  });
 };

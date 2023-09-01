@@ -25,10 +25,8 @@ export interface Article {
   content: string;
   notice: boolean;
   commentCount: number;
-  isWriter: boolean;
-  isWriterCertifiedStudent: boolean;
-  writerReliabilityLevel: ReliabilityType;
-  isWriterCaptain: boolean;
+  isCertifiedStudent: boolean;
+  isCaptain: boolean;
   images: string[];
 }
 
@@ -38,10 +36,7 @@ export interface Comment {
   name: string;
   date: string;
   content: string;
-  isWriter: boolean;
-  isWriterCaptain: boolean;
-  isWriterCertifiedStudent: boolean;
-  writerReliabilityLevel: ReliabilityType;
+  writer: boolean;
 }
 
 export interface GroupsResponse {
@@ -53,10 +48,8 @@ export interface GroupsResponse {
 }
 
 export interface GroupDetailResponse extends Grouping {
-  myGroup: boolean;
-  isCaptain: boolean;
-  isScraped: boolean;
-  isApplyWaited: boolean;
+  myGroup: true;
+  isCaptain: true;
 }
 
 export interface CreateGroupRequest {

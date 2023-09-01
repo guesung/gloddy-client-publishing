@@ -95,10 +95,8 @@ export const DUMMY_ARTICLES_DATA: Article[] = [
     content:
       '안녕하세요! 모임에 가입해주셔서 감사드립니다.\n오늘 19:00에 있을 모임 참여 전 모임에 필요한 공지 및 전달사항 확인 부탁드리겠습니다.',
     commentCount: 0,
-    isWriter: true,
-    isWriterCaptain: true,
-    isWriterCertifiedStudent: true,
-    writerReliabilityLevel: 'HOOD',
+    isCaptain: true,
+    isCertifiedStudent: true,
   },
   {
     articleId: 2,
@@ -109,10 +107,8 @@ export const DUMMY_ARTICLES_DATA: Article[] = [
     date: '2021.09.01',
     content: '안녕하세요! 모임에 가입해주셔서 감사드립니다.',
     commentCount: 100,
-    isWriter: false,
-    isWriterCaptain: false,
-    isWriterCertifiedStudent: false,
-    writerReliabilityLevel: 'HOOD',
+    isCaptain: false,
+    isCertifiedStudent: false,
   },
   {
     articleId: 3,
@@ -124,16 +120,12 @@ export const DUMMY_ARTICLES_DATA: Article[] = [
     content:
       '안녕하세요! 모임에 가입해주셔서 감사드립니다.\n오늘 19:00에 있을 모임 참여 전 모임에 필요한 공지 및 전달사항 확인 부탁드리겠습니다.',
     commentCount: 0,
-    isWriter: false,
-    isWriterCaptain: false,
-    isWriterCertifiedStudent: false,
-    writerReliabilityLevel: 'HOOD',
+    isCaptain: false,
+    isCertifiedStudent: false,
   },
 ];
 
 export const DETAIL_DUMMY_DATA: GroupDetailResponse = {
-  isApplyWaited: false,
-  isScraped: false,
   groupId: 1,
   imageUrl: '/assets/main_logo.png',
   fileUrl: '/assets/main_logo.png',
@@ -239,10 +231,7 @@ export const DUMMY_COMMENTS_DATA: Comment[] = [
       '안녕하세요! 모임에 가입해주셔서 감사드립니다.\n오늘 19:00에 있을 모임 참여 전 모임에 필요한 공지 및 전달사항 확인 부탁드리겠습니다.',
 
     date: '2021.09.01',
-    isWriter: true,
-    isWriterCaptain: true,
-    isWriterCertifiedStudent: true,
-    writerReliabilityLevel: 'HOOD',
+    writer: true,
   },
   {
     commentId: 2,
@@ -250,10 +239,7 @@ export const DUMMY_COMMENTS_DATA: Comment[] = [
     name: 'david',
     content: 'hello',
     date: '2021.09.01',
-    isWriter: false,
-    isWriterCaptain: false,
-    isWriterCertifiedStudent: false,
-    writerReliabilityLevel: 'HOOD',
+    writer: false,
   },
   {
     commentId: 3,
@@ -261,10 +247,7 @@ export const DUMMY_COMMENTS_DATA: Comment[] = [
     name: 'alice',
     content: '안녕하세요',
     date: '2021.09.01',
-    isWriter: false,
-    isWriterCaptain: false,
-    isWriterCertifiedStudent: false,
-    writerReliabilityLevel: 'HOOD',
+    writer: false,
   },
 ];
 

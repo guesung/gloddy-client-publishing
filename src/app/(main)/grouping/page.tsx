@@ -22,7 +22,7 @@ export default function Grouping() {
           <GroupingCardList />
         </HydrationProvider>
       </QueryAsyncBoundary>
-      <Link href="/grouping/create" className="absolute bottom-90 right-20 ml-auto">
+      <Link href="/grouping/create" className="absolute bottom-110 right-20 ml-auto">
         <FloatAddButton />
       </Link>
       <Footer page="grouping" />

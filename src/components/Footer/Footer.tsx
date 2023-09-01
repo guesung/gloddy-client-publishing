@@ -1,6 +1,5 @@
 'use client';
 
-import { Spacing } from '../common/Spacing';
 import cn from '@/utils/cn';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,6 +10,7 @@ interface TabType {
   id: string;
   name: PageType;
   title: string;
+  url: string;
 }
 
 const tabList: TabType[] = [
@@ -18,16 +18,19 @@ const tabList: TabType[] = [
     id: '1',
     name: 'grouping',
     title: '매칭',
+    url: '/grouping',
   },
   {
     id: '2',
     name: 'meeting',
     title: '나의모임',
+    url: '/meeting/participate?tab=participating',
   },
   {
     id: '3',
     name: 'profile',
     title: '프로필',
+    url: '/profile',
   },
 ];
 
@@ -44,30 +47,37 @@ export default function Footer({ page, isSpacing = true }: FooterProps) {
       <footer className="fixed inset-x-0 bottom-0 mx-auto flex max-w-450 rounded-t-24 bg-white pb-8 pt-12 shadow-navigation">
         {tabList.map((tab: TabType) => (
           <Link
-            href={'/' + tab.name}
+            href={tab.url}
             key={tab.id}
-            className="flex h-50 w-full flex-col items-center"
+            className="flex w-full flex-col items-center text-center text-caption"
           >
-            <Image
-              src={`/icons/32/footer/${tab.name}${
-                tab.name === page ? '_selected' : '_default'
-              }.svg`}
-              alt={tab.title}
-              width={32}
-              height={32}
-            />
-            <p
-              className={cn('text-caption', {
+            <div
+              className={cn('text-10', {
                 'text-sign-brand': isSelected(tab),
                 'text-sign-tertiary': !isSelected(tab),
               })}
             >
-              {tab.title}
-            </p>
+              <Image
+                src={`/icons/32/footer/${tab.name}${
+                  tab.name === page ? '_selected' : '_default'
+                }.svg`}
+                alt={tab.title}
+                width={32}
+                height={32}
+              />
+              <p
+                className={cn('text-10', {
+                  'text-sign-brand': isSelected(tab),
+                  'text-sign-tertiary': !isSelected(tab),
+                })}
+              >
+                {tab.title}
+              </p>
+            </div>
           </Link>
         ))}
       </footer>
-      {isSpacing && <Spacing size={70} />}
+      {isSpacing && <div className="h-70" />}
     </>
   );
 }
