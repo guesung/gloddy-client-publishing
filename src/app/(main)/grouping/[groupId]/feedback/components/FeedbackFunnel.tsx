@@ -5,7 +5,7 @@ import { useFunnel } from '@/hooks/useFunnel';
 import type { FeedbackRequestType } from '../type';
 
 export default function FeedbackFunnel() {
-  const { Funnel, prevStep, nextStep } = useFunnel(['feedback', 'mate']);
+  const { Funnel, prevStep, nextStep } = useFunnel(['praise', 'mate']);
 
   const handleSubmit = (data: FeedbackRequestType) => {
     console.log(data);

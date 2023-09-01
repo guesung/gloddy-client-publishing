@@ -1,5 +1,5 @@
-import FeedbackSection from './components/FeedbackSection.client';
+import PraiseSection from './components/PraiseSection.client';
 
 export default function page() {
-  return <FeedbackSection />;
+  return <PraiseSection />;
 }

@@ -4,7 +4,7 @@ import { Header } from '@/components/Header';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-export default function ProfileFeedbackHeader() {
+export default function ProfilePraiseHeader() {
   const router = useRouter();
   return (
     <Header

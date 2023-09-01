@@ -1,5 +1,5 @@
 'use client';
-import FeedbackCardList from './FeedbackCardList';
+import PraiseCardList from './PraiseCardList';
 import { BottomFixedButton } from '@/components/common/Button';
 import { Spacing } from '@/components/common/Spacing';
 import { Header } from '@/components/Header';
@@ -28,12 +28,12 @@ const DUMMY_USERLIST = [
   },
 ];
 
-interface FeedbackComponentProps {
+interface PraiseComponentProps {
   onPrevClick?: () => void;
   onNextClick?: () => void;
 }
 
-export default function FeedbackComponent({ onPrevClick, onNextClick }: FeedbackComponentProps) {
+export default function PraiseComponent({ onPrevClick, onNextClick }: PraiseComponentProps) {
   return (
     <main className="bg-white">
       <Header
@@ -49,7 +49,7 @@ export default function FeedbackComponent({ onPrevClick, onNextClick }: Feedback
           />
         }
       />
-      <FeedbackCardList userList={DUMMY_USERLIST} />
+      <PraiseCardList userList={DUMMY_USERLIST} />
       <Spacing size={100} />
       <BottomFixedButton text="다음" onClick={onNextClick} />
     </main>

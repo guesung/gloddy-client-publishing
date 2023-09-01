@@ -1,18 +1,18 @@
 'use client';
 
-import { FeedbacksResponse, useGetFeedbacks } from '@/apis/profile';
+import { PraisesResponse, useGetPraises } from '@/apis/profile';
 import { Spacing } from '@/components/common/Spacing';
 import { Flex } from '@/components/Layout';
 import Image from 'next/image';
 
-interface Feedback {
+interface Praise {
   id: number;
   title: string;
   imagePath: 'happy' | 'kind' | 'active' | 'humor';
-  dataPath: keyof FeedbacksResponse;
+  dataPath: keyof PraisesResponse;
 }
 
-const feedbacks: Feedback[] = [
+const praises: Praise[] = [
   {
     id: 1,
     title: '차분해요.',
@@ -39,40 +39,36 @@ const feedbacks: Feedback[] = [
   },
 ];
 
-export default function ProfileFeedbackDetail() {
-  const { data: feedbacksData } = useGetFeedbacks();
-  console.log(feedbacksData);
+export default function ProfilePraiseDetail() {
+  const { data: praisesData } = useGetPraises();
+  console.log(praisesData);
 
   return (
     <Flex as="main" direction="column" className="gap-8 px-20 py-16">
-      {feedbacks.map((feedback) => (
-        <FeedbackItem
-          key={feedback.id}
-          feedback={feedback}
-          count={feedbacksData[feedback.dataPath]}
-        />
+      {praises.map((praise) => (
+        <PraiseItem key={praise.id} praise={praise} count={praisesData[praise.dataPath]} />
       ))}
     </Flex>
   );
 }
 
-interface FeedbackItemProps {
-  feedback: Feedback;
+interface PraiseItemProps {
+  praise: Praise;
   count: number;
 }
 
-function FeedbackItem({ feedback, count }: FeedbackItemProps) {
+function PraiseItem({ praise, count }: PraiseItemProps) {
   return (
     <Flex align="center" justify="between" className="rounded-8 bg-sub py-8">
       <div className="flex items-center">
         <Image
-          src={`/icons/48/${feedback.imagePath}.svg`}
-          alt={feedback.title}
+          src={`/icons/48/${praise.imagePath}.svg`}
+          alt={praise.title}
           width={48}
           height={48}
         />
         <Spacing size={12} direction="horizontal" />
-        <p className="text-subtitle">{feedback.title}</p>
+        <p className="text-subtitle">{praise.title}</p>
       </div>
       <div className="text-secondary flex items-center">
         <h4 className="text-h4">{count}</h4>

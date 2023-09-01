@@ -1,12 +1,12 @@
-export type FeedbackType = 'calm' | 'kind' | 'active' | 'humor';
+export type PraiseType = 'calm' | 'kind' | 'active' | 'humor';
 
-export type FeedbackUser = {
+export type PraiseUser = {
   id: number;
-  feedbackType: FeedbackType;
+  praiseType: PraiseType;
 };
 
 export type FeedbackRequestType = {
-  feedbackUserList: FeedbackUser[];
+  praiseUserList: PraiseUser[];
   mateId: number;
   comment: string;
 };

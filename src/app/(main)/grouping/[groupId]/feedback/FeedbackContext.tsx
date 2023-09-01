@@ -8,7 +8,7 @@ export default function FeedbackContextProvider({ children }: StrictPropsWithChi
   const methods = useForm<FeedbackRequestType>({
     defaultValues: {
       mateId: undefined,
-      feedbackUserList: [],
+      praiseUserList: [],
       comment: '',
     },
   });

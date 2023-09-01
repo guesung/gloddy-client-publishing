@@ -1,4 +1,4 @@
-import { getMates, getFeedbacks, getProfile } from './apis';
+import { getMates, getPraises, getProfile } from './apis';
 import { Keys } from './keys';
 import { personalityList } from '@/constants/personalityList';
 import { useSuspenseQuery } from '@suspensive/react-query';
@@ -20,6 +20,6 @@ export const useGetProfile = () =>
     cacheTime: Infinity,
   });
 
-export const useGetFeedbacks = () => useSuspenseQuery(Keys.getFeedbacks(), getFeedbacks);
+export const useGetPraises = () => useSuspenseQuery(Keys.getPraises(), getPraises);
 
 export const useGetMates = () => useSuspenseQuery(Keys.getMates(), getMates);
