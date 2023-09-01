@@ -1,6 +1,6 @@
 import PraiseCard from './PraiseCard';
 
-import type { User } from '../../type';
+import type { User } from '../../../grouping/[groupId]/feedback/type';
 
 interface PraiseCardListProps {
   userList: User[];

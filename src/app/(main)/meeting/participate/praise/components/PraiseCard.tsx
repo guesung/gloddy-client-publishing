@@ -1,12 +1,12 @@
 'use client';
 
-import { useFeedbackContext } from '../../FeedbackContext';
+import { useFeedbackContext } from '../../../../grouping/[groupId]/feedback/FeedbackContext';
 import { Spacing } from '@/components/common/Spacing';
 import cn from '@/utils/cn';
 import Image from 'next/image';
 import { memo, useState } from 'react';
 
-import type { PraiseType, User } from '../../type';
+import type { PraiseType, User } from '../../../../grouping/[groupId]/feedback/type';
 
 const praises: Array<{
   name: string;

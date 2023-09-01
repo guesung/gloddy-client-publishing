@@ -10,7 +10,6 @@ interface TabType {
   id: string;
   name: PageType;
   title: string;
-  url: string;
 }
 
 const tabList: TabType[] = [
@@ -18,19 +17,16 @@ const tabList: TabType[] = [
     id: '1',
     name: 'grouping',
     title: '매칭',
-    url: '/grouping',
   },
   {
     id: '2',
     name: 'meeting',
     title: '나의모임',
-    url: '/meeting/participate?tab=participating',
   },
   {
     id: '3',
     name: 'profile',
     title: '프로필',
-    url: '/profile',
   },
 ];
 
@@ -47,7 +43,7 @@ export default function Footer({ page, isSpacing = true }: FooterProps) {
       <footer className="fixed inset-x-0 bottom-0 mx-auto flex max-w-450 rounded-t-24 bg-white pb-8 pt-12 shadow-navigation">
         {tabList.map((tab: TabType) => (
           <Link
-            href={tab.url}
+            href={'/' + tab.name}
             key={tab.id}
             className="flex w-full flex-col items-center text-center text-caption"
           >
@@ -60,7 +56,7 @@ export default function Footer({ page, isSpacing = true }: FooterProps) {
               <Image
                 src={`/icons/32/footer/${tab.name}${
                   tab.name === page ? '_selected' : '_default'
-                }.svg`}
+                }.png`}
                 alt={tab.title}
                 width={32}
                 height={32}
