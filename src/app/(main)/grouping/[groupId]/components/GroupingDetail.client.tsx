@@ -2,7 +2,7 @@
 
 import { ArticleList, NoticeList } from './articles';
 import { LocationSection, MemberSection, TimeSection } from './detail';
-import GroupDetailHeader from './GroupDetailHeader.client';
+import GroupingHeader from './GroupingHeader.client';
 import TopSection from './TopSection.client';
 import { useGetGroupDetail } from '@/apis/groups';
 import { BottomFixedDiv } from '@/components/BottomFixedDiv';
@@ -12,18 +12,18 @@ import { Divider } from '@/components/Divider';
 import { Tabs } from '@/components/Tabs';
 import Link from 'next/link';
 
-interface GroupDetailProps {
+interface GroupingDetailProps {
   groupId: number;
 }
 
-export default function GroupDetailPage({ groupId }: GroupDetailProps) {
+export default function GroupingDetail({ groupId }: GroupingDetailProps) {
   const { data: groupDetailData } = useGetGroupDetail(groupId);
 
   const { myGroup, isApplyWaited } = groupDetailData;
 
   return (
     <>
-      <GroupDetailHeader />
+      <GroupingHeader />
       <TopSection />
       <Divider />
       <Tabs>
