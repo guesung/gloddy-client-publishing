@@ -1,5 +1,5 @@
 export const Keys = Object.freeze({
   getProfile: () => ['profile'],
-  getPraises: () => ['praises'],
+  getFeedbacks: () => ['feedbacks'],
   getMates: () => ['mates'],
 });

@@ -5,7 +5,7 @@ import Step2 from './Step2';
 import Step3 from './Step3';
 import { useFunnel } from '@/hooks/useFunnel';
 
-export default function PraiseSection() {
+export default function FeedbackSection() {
   const { Funnel, prevStep, nextStep } = useFunnel(['step1', 'step2', 'step3']);
 
   return (

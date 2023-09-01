@@ -1,10 +1,10 @@
 import privateApi from '../config/privateApi';
 
-import type { MatesResponse, PraisesResponse, ProfileRequest, ProfileResponse } from './type';
+import type { MatesResponse, FeedbacksResponse, ProfileRequest, ProfileResponse } from './type';
 
 export const getProfile = () => privateApi.get<ProfileResponse>('/me/page');
 
-export const getPraises = () => privateApi.get<PraisesResponse>('/me/praises');
+export const getFeedbacks = () => privateApi.get<FeedbacksResponse>('/me/feedbacks');
 
 export const patchProfile = (profileData: ProfileRequest) =>
   privateApi.patch('/me/info', profileData);

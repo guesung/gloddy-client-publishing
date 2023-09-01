@@ -7,7 +7,7 @@ export interface ProfileResponse {
   introduce: string;
   name: string;
   personalities: Array<PersonalityType['keywordInEnglish']>;
-  praiseCount: number;
+  feedbackCount: number;
   reviewCount: number;
   school: string;
   birth: string;
@@ -22,7 +22,7 @@ export interface ProfileRequest {
   personalities: Array<PersonalityType['keywordInEnglish']>;
 }
 
-export interface PraisesResponse {
+export interface FeedbacksResponse {
   totalCalmCount: number;
   totalKindCount: number;
   totalActiveCount: number;

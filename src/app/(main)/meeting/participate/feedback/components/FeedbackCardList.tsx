@@ -1,16 +1,16 @@
-import PraiseCard from './PraiseCard';
+import FeedbackCard from './FeedbackCard';
 
 import type { User } from '../../../grouping/[groupId]/feedback/type';
 
-interface PraiseCardListProps {
+interface FeedbackCardListProps {
   userList: User[];
 }
 
-export default function PraiseCardList({ userList }: PraiseCardListProps) {
+export default function FeedbackCardList({ userList }: FeedbackCardListProps) {
   return (
     <div className="flex flex-col gap-12">
       {userList.map((user) => (
-        <PraiseCard key={user.id} user={user} />
+        <FeedbackCard key={user.id} user={user} />
       ))}
     </div>
   );

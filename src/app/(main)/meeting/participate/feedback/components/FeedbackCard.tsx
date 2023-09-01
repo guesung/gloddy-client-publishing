@@ -6,11 +6,11 @@ import cn from '@/utils/cn';
 import Image from 'next/image';
 import { memo, useState } from 'react';
 
-import type { PraiseType, User } from '../../../../grouping/[groupId]/feedback/type';
+import type { FeedbackType, User } from '../../../../grouping/[groupId]/feedback/type';
 
-const praises: Array<{
+const feedbacks: Array<{
   name: string;
-  type: PraiseType;
+  type: FeedbackType;
 }> = [
   {
     name: '차분',
@@ -30,40 +30,42 @@ const praises: Array<{
   },
 ];
 
-interface PraiseCardProps {
+interface FeedbackCardProps {
   user: User;
 }
 
-function PraiseCard({ user }: PraiseCardProps) {
+function FeedbackCard({ user }: FeedbackCardProps) {
   const { setValue, getValues } = useFeedbackContext();
 
-  const currentSelectedPraise = getValues('praiseUserList').find((praise) => praise.id === user.id);
+  const currentSelectedFeedback = getValues('feedbackUserList').find(
+    (feedback) => feedback.id === user.id
+  );
 
-  const [selectedPraise, setSelectedPraise] = useState<PraiseType | null>(
-    currentSelectedPraise?.praiseType ?? null
+  const [selectedFeedback, setSelectedFeedback] = useState<FeedbackType | null>(
+    currentSelectedFeedback?.feedbackType ?? null
   );
 
   const handleKickClick = () => {
     // TODO: 불참 모달 띄우기
   };
 
-  const handlePraiseClick = (type: PraiseType) => {
-    const filteredPraiseUserList = getValues('praiseUserList').filter(
-      (praise) => praise.id !== user.id
+  const handleFeedbackClick = (type: FeedbackType) => {
+    const filteredFeedbackUserList = getValues('feedbackUserList').filter(
+      (feedback) => feedback.id !== user.id
     );
 
-    if (selectedPraise === type) {
-      setSelectedPraise(null);
-      setValue('praiseUserList', filteredPraiseUserList);
+    if (selectedFeedback === type) {
+      setSelectedFeedback(null);
+      setValue('feedbackUserList', filteredFeedbackUserList);
       return;
     }
 
-    setSelectedPraise(type);
-    setValue('praiseUserList', [
-      ...filteredPraiseUserList,
+    setSelectedFeedback(type);
+    setValue('feedbackUserList', [
+      ...filteredFeedbackUserList,
       {
         id: user.id,
-        praiseType: type,
+        feedbackType: type,
       },
     ]);
   };
@@ -87,20 +89,20 @@ function PraiseCard({ user }: PraiseCardProps) {
       </div>
       <Spacing size={20} />
       <div className="flex">
-        {praises.map(({ name, type }) => (
+        {feedbacks.map(({ name, type }) => (
           <div
             key={type}
             className="flex grow cursor-pointer flex-col items-center"
-            onClick={() => handlePraiseClick(type)}
+            onClick={() => handleFeedbackClick(type)}
           >
             <Image
-              src={`/assets/${type}${selectedPraise === type ? '_selected' : ''}.svg`}
+              src={`/assets/${type}${selectedFeedback === type ? '_selected' : ''}.svg`}
               width={70}
               height={70}
-              alt="praise"
+              alt="feedback"
             />
             <Spacing size={5} />
-            <p className={cn('text-12', selectedPraise === type ? 'text-blue' : 'text-gray')}>
+            <p className={cn('text-12', selectedFeedback === type ? 'text-blue' : 'text-gray')}>
               {name}
             </p>
           </div>
@@ -110,4 +112,4 @@ function PraiseCard({ user }: PraiseCardProps) {
   );
 }
 
-export default memo(PraiseCard);
+export default memo(FeedbackCard);
