@@ -34,22 +34,25 @@ export default function LocationSection() {
           height={24}
           className="absolute right-12 top-12 z-10"
         />
-        <Map
-          center={{
-            lat: +placeLatitude,
-            lng: +placeLongitude,
-          }}
-          className="aspect-video rounded-t-8"
-          level={4}
-          draggable={false}
-        >
-          <MapMarker
-            position={{
+        <div className="absolute left-0 top-0 z-[2] aspect-video w-full opacity-0" />
+        <div className="z-[1] aspect-video rounded-t-8">
+          <Map
+            center={{
               lat: +placeLatitude,
               lng: +placeLongitude,
             }}
-          />
-        </Map>
+            className="aspect-video rounded-t-8"
+            level={4}
+            draggable={false}
+          >
+            <MapMarker
+              position={{
+                lat: +placeLatitude,
+                lng: +placeLongitude,
+              }}
+            />
+          </Map>
+        </div>
         <div className="p-16">
           <p>
             <span className="text-subtitle-2">{placeName}</span>
