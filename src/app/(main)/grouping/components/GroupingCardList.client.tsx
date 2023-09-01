@@ -1,12 +1,16 @@
 'use client';
 import { useGetGroups } from '@/apis/groups';
 import { GroupingCard } from '@/components/Card';
-import { ItemList } from '@/components/List';
+import { Flex } from '@/components/Layout';
 
 export default function GroupingCardList() {
   const { data } = useGetGroups();
 
   return (
-    <ItemList data={data} renderItem={(grouping) => <GroupingCard groupingData={grouping} />} />
+    <Flex direction="column" className="gap-8">
+      {data.map((groupingData) => (
+        <GroupingCard groupingData={groupingData} key={groupingData.groupId} />
+      ))}
+    </Flex>
   );
 }

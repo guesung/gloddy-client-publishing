@@ -12,14 +12,15 @@ import type {
   CommentsReponse,
   CreateGroupRequest,
   CreateGroupResponse,
+  EstimateResponse,
   GroupDetailResponse,
   GroupMembersResponse,
   GroupsResponse,
   Notice,
-} from './type';
+} from '.';
 
 export const getGroups = (page: number) => {
-  return privateApi.get<GroupsResponse>(`/groups?size=40&page=${page}`);
+  return privateApi.get<GroupsResponse>(`/groups?size=5&page=${page}`);
 };
 
 export const getGroupDetail = (groupId: number) => {
@@ -31,7 +32,7 @@ export const postCreateGroup = (CreateGroupData: CreateGroupRequest) => {
 };
 
 export const getArticles = (groupId: number, page: number) => {
-  return privateApi.get<ArticlesResponse>(`/groups/${groupId}/articles?size=40&page=${page}`);
+  return privateApi.get<ArticlesResponse>(`/groups/${groupId}/articles?size=5&page=${page}`);
 };
 
 export const getArticle = (groupId: number, articleId: number) => {
@@ -85,3 +86,6 @@ export const postScrap = (groupId: number) => {
 export const deleteScrap = (groupId: number) => {
   return privateApi.delete(`/groups/${groupId}/scrap`);
 };
+
+export const getEstimate = (groupId: number) =>
+  privateApi.get<EstimateResponse>(`/groups/${groupId}/estimate`);
