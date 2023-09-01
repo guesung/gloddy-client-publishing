@@ -3,10 +3,16 @@
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
+import { useGetEstimate } from '@/apis/groups';
 import { useFunnel } from '@/hooks/useFunnel';
+import { useNumberParams } from '@/hooks/useNumberParams';
 
 export default function PraiseSection() {
   const { Funnel, prevStep, nextStep } = useFunnel(['1', '2', '3']);
+  const { groupId } = useNumberParams();
+  const { data } = useGetEstimate(groupId);
+
+  console.log(data);
 
   return (
     <Funnel>
