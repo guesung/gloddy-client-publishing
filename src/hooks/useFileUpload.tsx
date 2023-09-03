@@ -1,11 +1,10 @@
-import { usePostFiles } from '@/apis/common';
 import { useCallback } from 'react';
 
 interface UseImageUploadProps {
   /**
    * 파일 업로드가 완료되었을 때 실행할 함수를 지정합니다.
    */
-  handleFileChange: (fileUrlList: string[]) => void;
+  handleFileChange: (files: File[]) => void;
   options?: {
     /**
      * 업로드할 파일의 타입을 지정합니다. (default: image/*)
@@ -22,8 +21,6 @@ export function useFileUpload(
   handleFileChange: UseImageUploadProps['handleFileChange'],
   options?: UseImageUploadProps['options']
 ) {
-  const { mutate } = usePostFiles();
-
   const handleFileUploadClick = useCallback(() => {
     const input = document.createElement('input');
     input.type = 'file';
@@ -34,16 +31,9 @@ export function useFileUpload(
       const { files } = event.target as HTMLInputElement;
       if (!files) return;
 
-      mutate(
-        { fileList: Array.from(files) },
-        {
-          onSuccess: (data) => {
-            handleFileChange(data.fileUrlList);
-          },
-        }
-      );
+      handleFileChange(Array.from(files));
     };
-  }, [handleFileChange, mutate, options?.accept, options?.multiple]);
+  }, [handleFileChange, options]);
 
   return {
     handleFileUploadClick,
