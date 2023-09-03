@@ -10,6 +10,7 @@ export interface Grouping {
   maxMemberCount: number;
   meetDate: string; // '2021-08-01'
   startTime: string; // '19:00'
+  endTime: string; // '21:00'
   placeName: string;
   placeAddress: string;
   placeLatitude: number;
@@ -64,6 +65,7 @@ export interface CreateGroupRequest {
   content: string;
   meetDate: string;
   startTime: string;
+  endTime: string;
   placeName: string;
   placeAddress: string;
   placeLatitude: string;
