@@ -11,12 +11,21 @@ export function getMonthName(monthIndex: number) {
 }
 
 export function displayDate(date: Date | undefined, time: TimeType) {
-  if (!date || !time.fromHour || !time.fromMin || !time.fromAmPm) {
+  if (
+    !date ||
+    !time.fromHour ||
+    !time.fromMin ||
+    !time.fromAmPm ||
+    !time.toHour ||
+    !time.toMin ||
+    !time.toAmPm
+  ) {
     return '';
   }
 
+  const year = date.getFullYear();
   const month = getMonthName(date.getMonth());
   const day = date.getDate().toString().padStart(2, '0');
   const dayName = getDayName(date.getDay());
-  return `${month}. ${day} ${dayName} ${time.fromHour}:${time.fromMin} ${time.fromAmPm}`;
+  return `${year}. ${month}. ${day} ${dayName} ${time.fromHour}:${time.fromMin} ${time.fromAmPm} ~ ${time.toHour}:${time.toMin} ${time.toAmPm}`;
 }

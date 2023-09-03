@@ -13,7 +13,8 @@ export default function MeetDateStep({ onDone }: MeetDateStepProps) {
     <>
       <CalendarSection />
       <Divider thickness="thick" />
-      <TimeSection />
+      <TimeSection type="from" />
+      <TimeSection type="to" />
       <Spacing size={60} />
       <ButtonGroup>
         <Button onClick={onDone}>완료</Button>
