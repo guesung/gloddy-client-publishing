@@ -12,6 +12,8 @@ interface ImageSectionProps {
 }
 
 export default function ImageSection({ control }: ImageSectionProps) {
+  const { mutate: mutateFiles } = usePostFiles();
+
   const {
     field: { value, onChange },
   } = useController({
@@ -20,7 +22,14 @@ export default function ImageSection({ control }: ImageSectionProps) {
   });
 
   const { handleFileUploadClick } = useFileUpload((files) => {
-    onChange([...value, ...files]);
+    mutateFiles(
+      { fileList: files },
+      {
+        onSuccess: ({ fileUrlList }) => {
+          onChange([...value, ...fileUrlList]);
+        },
+      }
+    );
   });
 
   const handleDeleteClick = useCallback(

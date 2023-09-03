@@ -30,7 +30,6 @@ export default function InputSection() {
           placeholder="내용을 입력해주세요."
           register={register('content', {
             required: true,
-            maxLength: 500,
           })}
           hookForm={hookForm}
           as="textarea"

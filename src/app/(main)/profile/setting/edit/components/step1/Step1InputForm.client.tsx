@@ -29,6 +29,7 @@ export default function Step1InputForm({ onNext }: Step1InputFormProps) {
   const { control, watch, handleSubmit, setValue, register, formState } = hookForm;
   const birth = watch('birth');
   const personalities = watch('personalities');
+  const imageUrl = watch('imageUrl');
 
   const {
     field: { value, onChange },
@@ -49,7 +50,7 @@ export default function Step1InputForm({ onNext }: Step1InputFormProps) {
       birth: formatDateDTO(birth),
     };
 
-    mutate(profileData, { onSuccess: () => router.push('/profile/setting') });
+    mutate(profileData);
   };
 
   const isBirthDayEntered = !!birth.year && !!birth.month && !!birth.date;
@@ -59,7 +60,7 @@ export default function Step1InputForm({ onNext }: Step1InputFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col px-20">
       <Flex justify="center">
         <Avatar
-          imageUrl={value}
+          imageUrl={imageUrl}
           size="large"
           iconVariant="draft_orders"
           onClick={handleFileUploadClick}
