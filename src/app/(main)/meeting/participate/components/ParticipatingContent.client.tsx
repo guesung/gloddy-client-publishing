@@ -39,7 +39,7 @@ export default function ParticipatingContent() {
         <GroupingCard
           groupingData={groupingData.group}
           key={groupingData.group.groupId}
-          isExistNewApply={groupingData.isExistNewApply}
+          isNew={groupingData.isExistNewApply}
         />
       ))}
     </>
