@@ -1,18 +1,8 @@
-import { Keys } from '.';
 import { deleteMate, patchProfile } from './apis';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
 
 export const usePatchProfile = () => {
-  const router = useRouter();
-  const queryClient = useQueryClient();
-
-  return useMutation(patchProfile, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(Keys.getProfile());
-      router.back();
-    },
-  });
+  return useMutation(patchProfile);
 };
 
 export const useDeleteMate = () => {

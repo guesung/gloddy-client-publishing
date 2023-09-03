@@ -54,8 +54,7 @@ export default function Step2() {
       </div>
       <ButtonGroup>
         <Button
-          disabled={watch('deleteReason').length === 0}
-          onClick={() => open(<DeleteModal onCancelClick={close} />)}
+          onClick={() => open(<DeleteModal onCancelClick={close} onOkClick={handleDeleteClick} />)}
         >
           탈퇴하기
         </Button>

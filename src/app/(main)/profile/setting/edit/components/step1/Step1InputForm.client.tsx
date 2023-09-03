@@ -29,7 +29,6 @@ export default function Step1InputForm({ onNext }: Step1InputFormProps) {
   const { control, watch, handleSubmit, setValue, register, formState } = hookForm;
   const birth = watch('birth');
   const personalities = watch('personalities');
-  const imageUrl = watch('imageUrl');
 
   const {
     field: { value, onChange },
@@ -50,7 +49,7 @@ export default function Step1InputForm({ onNext }: Step1InputFormProps) {
       birth: formatDateDTO(birth),
     };
 
-    mutate(profileData);
+    mutate(profileData, { onSuccess: () => router.push('/profile/setting') });
   };
 
   const isBirthDayEntered = !!birth.year && !!birth.month && !!birth.date;
@@ -60,7 +59,7 @@ export default function Step1InputForm({ onNext }: Step1InputFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col px-20">
       <Flex justify="center">
         <Avatar
-          imageUrl={imageUrl}
+          imageUrl={value}
           size="large"
           iconVariant="draft_orders"
           onClick={handleFileUploadClick}
@@ -71,7 +70,20 @@ export default function Step1InputForm({ onNext }: Step1InputFormProps) {
       <p className="text-subtitle-3">닉네임</p>
       <Spacing size={4} />
 
-      <TextField as="input" value={watch('name')} readOnly />
+      <TextFieldController
+        as="input"
+        placeholder="닉네임을 입력해주세요."
+        hookForm={hookForm}
+        register={register('name', {
+          required: true,
+          pattern: {
+            value: /^[a-zA-Z0-9ㄱ-ㅎ가-힣]{3,15}$/,
+            message: '* 최소 3글자 이상 15자 이하로 작성해주세요.',
+          },
+        })}
+        leftCaption="* 최소 3글자 이상 15자 이하로 작성해주세요."
+        maxCount={15}
+      />
 
       <Spacing size={8} />
 
