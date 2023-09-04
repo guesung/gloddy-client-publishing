@@ -76,7 +76,7 @@ export interface CreateGroupResponse {
 }
 
 export interface ArticleRequest {
-  groupId: number;
+  params: { groupId: number };
   article: Pick<Article, 'content' | 'notice' | 'images'>;
 }
 
@@ -89,8 +89,10 @@ export interface ArticlesResponse {
 }
 
 export interface CommentRequest {
-  groupId: number;
-  articleId: number;
+  params: {
+    groupId: number;
+    articleId: number;
+  };
   content: string;
 }
 
@@ -132,12 +134,6 @@ export interface ApplyRequest {
   apply: Pick<Apply, 'introduce' | 'reason'>;
 }
 
-export interface ApplyPatchRequest {
-  groupId: number;
-  applyId: number;
-  status: ApplyStatusType;
-}
-
 export interface ApplyResponse {
   applyId: number;
 }
@@ -151,6 +147,5 @@ export interface EstimateResponse {
   groupMemberList: Array<{
     imageUrl: string;
     name: string;
-    userId: number;
   }>;
 }
