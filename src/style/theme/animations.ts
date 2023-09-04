@@ -25,9 +25,4 @@ export const animations = {
     '0%': { transform: 'translateY(0%)' },
     '100%': { transform: 'translateY(100%)' },
   },
-  sizeUpAndDown: {
-    '0%': { transform: 'scale(1)', backgroundColor: '#C7DEFF' },
-    '20%': { transform: 'scale(1.5)', backgroundColor: '#3387FF' },
-    '40%': { transform: 'scale(1)', backgroundColor: '#C7DEFF' },
-  },
 };
