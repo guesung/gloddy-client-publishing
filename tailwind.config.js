@@ -10,10 +10,7 @@ module.exports = {
       boxShadow,
       keyframes: animations,
       animation: {
-        sizeUpAndDown1: 'sizeUpAndDown 2s ease infinite ',
-        sizeUpAndDown2: 'sizeUpAndDown 2s 0.25s ease infinite ',
-        sizeUpAndDown3: 'sizeUpAndDown 2s 0.5s ease infinite ',
-        sizeUpAndDown: 'sizeUpAndDown 2s 0.75s ease infinite ',
+        slideUp: 'slideUp 0.5s ease-in-out',
       },
       zIndex: {
         modal: '10000000',
