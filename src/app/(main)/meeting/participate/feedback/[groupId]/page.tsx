@@ -1,5 +1,4 @@
-import FeedbackFunnel from './components/FeedbackFunnel.client';
-import FeedbackProvider from './components/FeedbackProvider.client';
+import FeedbackSection from './components/FeedbackSection.client';
 import { Keys, getEstimate } from '@/apis/groups';
 import { HydrationProvider } from '@/components/common/Provider';
 import { Suspense } from 'react';
@@ -16,9 +15,7 @@ export default function page({ params }: PageProps) {
   return (
     <Suspense>
       {/* <HydrationProvider queryKey={Keys.getEstimate(groupId)} queryFn={() => getEstimate(groupId)}> */}
-      <FeedbackProvider>
-        <FeedbackFunnel />
-      </FeedbackProvider>
+      <FeedbackSection />
       {/* </HydrationProvider> */}
     </Suspense>
   );
