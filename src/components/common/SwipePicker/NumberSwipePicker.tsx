@@ -1,4 +1,3 @@
-'use client';
 import 'swiper/css';
 import 'swiper/css/free-mode';
 
