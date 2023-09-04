@@ -184,5 +184,6 @@ export interface EstimateResponse {
   groupMemberList: Array<{
     imageUrl: string;
     name: string;
+    userId: number;
   }>;
 }
