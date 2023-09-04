@@ -3,7 +3,7 @@ import { Flex } from '@/components/Layout';
 import { Modal } from '@/components/Modal';
 import Image from 'next/image';
 
-interface WarningModalProps {
+interface DeleteModalProps {
   content: string | React.ReactNode;
   description?: string | React.ReactNode;
   onOkClick: () => void;
@@ -11,13 +11,13 @@ interface WarningModalProps {
   onCancelClick: () => void;
 }
 
-export default function WarningModal({
+export default function DeleteModal({
   content,
   description,
   onOkClick,
   okDisabled,
   onCancelClick,
-}: WarningModalProps) {
+}: DeleteModalProps) {
   return (
     <Modal
       variant="warning"

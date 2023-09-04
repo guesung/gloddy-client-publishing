@@ -1,19 +1,18 @@
 'use client';
 import { useDeleteArticle, useGetArticle, useGetGroupDetail } from '@/apis/groups';
-import WarningModal from '@/app/(main)/grouping/components/WarningModal.client';
+import DeleteModal from '@/app/(main)/grouping/components/DeleteModal.client';
 import { IconButton } from '@/components/Button';
 import { Header } from '@/components/Header';
 import { useModal } from '@/hooks/useModal';
 import { useNumberParams } from '@/hooks/useNumberParams';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 export default function ArticleHeader() {
   const { groupId, articleId } = useNumberParams<['groupId', 'articleId']>();
   const { data: groupDetailData } = useGetGroupDetail(groupId);
   const { data: articleData } = useGetArticle(groupId, articleId);
-  const { mutate: mutateDeleteArticle } = useDeleteArticle(groupId);
-  const router = useRouter();
+  const { mutate: mutateDeleteArticle } = useDeleteArticle(groupId, articleId);
 
   const { open, close } = useModal();
 
@@ -22,19 +21,12 @@ export default function ArticleHeader() {
 
   const handleMoreClick = () => {
     open(
-      <WarningModal
+      <DeleteModal
         onCancelClick={close}
-        onOkClick={() =>
-          mutateDeleteArticle(
-            {
-              articleId,
-              groupId,
-            },
-            {
-              onSettled: close,
-            }
-          )
-        }
+        onOkClick={() => {
+          mutateDeleteArticle();
+          close();
+        }}
         content={`해당 ${notice ? '공지글' : '게시글'}을 삭제하시겠습니까?`}
       />
     );
@@ -43,9 +35,11 @@ export default function ArticleHeader() {
   return (
     <Header className="px-4">
       <Header.Left>
-        <IconButton size="large" onClick={() => router.back()}>
-          <Image src="/icons/24/arrow_back.svg" alt="back" width={24} height={24} />
-        </IconButton>
+        <Link href={`/grouping/${groupId}?tab=articles`}>
+          <IconButton size="large">
+            <Image src="/icons/24/arrow_back.svg" alt="back" width={24} height={24} />
+          </IconButton>
+        </Link>
         <p>게시글</p>
       </Header.Left>
       {(isWriter || isCaptain) && (

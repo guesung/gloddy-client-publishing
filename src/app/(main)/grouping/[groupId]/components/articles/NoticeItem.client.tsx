@@ -1,4 +1,4 @@
-import WarningModal from '../../../components/WarningModal.client';
+import DeleteModal from '../../../components/DeleteModal.client';
 import { type Notice, useDeleteArticle } from '@/apis/groups';
 import { Flex } from '@/components/Layout';
 import { useModal } from '@/hooks/useModal';
@@ -15,18 +15,10 @@ export default function NoticeItem({ notice, groupId, isCaptain }: NoticeItemPro
   const { content, noticeId } = notice;
   const router = useRouter();
   const { open, close } = useModal();
-  const { mutate: mutateDeleteArticle } = useDeleteArticle(groupId);
+  const { mutate: mutateDeleteArticle } = useDeleteArticle(groupId, noticeId);
 
   const handleDeleteClick = () => {
-    mutateDeleteArticle(
-      {
-        articleId: noticeId,
-        groupId,
-      },
-      {
-        onSettled: close,
-      }
-    );
+    mutateDeleteArticle();
   };
 
   return (
@@ -42,7 +34,7 @@ export default function NoticeItem({ notice, groupId, isCaptain }: NoticeItemPro
             height={24}
             onClick={() => {
               open(
-                <WarningModal
+                <DeleteModal
                   onCancelClick={close}
                   onOkClick={handleDeleteClick}
                   content="해당 공지글을 삭제하시겠습니까?"

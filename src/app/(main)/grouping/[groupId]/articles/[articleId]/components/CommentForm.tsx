@@ -24,12 +24,12 @@ export default function CommentForm() {
   const { register, handleSubmit } = hookForm;
 
   const onSubmit = ({ content }: CommentFormType) => {
-    mutateComment({ params: { articleId, groupId }, content });
+    mutateComment({ content, groupId, articleId });
     hookForm.reset();
   };
 
   return (
-    <BottomFixedDiv className="bg-white">
+    <BottomFixedDiv>
       <form onSubmit={handleSubmit(onSubmit)} className="flex items-center gap-8">
         <div className="grow">
           <TextFieldController
