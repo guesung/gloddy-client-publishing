@@ -1,6 +1,5 @@
 import GroupDetailPage from './components/GroupDetail.client';
-import GroupDetailHeader from './components/GroupDetailHeader.client';
-import { Keys, getGroupDetail, getGroupMembers } from '@/apis/groups';
+import { Keys, getGroupDetail } from '@/apis/groups';
 import { RejectedFallback } from '@/components/common/ErrorBoundary';
 import { HydrationProvider } from '@/components/common/Provider';
 import { Loading } from '@/components/Loading';
@@ -22,21 +21,15 @@ export default function GroupingDetailPage({ params, searchParams }: GroupingDet
   if (!searchParams?.tab) redirect(`/grouping/${groupId}?tab=detail`);
 
   return (
-    <>
-      <GroupDetailHeader />
-      <QueryAsyncBoundary
-        rejectedFallback={RejectedFallback}
-        pendingFallback={<Loading className="h-[calc(100dvh-48px)]" />}
-      >
-        <PageAnimation>
-          <HydrationProvider
-            queryMultipleFn={[() => getGroupDetail(groupId), () => getGroupMembers(groupId)]}
-            queryMultipleKey={[Keys.getGroupDetail(groupId), Keys.getGroupMembers(groupId)]}
-          >
-            <GroupDetailPage groupId={groupId} />
-          </HydrationProvider>
-        </PageAnimation>
-      </QueryAsyncBoundary>
-    </>
+    <QueryAsyncBoundary rejectedFallback={RejectedFallback} pendingFallback={<Loading />}>
+      <PageAnimation>
+        <HydrationProvider
+          queryKey={Keys.getGroupDetail(groupId)}
+          queryFn={() => getGroupDetail(groupId)}
+        >
+          <GroupDetailPage groupId={groupId} />
+        </HydrationProvider>
+      </PageAnimation>
+    </QueryAsyncBoundary>
   );
 }

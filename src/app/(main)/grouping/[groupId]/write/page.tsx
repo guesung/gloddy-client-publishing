@@ -2,6 +2,7 @@ import InputForm from './components/InputForm.client';
 import WriteHeader from './components/WriteHeader.client';
 import { Keys, getGroupDetail } from '@/apis/groups';
 import { HydrationProvider } from '@/components/common/Provider';
+import { Flex } from '@/components/Layout';
 import { PageAnimation } from '@/components/PageAnimation';
 import { Suspense } from 'react';
 
@@ -15,16 +16,18 @@ export default function WritePage({ params }: WritePageProps) {
   const groupId = Number(params.groupId);
 
   return (
-    <PageAnimation className="flex h-full flex-col">
+    <Flex direction="column" className="h-full">
       <WriteHeader />
       <Suspense fallback={null}>
-        <HydrationProvider
-          queryFn={() => getGroupDetail(groupId)}
-          queryKey={Keys.getGroupDetail(groupId)}
-        >
-          <InputForm />
-        </HydrationProvider>
+        <PageAnimation>
+          <HydrationProvider
+            queryFn={() => getGroupDetail(groupId)}
+            queryKey={Keys.getGroupDetail(groupId)}
+          >
+            <InputForm />
+          </HydrationProvider>
+        </PageAnimation>
       </Suspense>
-    </PageAnimation>
+    </Flex>
   );
 }
