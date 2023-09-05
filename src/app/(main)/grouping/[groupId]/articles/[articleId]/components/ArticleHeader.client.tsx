@@ -21,14 +21,14 @@ export default function ArticleHeader() {
       </Header.Left>
       <Header.Right>
         <Suspense>
-          <IconButtonAction />
+          <ActionIconButton />
         </Suspense>
       </Header.Right>
     </Header>
   );
 }
 
-function IconButtonAction() {
+function ActionIconButton() {
   const { groupId, articleId } = useNumberParams<['groupId', 'articleId']>();
   const { data: groupDetailData } = useGetGroupDetail(groupId);
   const { data: articleData } = useGetArticle(groupId, articleId);
