@@ -5,14 +5,14 @@ import NoMeeting from '../../components/NoMeeting';
 import { useGetMeetingNotEstimated } from '@/apis/meeting';
 import { Button } from '@/components/Button';
 import { GroupingCard } from '@/components/Card';
-import { Spacing } from '@/components/Spacing';
+import { Spacing } from '@/components/common/Spacing';
 import { useModal } from '@/hooks/useModal';
 
 export default function FeedbackContent() {
   const {
     data: { groups: meetingNotEstimatedData },
   } = useGetMeetingNotEstimated();
-  const { open, exit } = useModal();
+  const { open, close } = useModal();
 
   return (
     <>
@@ -33,7 +33,7 @@ export default function FeedbackContent() {
             size="small"
             variant="solid-secondary"
             onClick={() =>
-              open(() => <FeedbackModal onClose={exit} groupId={groupingData.group.groupId} />)
+              open(<FeedbackModal onClose={close} groupId={groupingData.group.groupId} />)
             }
           >
             모임 평가하기

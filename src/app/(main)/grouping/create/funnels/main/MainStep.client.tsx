@@ -5,8 +5,9 @@ import { useCreateGroupContext } from '../../components/CreateGroupContext';
 import CreateModal from '../../components/CreateModal.client';
 import { usePostCreateGroup } from '@/apis/groups';
 import { Button, ButtonGroup } from '@/components/Button';
+import { Spacing } from '@/components/common/Spacing';
 import { Divider } from '@/components/Divider';
-import { Spacing } from '@/components/Spacing';
+import { Toast } from '@/components/Modal';
 import { useModal } from '@/hooks/useModal';
 import { format } from 'date-fns';
 
@@ -30,7 +31,7 @@ export default function MainStep({ onSelectMeetDate }: MainStepProps) {
   const { handleSubmit, formState } = hookForm;
 
   const { mutate: mutateCreateGroup } = usePostCreateGroup();
-  const { open: openCreateModal, exit: exitCreateModal } = useModal();
+  const { open: openCreateModal, close: closeCreateModal } = useModal();
 
   const isAllInput = Object.values(hookForm.watch()).every((value) => {
     if (typeof value === 'object') {
@@ -54,19 +55,19 @@ export default function MainStep({ onSelectMeetDate }: MainStepProps) {
         startTime: formatTime(data.time),
       },
       {
-        onSettled: exitCreateModal,
+        onSettled: closeCreateModal,
       }
     );
   };
 
   const handleCreateClick = () => {
-    openCreateModal(() => (
+    openCreateModal(
       <CreateModal
-        onCancelClick={exitCreateModal}
+        onCancelClick={closeCreateModal}
         onOkClick={handleSubmit(onsubmit)}
         okDisabled={formState.isSubmitting}
       />
-    ));
+    );
   };
 
   return (

@@ -1,11 +1,11 @@
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { Icon } from '../Icon';
-import { Spacing } from '../Spacing';
+import { Spacing } from '../common/Spacing';
 import { IconButton } from '@/components/Button';
 import { Flex } from '@/components/Layout';
 import { getMonth, getYear } from 'date-fns';
 import { ko } from 'date-fns/esm/locale';
+import Image from 'next/image';
 import { useEffect, useMemo } from 'react';
 import DatePicker from 'react-datepicker';
 
@@ -40,10 +40,15 @@ export default function Calendar({ dateValue, setDateValue }: CalendarProps) {
           </p>
           <Spacing size={0} className="grow" />
           <IconButton size="medium" onClick={decreaseMonth}>
-            <Icon id="24-navigate_before" />
+            <Image
+              src="/icons/24/navigate_before.svg"
+              alt="navigate_before"
+              width={24}
+              height={24}
+            />
           </IconButton>
           <IconButton size="medium" onClick={increaseMonth}>
-            <Icon id="24-navigate_next" />
+            <Image src="/icons/24/navigate_next.svg" alt="navigate_next" width={24} height={24} />
           </IconButton>
         </Flex>
       )}

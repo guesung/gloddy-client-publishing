@@ -4,8 +4,8 @@ import SubtitleSection from './SubtitleSection';
 import NoMeeting from '../../components/NoMeeting';
 import { useGetMeetingRejected, useGetMeetingWaiting } from '@/apis/meeting';
 import { GroupingCard } from '@/components/Card';
+import { Spacing } from '@/components/common/Spacing';
 import { Divider } from '@/components/Divider';
-import { Spacing } from '@/components/Spacing';
 import { useModal } from '@/hooks/useModal';
 
 export default function WaitingContent() {
@@ -40,7 +40,7 @@ export default function WaitingContent() {
           groupingData={groupingData.group}
           key={groupingData.group.groupId}
           applyId={groupingData.applyId}
-          onClick={() => open(() => <RejectModal applyId={groupingData.applyId} />)}
+          onClick={() => open(<RejectModal applyId={groupingData.applyId} />)}
         />
       ))}
     </>

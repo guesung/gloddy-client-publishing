@@ -6,12 +6,12 @@ import WarningModal from '../../components/WarningModal.client';
 import { useDeleteGroupMember, useGetGroupDetail } from '@/apis/groups';
 import { IconButton } from '@/components/Button';
 import { Header } from '@/components/Header';
-import { Icon } from '@/components/Icon';
 import { Flex } from '@/components/Layout';
 import MoreBottomSheet from '@/components/Modal/MoreBottomSheet.client';
 import { useModal } from '@/hooks/useModal';
 import { useNumberParams } from '@/hooks/useNumberParams';
 import { Suspense } from '@suspensive/react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function GroupDetailHeader() {
@@ -23,7 +23,7 @@ export default function GroupDetailHeader() {
       <Header.Left>
         <Flex align="center">
           <IconButton size="large" onClick={() => router.back()}>
-            <Icon id="24-arrow_back" />
+            <Image src="/icons/24/arrow_back.svg" alt="back" width={24} height={24} />
           </IconButton>
           <Suspense>
             <TitleAction groupId={groupId} />
@@ -61,7 +61,7 @@ function ManageButtonAction({ groupId }: ActionProps) {
   return (
     isCaptain && (
       <IconButton size="large" onClick={() => router.push(`/grouping/${groupId}/manage`)}>
-        <Icon id="24-application" />
+        <Image src="/icons/24/application.svg" alt="application" width={24} height={24} />
       </IconButton>
     )
   );
@@ -69,39 +69,39 @@ function ManageButtonAction({ groupId }: ActionProps) {
 
 function MoreButtonAction({ groupId }: ActionProps) {
   const { open: openBottomSheet, close: closeBottomSheet } = useModal();
-  const { open: openItemModal, exit: exitItemModal } = useModal();
-  const { open: openDoneModal, exit: exitDoneModal } = useModal();
+  const { open: openItemModal, close: closeItemModal } = useModal();
+  const { open: openDoneModal, close: closeDoneModal } = useModal();
 
   const { mutate: mutateExitGroup, isLoading: isExitGroupLoading } = useDeleteGroupMember(groupId);
   const { data: groupDetailData } = useGetGroupDetail(groupId);
   const { isCaptain, myGroup } = groupDetailData;
 
   const handleExitClick = () => {
-    mutateExitGroup({ params: { groupId } }, { onSettled: exitItemModal });
+    mutateExitGroup({ params: { groupId } }, { onSettled: closeItemModal });
   };
 
   const handleReportClick = () => {
-    exitItemModal();
+    closeItemModal();
     closeBottomSheet();
-    openDoneModal(() => <ReportDoneModal onOkClick={exitDoneModal} />);
+    openDoneModal(<ReportDoneModal onOkClick={closeDoneModal} />);
   };
 
   const handleBlockClick = () => {
-    exitItemModal();
+    closeItemModal();
     closeBottomSheet();
-    openDoneModal(() => <BlockDoneModal onOkClick={exitDoneModal} />);
+    openDoneModal(<BlockDoneModal onOkClick={closeDoneModal} />);
   };
 
   const handleMoreClick = () => {
-    openBottomSheet(({ isOpen }) => (
-      <MoreBottomSheet onClose={closeBottomSheet} isOpen={isOpen}>
+    openBottomSheet(
+      <MoreBottomSheet onClose={closeBottomSheet}>
         <MoreBottomSheet.ListItem
           label="모임 나가기"
           isShown={myGroup && !isCaptain}
           onClick={() =>
-            openItemModal(({ exit }) => (
+            openItemModal(
               <WarningModal
-                onCancelClick={exit}
+                onCancelClick={closeItemModal}
                 onOkClick={handleExitClick}
                 content="모임에서 나가시겠어요?"
                 description={
@@ -112,43 +112,43 @@ function MoreButtonAction({ groupId }: ActionProps) {
                 }
                 okDisabled={isExitGroupLoading}
               />
-            ))
+            )
           }
         />
         <MoreBottomSheet.ListItem
           label="신고하기"
           isShown={!isCaptain}
           onClick={() =>
-            openItemModal(() => (
+            openItemModal(
               <WarningModal
-                onCancelClick={exitItemModal}
+                onCancelClick={closeItemModal}
                 onOkClick={handleReportClick}
                 content="신고하시겠어요?"
               />
-            ))
+            )
           }
         />
         <MoreBottomSheet.ListItem
           label="차단하기"
           isShown={!isCaptain}
           onClick={() =>
-            openItemModal(() => (
+            openItemModal(
               <WarningModal
-                onCancelClick={exitItemModal}
+                onCancelClick={closeItemModal}
                 onOkClick={handleBlockClick}
                 content="차단하시겠어요?"
               />
-            ))
+            )
           }
         />
       </MoreBottomSheet>
-    ));
+    );
   };
 
   return (
     !isCaptain && (
       <IconButton size="large" onClick={handleMoreClick}>
-        <Icon id="24-more" />
+        <Image src="/icons/24/more.svg" alt="more" width={24} height={24} />
       </IconButton>
     )
   );

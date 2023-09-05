@@ -4,11 +4,11 @@ import ManageModal from './ManageModal';
 import { Apply, usePatchApply } from '@/apis/groups';
 import { Avatar } from '@/components/Avatar';
 import { Button, ButtonGroup, IconButton } from '@/components/Button';
-import { Icon } from '@/components/Icon';
+import { Spacing } from '@/components/common/Spacing';
 import { Flex } from '@/components/Layout';
-import { Spacing } from '@/components/Spacing';
 import { TextField } from '@/components/TextField';
 import { useModal } from '@/hooks/useModal';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 interface ApplyCardProps {
@@ -29,14 +29,14 @@ export default function ApplyCard({ apply, groupId }: ApplyCardProps) {
   } = apply;
 
   const router = useRouter();
-  const { open, exit } = useModal();
+  const { open, close } = useModal();
   const { mutate: mutatePatchApply } = usePatchApply(groupId);
 
   const handleApproveClick = () => {
     mutatePatchApply(
       { params: { groupId, applyId, status: 'APPROVE' } },
       {
-        onSettled: exit,
+        onSettled: close,
       }
     );
   };
@@ -45,7 +45,7 @@ export default function ApplyCard({ apply, groupId }: ApplyCardProps) {
     mutatePatchApply(
       { params: { groupId, applyId, status: 'REFUSE' } },
       {
-        onSettled: exit,
+        onSettled: close,
       }
     );
   };
@@ -62,13 +62,17 @@ export default function ApplyCard({ apply, groupId }: ApplyCardProps) {
         <div className="grow">
           <p className="text-paragraph-1">{userNickname}</p>
           <Flex align="center" className="gap-2">
-            <Icon id={`16-reliability-${reliabilityLevel.toLowerCase()}`} width={16} height={16} />
-
+            <Image
+              src={`/icons/16/reliability/${reliabilityLevel.toLowerCase()}.svg`}
+              alt="medal"
+              width={16}
+              height={16}
+            />
             <p className="text-caption text-sign-tertiary">{reliabilityLevel}</p>
           </Flex>
         </div>
         <IconButton>
-          <Icon id="24-navigate_next" />
+          <Image src="/icons/24/navigate_next.svg" alt="navigate_next" width={24} height={24} />
         </IconButton>
       </Flex>
       <Spacing size={16} />
@@ -83,18 +87,16 @@ export default function ApplyCard({ apply, groupId }: ApplyCardProps) {
         <Button
           variant="solid-warning"
           onClick={() =>
-            open(() => (
-              <ManageModal type="REFUSE" onOkClick={handleRefuseClick} onCancelClick={exit} />
-            ))
+            open(<ManageModal type="REFUSE" onOkClick={handleRefuseClick} onCancelClick={close} />)
           }
         >
           거절
         </Button>
         <Button
           onClick={() =>
-            open(() => (
-              <ManageModal type="APPROVE" onOkClick={handleApproveClick} onCancelClick={exit} />
-            ))
+            open(
+              <ManageModal type="APPROVE" onOkClick={handleApproveClick} onCancelClick={close} />
+            )
           }
         >
           승인

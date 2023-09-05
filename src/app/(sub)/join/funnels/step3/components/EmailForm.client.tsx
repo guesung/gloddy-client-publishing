@@ -15,7 +15,7 @@ import type { SignUpState } from '../../../type';
 export default memo(function EmailForm() {
   const { nextStep } = useFunnelContext();
 
-  const { open: openSkipModal, exit: exitSkipModal } = useModal();
+  const { open: openSkipModal, close: closeSkipModal } = useModal();
   const { open: openVerifyBottomSheet, close: closeVerifyBottomSheet } = useModal();
   const { mutate: mutateEmail } = useEmailMutation();
   const hookForm = useJoinContext();
@@ -27,9 +27,9 @@ export default memo(function EmailForm() {
   } = hookForm;
 
   const onSubmit = (data: Pick<SignUpState, 'schoolInfo'>) => {
-    openVerifyBottomSheet(({ isOpen }) => (
-      <VerifyBottomSheet onClose={closeVerifyBottomSheet} onOkClick={nextStep} isOpen={isOpen} />
-    ));
+    openVerifyBottomSheet(
+      <VerifyBottomSheet onClose={closeVerifyBottomSheet} onOkClick={nextStep} />
+    );
 
     if (!data.schoolInfo.email) return;
     mutateEmail(
@@ -41,15 +41,15 @@ export default memo(function EmailForm() {
   };
 
   const handleSkipClick = () => {
-    openSkipModal(() => (
+    openSkipModal(
       <CertificateSkipModal
         onOkClick={() => {
           setValue('schoolInfo.email', '');
           nextStep();
         }}
-        onCancelClick={exitSkipModal}
+        onCancelClick={closeSkipModal}
       />
-    ));
+    );
   };
 
   return (

@@ -1,9 +1,9 @@
 import DeleteModal from './DeleteModal.client';
 import { useDeleteContext } from './DeleteProvider.client';
 import { Button, ButtonGroup } from '@/components/Button';
-import { CircleCheckbox } from '@/components/Checkbox';
+import { CircleCheckbox } from '@/components/common/Checkbox';
+import { Spacing } from '@/components/common/Spacing';
 import { Flex } from '@/components/Layout';
-import { Spacing } from '@/components/Spacing';
 import { useModal } from '@/hooks/useModal';
 
 const infoList = [
@@ -17,7 +17,7 @@ const infoList = [
 ];
 
 export default function Step2() {
-  const { open, exit } = useModal();
+  const { open, close } = useModal();
   const handleDeleteClick = () => {};
 
   const { watch, setValue } = useDeleteContext();
@@ -55,7 +55,7 @@ export default function Step2() {
       <ButtonGroup>
         <Button
           disabled={watch('deleteReason').length === 0}
-          onClick={() => open(() => <DeleteModal onCancelClick={exit} />)}
+          onClick={() => open(<DeleteModal onCancelClick={close} />)}
         >
           탈퇴하기
         </Button>

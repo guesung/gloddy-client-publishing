@@ -1,15 +1,17 @@
 import './globals.css';
 
-import { QueryProvider } from '@/components/Provider';
+import { QueryProvider } from '@/components/common/Provider';
+import { Loading } from '@/components/Loading';
 import { BASE_WEB_URL, KAKAO_SDK_URL } from '@/constants';
 import ModalProvider from '@/hooks/useModal/ModalProvider';
 import Script from 'next/script';
+import { Suspense } from 'react';
 
 import type { StrictPropsWithChildren } from '@/types';
 
 const DEFAULT_OG_TITLE = 'Gloddy';
 const DEFAULT_OG_DESC = '조금 더 믿을 만한 모임을 할 수 있도록 준비했어요!';
-const DEFAULT_OG_IMAGE = '/images/main_logo.png';
+const DEFAULT_OG_IMAGE = '/assets/main_logo.png';
 
 export const metadata = {
   metadataBase: new URL(BASE_WEB_URL),

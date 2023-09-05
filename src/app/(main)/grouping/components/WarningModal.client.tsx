@@ -1,7 +1,7 @@
-import { Icon } from '@/components/Icon';
+import { Spacing } from '@/components/common/Spacing';
 import { Flex } from '@/components/Layout';
 import { Modal } from '@/components/Modal';
-import { Spacing } from '@/components/Spacing';
+import Image from 'next/image';
 
 interface WarningModalProps {
   content: string | React.ReactNode;
@@ -26,7 +26,7 @@ export default function WarningModal({
       okDisabled={okDisabled}
     >
       <Spacing size={32} />
-      <Icon id="48-warning" width={48} height={48} />
+      <Image src="/icons/48/warning.svg" alt="warning" width={48} height={48} />
       <Spacing size={12} />
       <Flex direction="column" justify="center" align="center" className="gap-4">
         <div>{content}</div>

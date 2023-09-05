@@ -7,7 +7,6 @@ import React, {
   createContext,
   useCallback,
   useContext,
-  useMemo,
   useState,
 } from 'react';
 
@@ -45,7 +44,7 @@ export default function ModalProvider({ children }: PropsWithChildren) {
     });
   }, []);
 
-  const context = useMemo(() => ({ addModal, removeModal }), [addModal, removeModal]);
+  const context = { addModal, removeModal };
 
   return (
     <ModalContext.Provider value={context}>

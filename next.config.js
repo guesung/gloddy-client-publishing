@@ -1,8 +1,5 @@
 const { withSentryConfig } = require('@sentry/nextjs');
 
-/**
- * @type {import('next').NextConfig}
- */
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -11,9 +8,6 @@ const nextConfig = {
         hostname: '*',
       },
     ],
-  },
-  experimental: {
-    optimizeCss: true,
   },
 };
 

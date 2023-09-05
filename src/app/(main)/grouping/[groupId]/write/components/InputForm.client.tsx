@@ -4,9 +4,9 @@ import ImageSection from './ImageSection.client';
 import WriteModal from './WriteModal';
 import { useGetGroupDetail, usePostArticle } from '@/apis/groups';
 import { Button, ButtonGroup } from '@/components/Button';
-import { CircleCheckbox } from '@/components/Checkbox';
+import { CircleCheckbox } from '@/components/common/Checkbox';
+import { Spacing } from '@/components/common/Spacing';
 import { Flex } from '@/components/Layout';
-import { Spacing } from '@/components/Spacing';
 import { TextFieldController } from '@/components/TextField';
 import { useModal } from '@/hooks/useModal';
 import { useNumberParams } from '@/hooks/useNumberParams';
@@ -15,7 +15,7 @@ import { useForm } from 'react-hook-form';
 import type { WriteFormValues } from '../type';
 
 export default function InputForm() {
-  const { open, exit } = useModal();
+  const { open, close } = useModal();
   const { groupId } = useNumberParams<['groupId']>();
   const hookForm = useForm<WriteFormValues>({
     defaultValues: {
@@ -34,15 +34,10 @@ export default function InputForm() {
   const onSubmit = async (data: WriteFormValues) => {
     if (isLoading) return;
 
-    mutateArticle(
-      {
-        params: { groupId },
-        article: data,
-      },
-      {
-        onSettled: exit,
-      }
-    );
+    mutateArticle({
+      params: { groupId },
+      article: data,
+    });
   };
 
   return (
@@ -68,9 +63,9 @@ export default function InputForm() {
       <ButtonGroup>
         <Button
           onClick={() =>
-            open(() => (
-              <WriteModal type="write" onCancelClick={exit} onOkClick={handleSubmit(onSubmit)} />
-            ))
+            open(
+              <WriteModal type="write" onCancelClick={close} onOkClick={handleSubmit(onSubmit)} />
+            )
           }
           disabled={watch('content').length < 20}
         >

@@ -1,11 +1,11 @@
 import LocationItem from './LoctationItem.client';
 import { CreateGroupContextValue } from '../type';
 import { Button, ButtonGroup } from '@/components/Button';
-import { Icon } from '@/components/Icon';
 import { Flex } from '@/components/Layout';
 import { ItemList } from '@/components/List';
 import { BottomSheet } from '@/components/Modal';
 import { TextField } from '@/components/TextField';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
 import { Map } from 'react-kakao-maps-sdk';
@@ -13,14 +13,9 @@ import { Map } from 'react-kakao-maps-sdk';
 interface LocationBottomSheetProps {
   control: Control<CreateGroupContextValue>;
   onClose: () => void;
-  isOpen: boolean;
 }
 
-export default function LocationBottomSheet({
-  control,
-  onClose,
-  isOpen,
-}: LocationBottomSheetProps) {
+export default function LocationBottomSheet({ control, onClose }: LocationBottomSheetProps) {
   const [keyword, setKeyword] = useState('');
   const [places, setPlaces] = useState<kakao.maps.services.PlacesSearchResult>([]);
   const [snapPoints, setSnapPoints] = useState<number[]>([500, 0]);
@@ -73,13 +68,12 @@ export default function LocationBottomSheet({
       mountPoint={document.getElementById('setting') as HTMLElement}
       isTapOutsideToClose
       disableDrag
-      isOpen={isOpen}
     >
       <TextField
         placeholder="모임 위치를 입력해주세요."
         value={keyword}
         onChange={(e) => setKeyword((e.target as HTMLInputElement).value)}
-        leftIcon={<Icon id="24-search" width={24} height={24} />}
+        leftIcon={<Image src="/icons/24/search.svg" alt="search" width={24} height={24} />}
       />
       <Map
         center={{

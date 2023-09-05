@@ -1,15 +1,14 @@
 import { useJoinContext } from '@/app/(sub)/join/components/JoinContext.client';
 import { Button, ButtonGroup } from '@/components/Button';
+import { DateSwipePicker } from '@/components/common/SwipePicker';
 import { BottomSheet } from '@/components/Modal';
-import { DateSwipePicker } from '@/components/SwipePicker';
 
 import type { DateType } from '@/types';
 
 interface BirthdayBottomSheetProps {
   onClose: () => void;
-  isOpen: boolean;
 }
-export default function BirthdayBottomSheet({ onClose, isOpen }: BirthdayBottomSheetProps) {
+export default function BirthdayBottomSheet({ onClose }: BirthdayBottomSheetProps) {
   const { setValue, watch } = useJoinContext();
   const birth = watch('birth');
   const handleCloseClick = () => {
@@ -20,13 +19,7 @@ export default function BirthdayBottomSheet({ onClose, isOpen }: BirthdayBottomS
   };
 
   return (
-    <BottomSheet
-      snapPoints={[400, 0]}
-      onClose={onClose}
-      title="생년월일"
-      disableDrag
-      isOpen={isOpen}
-    >
+    <BottomSheet snapPoints={[400, 0]} onClose={onClose} title="생년월일" disableDrag>
       <DateSwipePicker
         dateValue={birth}
         setDateValue={(birth: DateType) => setValue('birth', birth)}

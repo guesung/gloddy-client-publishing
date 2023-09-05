@@ -1,6 +1,6 @@
-import { Icon } from '@/components/Icon';
+import { Spacing } from '@/components/common/Spacing';
 import { Modal } from '@/components/Modal';
-import { Spacing } from '@/components/Spacing';
+import Image from 'next/image';
 
 interface CreateModalProps {
   onOkClick: () => void;
@@ -17,7 +17,7 @@ export default function CreateModal({ onOkClick, onCancelClick, okDisabled }: Cr
       okDisabled={okDisabled}
     >
       <Spacing size={32} />
-      <Icon id="48-warning" width={48} height={48} />
+      <Image src="/icons/48/warning.svg" width={48} height={48} alt="warning" />
       <Spacing size={12} />
       <div>
         모임 개설 후 수정 및 삭제가 불가합니다.

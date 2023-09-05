@@ -3,8 +3,8 @@ import { useGetArticle, useGetGroupDetail } from '@/apis/groups';
 import { useMoreSheet } from '@/app/(main)/grouping/hooks/useMoreSheet';
 import { IconButton } from '@/components/Button';
 import { Header } from '@/components/Header';
-import { Icon } from '@/components/Icon';
 import { useNumberParams } from '@/hooks/useNumberParams';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
 
@@ -15,7 +15,7 @@ export default function ArticleHeader() {
     <Header className="px-4">
       <Header.Left>
         <IconButton size="large" onClick={() => router.back()}>
-          <Icon id="24-arrow_back" />
+          <Image src="/icons/24/arrow_back.svg" alt="back" width={24} height={24} />
         </IconButton>
         <p>게시글</p>
       </Header.Left>
@@ -44,7 +44,7 @@ function IconButtonAction() {
 
   return (
     <IconButton size="large" onClick={handleMoreClick}>
-      <Icon id="24-more" />
+      <Image src="/icons/24/more.svg" alt="more" width={24} height={24} />
     </IconButton>
   );
 }

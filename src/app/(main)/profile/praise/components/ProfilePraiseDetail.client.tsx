@@ -1,9 +1,9 @@
 'use client';
 
 import { PraisesResponse, useGetPraises } from '@/apis/profile';
-import { Icon } from '@/components/Icon';
+import { Spacing } from '@/components/common/Spacing';
 import { Flex } from '@/components/Layout';
-import { Spacing } from '@/components/Spacing';
+import Image from 'next/image';
 
 interface Praise {
   id: number;
@@ -61,7 +61,12 @@ function PraiseItem({ praise, count }: PraiseItemProps) {
   return (
     <Flex align="center" justify="between" className="rounded-8 bg-sub py-8">
       <div className="flex items-center">
-        <Icon id={`48-${praise.imagePath}`} width={48} height={48} />
+        <Image
+          src={`/icons/48/${praise.imagePath}.svg`}
+          alt={praise.title}
+          width={48}
+          height={48}
+        />
         <Spacing size={12} direction="horizontal" />
         <p className="text-subtitle">{praise.title}</p>
       </div>

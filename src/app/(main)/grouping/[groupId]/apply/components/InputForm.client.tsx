@@ -3,7 +3,7 @@
 import ApplyModal from './ApplyModal.client';
 import { usePostApply } from '@/apis/groups';
 import { Button, ButtonGroup } from '@/components/Button';
-import { Spacing } from '@/components/Spacing';
+import { Spacing } from '@/components/common/Spacing';
 import { TextFieldController } from '@/components/TextField';
 import { useModal } from '@/hooks/useModal';
 import { useNumberParams } from '@/hooks/useNumberParams';
@@ -22,7 +22,7 @@ export default function InputForm() {
       reason: '',
     },
   });
-  const { open, exit } = useModal();
+  const { open, close } = useModal();
   const { groupId } = useNumberParams<['groupId']>();
   const { mutate: mutatePostApply, isLoading } = usePostApply(groupId);
 
@@ -62,7 +62,7 @@ export default function InputForm() {
       <ButtonGroup>
         <Button
           onClick={() =>
-            open(() => <ApplyModal onOkClick={handleSubmit(onSubmit)} onCancelClick={exit} />)
+            open(<ApplyModal onOkClick={handleSubmit(onSubmit)} onCancelClick={close} />)
           }
           disabled={!formState.isValid}
         >

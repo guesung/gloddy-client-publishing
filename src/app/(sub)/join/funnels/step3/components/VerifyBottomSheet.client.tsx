@@ -12,14 +12,9 @@ import type { SignUpState } from '../../../type';
 interface VerifyBottomSheetProps extends ModalProps {
   onClose: () => void;
   onOkClick: () => void;
-  isOpen: boolean;
 }
 
-export default memo(function VerifyBottomSheet({
-  onClose,
-  onOkClick,
-  isOpen,
-}: VerifyBottomSheetProps) {
+export default memo(function VerifyBottomSheet({ onClose, onOkClick }: VerifyBottomSheetProps) {
   const hookForm = useJoinContext();
   const {
     register,
@@ -79,7 +74,6 @@ export default memo(function VerifyBottomSheet({
       snapPoints={[300, 0]}
       title="인증번호 입력"
       isRightCloseIcon={false}
-      isOpen={isOpen}
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="my-20">

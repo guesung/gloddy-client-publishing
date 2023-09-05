@@ -1,7 +1,7 @@
 'use client';
 import { IconButton } from '@/components/Button';
 import { Header } from '@/components/Header';
-import { Icon } from '@/components/Icon';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function ManageHeader() {
@@ -11,7 +11,7 @@ export default function ManageHeader() {
     <Header className="px-4">
       <Header.Left>
         <IconButton size="large" onClick={() => router.back()}>
-          <Icon id="24-close" />
+          <Image src="/icons/24/close.svg" alt="close" width={24} height={24} />
         </IconButton>
         <p>모임 지원서 관리</p>
       </Header.Left>

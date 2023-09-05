@@ -1,5 +1,5 @@
+import { Spacing } from '@/components/common/Spacing';
 import { Modal } from '@/components/Modal';
-import { Spacing } from '@/components/Spacing';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -8,7 +8,6 @@ interface FeedbackOutModalProps {
 }
 export default function FeedbackOutModal({ onClose }: FeedbackOutModalProps) {
   const router = useRouter();
-
   return (
     <Modal variant="warning" onOkClick={() => router.back()} onCancelClick={onClose}>
       <Spacing size={28} />

@@ -4,9 +4,9 @@ import { useFunnelContext } from '../../JoinFunnel';
 import BirthdayBottomSheet from '@/app/(sub)/join/funnels/step4/components/BirthdayBottomSheet.client';
 import { Avatar } from '@/components/Avatar';
 import { Button, ButtonGroup } from '@/components/Button';
+import { Spacing } from '@/components/common/Spacing';
 import { Flex } from '@/components/Layout';
 import { SegmentGroup } from '@/components/SegmentGroup';
-import { Spacing } from '@/components/Spacing';
 import { TextField, TextFieldController } from '@/components/TextField';
 import { useFileUpload } from '@/hooks/useFileUpload';
 import { useModal } from '@/hooks/useModal';
@@ -15,7 +15,7 @@ export default function InputForm() {
   const hookForm = useJoinContext();
   const { watch, handleSubmit, setValue, register, formState } = hookForm;
   const { nextStep } = useFunnelContext();
-  const { open: openBirthdayBottomSheet } = useModal();
+  const { open: openBirthdayBottomSheet, close: closeBirthdayBottomSheet } = useModal();
 
   const isAllTyped = !!(
     formState.isValid &&
@@ -77,9 +77,7 @@ export default function InputForm() {
       <TextField
         placeholder="생년월일을 선택해주세요."
         onClick={() =>
-          openBirthdayBottomSheet(({ close, isOpen }) => (
-            <BirthdayBottomSheet onClose={close} isOpen={isOpen} />
-          ))
+          openBirthdayBottomSheet(<BirthdayBottomSheet onClose={closeBirthdayBottomSheet} />)
         }
         value={isBirthDayEntered ? `${birth.year} ${birth.month} ${birth.date}` : ''}
         readOnly

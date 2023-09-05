@@ -1,6 +1,5 @@
 'use client';
 import { useCreateGroupContext } from '../../components/CreateGroupContext';
-import { Icon } from '@/components/Icon';
 import { Flex } from '@/components/Layout';
 import { useFileUpload } from '@/hooks/useFileUpload';
 import Image from 'next/image';
@@ -23,7 +22,7 @@ export default function UploadSection() {
         <Image src={watch('imageUrl')} alt="group_image" className="object-cover" fill />
       ) : (
         <div className="relative h-48 w-48">
-          <Icon id="48-add_photo_white" />
+          <Image src="/icons/48/add_photo_white.svg" alt="add_photo" fill />
         </div>
       )}
     </Flex>

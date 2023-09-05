@@ -1,9 +1,9 @@
 'use client';
 import { IconButton } from '../Button';
+import { Spacing } from '../common/Spacing';
 import { Header } from '../Header';
-import { Icon } from '../Icon';
-import { Spacing } from '../Spacing';
-import { forwardRef } from 'react';
+import Image from 'next/image';
+import { forwardRef, useEffect, useState } from 'react';
 import Sheet, { type SheetRef } from 'react-modal-sheet';
 
 import type { StrictPropsWithChildren } from '@/types';
@@ -16,7 +16,6 @@ interface BottomSheetProps extends Partial<SheetProps> {
   disableDrag?: boolean;
   isTapOutsideToClose?: boolean;
   isRightCloseIcon?: boolean;
-  isOpen: boolean;
 }
 
 export default forwardRef(function BottomSheet(
@@ -32,9 +31,16 @@ export default forwardRef(function BottomSheet(
   }: StrictPropsWithChildren<BottomSheetProps>,
   ref?: React.ForwardedRef<SheetRef>
 ) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    setIsOpen(true);
+  }, []);
+
   return (
     <Sheet
       ref={ref}
+      isOpen={isOpen}
       onClose={onClose}
       snapPoints={snapPoints}
       initialSnap={0}
@@ -59,7 +65,13 @@ export default forwardRef(function BottomSheet(
             {isRightCloseIcon && (
               <Header.Right className="pr-4">
                 <IconButton size="large" onClick={onClose}>
-                  <Icon id="24-close" className="cursor-pointer" />
+                  <Image
+                    src="/icons/24/close.svg"
+                    alt="close"
+                    width={24}
+                    height={24}
+                    className="cursor-pointer"
+                  />
                 </IconButton>
               </Header.Right>
             )}
