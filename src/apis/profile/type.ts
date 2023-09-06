@@ -1,22 +1,17 @@
 import type { PersonalityType, ReliabilityType } from '@/types';
 
 export interface ProfileResponse {
-  userId: number;
-  isCertifiedStudent: boolean;
-  imageUrl: string;
-  nickname: string;
-  gender: 'MAIL' | 'FEMAIL';
   age: number;
-  birth: string;
-  school: string;
+  gender: 'MAIL' | 'FEMAIL';
+  imageUrl: string;
   introduce: string;
+  name: string;
   personalities: Array<PersonalityType['keywordInEnglish']>;
-  joinAt: string;
-  reliabilityLevel: ReliabilityType;
-  reliabilityScore: 0;
-  participatedGroupCount: 0;
   praiseCount: number;
   reviewCount: number;
+  school: string;
+  birth: string;
+  reliability: ReliabilityType;
 }
 
 export interface ProfileRequest {
