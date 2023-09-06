@@ -36,17 +36,13 @@ export default function Avatar({
         'w-96': size === 'large',
       })}
     >
-      <div className="relative flex w-full before:block before:pb-[100%]" onClick={onClick}>
-        {!!imageUrl ? (
-          <Image
-            src={imageUrl}
-            alt="avatar"
-            className="cursor-pointer rounded-full object-cover"
-            fill
-          />
-        ) : (
-          <div className="h-full w-full cursor-pointer rounded-full bg-sub" />
-        )}
+      <div className="relative inline-block w-full before:block before:pb-[100%]" onClick={onClick}>
+        <Image
+          src={imageUrl}
+          alt="avatar"
+          className="cursor-pointer rounded-full bg-sub object-cover"
+          fill
+        />
         {iconVariant !== 'none' && (
           <Icon
             id={`32-${iconVariant}`}
