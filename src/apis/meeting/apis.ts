@@ -3,7 +3,6 @@ import {
   MeetingNotEstimatedResponse,
   MeetingParticipatingResponse,
   MeetingRejectedResponse,
-  MeetingScrapResponse,
   MeetingWaitingResponse,
 } from '.';
 import privateApi from '../config/privateApi';
@@ -27,6 +26,3 @@ export const getMeetingRejected = () =>
 
 export const getMeetingNotEstimated = () =>
   privateApi.get<MeetingNotEstimatedResponse>('/users/groups/notEstimated');
-
-/* 찜한 모임 */
-export const getMeetingScrap = () => privateApi.get<MeetingScrapResponse>('/scraps');

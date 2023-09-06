@@ -34,13 +34,3 @@ export interface MeetingNotEstimatedResponse {
     group: Grouping;
   }>;
 }
-
-/* 찜한 모임 */
-
-export interface MeetingScrapResponse {
-  totalCount: number;
-  currentCount: number;
-  currentPage: number;
-  totalPage: number;
-  contents: Grouping[];
-}

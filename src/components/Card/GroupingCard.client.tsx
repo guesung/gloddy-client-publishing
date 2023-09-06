@@ -1,8 +1,6 @@
 'use client';
 
-import { IconButton } from '../Button';
 import { Icon } from '../Icon';
-import { useDeleteScrapMeeting } from '@/apis/groups';
 import { Flex } from '@/components/Layout';
 import { Spacing } from '@/components/Spacing';
 import cn from '@/utils/cn';
@@ -17,9 +15,8 @@ interface GroupingCardProps extends HTMLAttributes<HTMLDivElement> {
   groupingData: Grouping;
   isNew?: boolean;
   isExistNewApply?: boolean;
-  isCaptain?: boolean;
   applyId?: number;
-  isScrapped?: boolean;
+  isCaptain?: boolean;
   onClick?: () => void;
 }
 
@@ -32,9 +29,8 @@ export default function GroupingCard({
   children,
   isNew,
   isExistNewApply,
-  isCaptain,
   applyId,
-  isScrapped,
+  isCaptain,
   onClick,
 }: PropsWithChildren<GroupingCardProps>) {
   const {
@@ -49,10 +45,7 @@ export default function GroupingCard({
     placeAddress,
   } = groupingData;
   const router = useRouter();
-
-  let status = '';
-  if (isNew) status = 'NEW';
-  if (isExistNewApply) status = '신규 지원';
+  const status = isNew ? 'NEW' : isExistNewApply ? '신규 지원' : '';
 
   return (
     <Flex className="bg-white px-20 py-16" direction="column">
@@ -91,7 +84,6 @@ export default function GroupingCard({
             <Spacing size={4} direction="horizontal" />
             {formatMeetingDate(meetDate, startTime)}
           </div>
-          {isScrapped && <ScrapBadge groupId={groupId} />}
           {status && <StatusBadge status={status} />}
         </section>
       </Flex>
@@ -157,25 +149,5 @@ function StatusBadge({ status }: StatusBadgeProps) {
     >
       {status}
     </Flex>
-  );
-}
-
-interface ScrapBadgeProps {
-  groupId: number;
-}
-
-function ScrapBadge({ groupId }: ScrapBadgeProps) {
-  const { mutate: mutateDeleteScrap } = useDeleteScrapMeeting(groupId);
-  return (
-    <IconButton
-      size="medium"
-      className="absolute right-0 top-0"
-      onClick={(e) => {
-        e.stopPropagation();
-        mutateDeleteScrap({ params: { groupId } });
-      }}
-    >
-      <Icon id="24-scrap_fixed" />
-    </IconButton>
   );
 }
