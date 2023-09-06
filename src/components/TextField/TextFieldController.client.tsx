@@ -1,6 +1,6 @@
 'use client';
 import TextField, { type TextFieldProps } from './TextField.client';
-import { Icon } from '../Icon';
+import Image from 'next/image';
 import { forwardRef } from 'react';
 
 import type { UseFormRegisterReturn, UseFormReturn } from 'react-hook-form';
@@ -78,8 +78,11 @@ function TextFieldController<T extends React.ElementType>(
         rightInputIconName &&
         !readOnly &&
         (as === 'input' || as === undefined) && (
-          <Icon
-            id={`24-${rightInputIconName}`}
+          <Image
+            src={`/icons/24/${rightInputIconName}.svg`}
+            width={24}
+            height={24}
+            alt={rightInputIconName}
             onClick={() => rightInputIconName === 'backspace' && resetField(inputName)}
           />
         )

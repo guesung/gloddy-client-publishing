@@ -1,7 +1,7 @@
 'use client';
 import { IconButton } from '@/components/Button';
 import { Header } from '@/components/Header';
-import { Icon } from '@/components/Icon';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function InformationHeader() {
@@ -10,7 +10,7 @@ export default function InformationHeader() {
     <Header>
       <Header.Left className="px-4">
         <IconButton size="large" onClick={() => router.back()}>
-          <Icon id="24-close" />
+          <Image src="/icons/24/close.svg" width={24} height={24} alt="back" />
         </IconButton>
         <p className="text-subtitle-1">개인정보 처리 방침</p>
       </Header.Left>

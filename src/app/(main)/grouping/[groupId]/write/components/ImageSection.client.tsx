@@ -1,4 +1,4 @@
-import { Icon } from '@/components/Icon';
+import { usePostFiles } from '@/apis/common';
 import { Flex } from '@/components/Layout';
 import { useFileUpload } from '@/hooks/useFileUpload';
 import Image from 'next/image';
@@ -62,7 +62,7 @@ function AddImageButton({ imageCount, onClick }: AddImageSectionProps) {
       className="h-96 w-96 cursor-pointer rounded-8 bg-sub"
       onClick={onClick}
     >
-      <Icon id="48-add_photo" width={48} height={48} />
+      <Image src="/icons/48/add_photo.svg" alt="add_photo" width={48} height={48} />
       <p className="text-caption text-sign-caption">{imageCount}/3</p>
     </Flex>
   );
@@ -77,8 +77,9 @@ const ImageThumbnail = memo(({ imageUrl, onClick }: ImageThumbnailProps) => {
   return (
     <div className="relative h-96 w-96">
       <Image src={imageUrl} alt="select-img" className="rounded-8 object-cover" fill />
-      <Icon
-        id="32-close"
+      <Image
+        src="/icons/32/close.svg"
+        alt="delete_image"
         width={32}
         height={32}
         className="absolute right-0 top-0 cursor-pointer"

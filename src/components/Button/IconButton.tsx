@@ -1,23 +1,26 @@
 import cn from '@/utils/cn';
 
 import type { StrictPropsWithChildren } from '@/types';
-import type { HTMLAttributes } from 'react';
 
-interface IconButtonProps extends HTMLAttributes<HTMLDivElement> {
+interface IconButtonProps {
   /**
    * 버튼의 크기를 설정합니다. small: 24px, medium: 40px, large: 48px (default: small)
    */
   size?: 'small' | 'medium' | 'large';
+  /**
+   * 버튼의 클릭 이벤트를 설정합니다.
+   */
+  onClick?: () => void;
   /**
    * 버튼의 스타일을 설정합니다.
    */
   className?: string;
 }
 export default function IconButton({
+  onClick,
   children,
   className,
   size = 'small',
-  ...props
 }: StrictPropsWithChildren<IconButtonProps>) {
   return (
     <div
@@ -30,7 +33,7 @@ export default function IconButton({
         },
         className
       )}
-      {...props}
+      onClick={onClick}
     >
       {children}
     </div>

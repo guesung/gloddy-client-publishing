@@ -17,6 +17,8 @@ export const useGetProfile = () =>
 
       return { ...data, introduce: defaultIntroduce, birth: formattedBirth };
     },
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 
 export const useGetProfileById = (userId: number) =>
@@ -34,6 +36,8 @@ export const useGetProfileById = (userId: number) =>
 
       return { ...data, introduce: defaultIntroduce, birth: formattedBirth };
     },
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 
 export const useGetPraises = () => useSuspenseQuery(Keys.getPraises(), getPraises);

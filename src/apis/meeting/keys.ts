@@ -4,5 +4,4 @@ export const Keys = Object.freeze({
   getMeetingWaiting: () => ['getMeetingWaiting'],
   getMeetingRejected: () => ['getMeetingRejected'],
   getMeetingNotEstimated: () => ['getMeetingNotEstimated'],
-  getMeetingScraps: () => ['getMeetingScraps'],
 });

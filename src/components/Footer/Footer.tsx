@@ -1,7 +1,7 @@
 'use client';
 
-import { Icon } from '../Icon';
 import cn from '@/utils/cn';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import type { PageType } from '@/types';
@@ -56,8 +56,11 @@ export default function Footer({ page, isSpacing = true, spacingColor }: FooterP
             })}
             scroll={false}
           >
-            <Icon
-              id={`32-footer-${tab.name}${isSelected(tab) ? '_selected' : '_default'}`}
+            <Image
+              src={`/icons/32/footer/${tab.name}${
+                tab.name === page ? '_selected' : '_default'
+              }.svg`}
+              alt={tab.title}
               width={32}
               height={32}
             />

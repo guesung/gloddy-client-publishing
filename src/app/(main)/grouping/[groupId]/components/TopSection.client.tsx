@@ -1,24 +1,20 @@
 'use client';
-import { useDeleteScrapGroups, useGetGroupDetail, usePostScrap } from '@/apis/groups';
+import { useDeleteScrap, useGetGroupDetail, usePostScrap } from '@/apis/groups';
 import { IconButton } from '@/components/Button';
-import { Icon } from '@/components/Icon';
-import { ImageModal } from '@/components/Modal';
-import { Spacing } from '@/components/Spacing';
-import { useModal } from '@/hooks/useModal';
+import { Spacing } from '@/components/common/Spacing';
 import { useNumberParams } from '@/hooks/useNumberParams';
 import { useShowMore } from '@/hooks/useShowMore';
 import Image from 'next/image';
 
 export default function TopSection() {
   const { groupId } = useNumberParams<['groupId']>();
-  const { open, exit } = useModal();
   const { contentRef, toggleShowFullText, shouldShowButton, showFullText } = useShowMore({
     maxLines: 6,
   });
 
   const { data: groupDetailData } = useGetGroupDetail(groupId);
   const { mutate: mutatePostScrap } = usePostScrap(groupId);
-  const { mutate: mutateDeleteScrap } = useDeleteScrapGroups(groupId);
+  const { mutate: mutateDeleteScrap } = useDeleteScrap(groupId);
   const { imageUrl, fileUrl, isScraped, title, content } = groupDetailData;
 
   const handleScrapClick = () => {
@@ -36,15 +32,6 @@ export default function TopSection() {
           src={fileUrl || imageUrl || '/images/dummy_image.png'}
           alt="thumbnail"
           className="object-cover"
-          onClick={() =>
-            open(() => (
-              <ImageModal
-                images={[fileUrl || imageUrl]}
-                currentImage={fileUrl || imageUrl}
-                onClose={exit}
-              />
-            ))
-          }
           fill
         />
         <IconButton
@@ -52,7 +39,12 @@ export default function TopSection() {
           className="absolute bottom-20 right-20 z-10 rounded-full bg-black bg-opacity-[.38]"
           onClick={handleScrapClick}
         >
-          <Icon id={`24-scrap_${isScraped ? 'filled' : 'outline'}`} />
+          <Image
+            src={`/icons/24/bookmark_${isScraped ? 'filled' : 'outline'}.svg`}
+            alt="bookmark"
+            width={24}
+            height={24}
+          />
         </IconButton>
       </div>
       <Spacing size={24} />

@@ -17,7 +17,6 @@ export interface Grouping {
 }
 
 export interface Article {
-  userId: number;
   articleId: number;
   userImageUrl: string;
   name: string;
@@ -33,7 +32,6 @@ export interface Article {
 }
 
 export interface Comment {
-  userId: number;
   commentId: number;
   userImageUrl: string;
   name: string;

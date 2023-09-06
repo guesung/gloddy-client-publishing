@@ -5,10 +5,10 @@ import { formatRelativeDate } from '../util';
 import { type Mate, useGetMates } from '@/apis/profile';
 import NoMeeting from '@/app/(main)/meeting/components/NoMeeting';
 import { Avatar } from '@/components/Avatar';
-import { Icon } from '@/components/Icon';
+import { Spacing } from '@/components/common/Spacing';
 import { Flex } from '@/components/Layout';
-import { Spacing } from '@/components/Spacing';
 import { useModal } from '@/hooks/useModal';
+import Image from 'next/image';
 
 export default function MatesDetail() {
   const {
@@ -51,7 +51,14 @@ function Mates({ mateData }: MatesProps) {
             {school ?? formatRelativeDate(createdAt)}
           </p>
         </Flex>
-        <Icon id="24-more" className="ml-auto" onClick={handleMateDelete} />
+        <Image
+          src="/icons/24/more.svg"
+          alt="more"
+          width={24}
+          height={24}
+          className="ml-auto"
+          onClick={handleMateDelete}
+        />
       </Flex>
       <Spacing size={8} />
       <Flex className="text-paragraph-2">{selectionReason}</Flex>

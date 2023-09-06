@@ -1,11 +1,11 @@
 import { useCreateGroupContext } from '../../components/CreateGroupContext';
 import LocationBottomSheet from '../../components/LocationBottomSheet.client';
 import { displayDate } from '../../util';
-import { Icon } from '@/components/Icon';
-import { Spacing } from '@/components/Spacing';
+import { Spacing } from '@/components/common/Spacing';
 import { SpinBox } from '@/components/SpinBox';
 import { TextField } from '@/components/TextField';
 import { useModal } from '@/hooks/useModal';
+import Image from 'next/image';
 
 interface SettingSectionProps {
   onSelectMeetDate: () => void;
@@ -23,7 +23,9 @@ export default function SettingSection({ onSelectMeetDate }: SettingSectionProps
         <TextField
           value={displayDate(watch('meetDate'), watch('time'))}
           placeholder="모임 일시를 설정해주세요."
-          rightIcon={<Icon id="24-calendar_month" />}
+          rightIcon={
+            <Image src="/icons/24/calendar_month.svg" alt="calendar" width={24} height={24} />
+          }
           onClick={onSelectMeetDate}
           readOnly
         />
@@ -40,7 +42,9 @@ export default function SettingSection({ onSelectMeetDate }: SettingSectionProps
           }
           value={watch('place.name')}
           placeholder="모임 위치를 설정해주세요."
-          rightIcon={<Icon id="24-location_on" />}
+          rightIcon={
+            <Image src="/icons/24/location_on.svg" alt="location" width={24} height={24} />
+          }
           readOnly
         />
       </section>

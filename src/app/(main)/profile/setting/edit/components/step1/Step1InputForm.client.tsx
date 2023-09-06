@@ -3,16 +3,17 @@ import { useEditContext } from '../EditProvider.client';
 import { usePatchProfile } from '@/apis/profile';
 import { Avatar } from '@/components/Avatar';
 import { Button, ButtonGroup } from '@/components/Button';
-import { Icon } from '@/components/Icon';
+import { Spacing } from '@/components/common/Spacing';
 import { Flex } from '@/components/Layout';
 import { SegmentGroup } from '@/components/SegmentGroup';
-import { Spacing } from '@/components/Spacing';
 import { Tag } from '@/components/Tag';
 import { TextField, TextFieldController } from '@/components/TextField';
 import { personalityList } from '@/constants/personalityList';
 import { useFileUpload } from '@/hooks/useFileUpload';
 import { useModal } from '@/hooks/useModal';
 import { formatDateDTO } from '@/utils/formatDateDTO';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useController } from 'react-hook-form';
 
 import type { ProfileEditState } from '../../type';
@@ -21,6 +22,7 @@ interface Step1InputFormProps {
   onNext: () => void;
 }
 export default function Step1InputForm({ onNext }: Step1InputFormProps) {
+  const router = useRouter();
   const { mutate } = usePatchProfile();
 
   const hookForm = useEditContext();
@@ -127,7 +129,7 @@ export default function Step1InputForm({ onNext }: Step1InputFormProps) {
         ))}
 
         <div className="rounded-full bg-sign-brand" onClick={onNext}>
-          <Icon id="24-add" />
+          <Image src="/icons/24/add.svg" width={24} height={24} alt="plus" />
         </div>
       </Flex>
 

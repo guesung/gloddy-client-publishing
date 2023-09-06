@@ -1,5 +1,5 @@
 import { getLocalCookie, setLocalCookie } from '../cookieController';
-import { afterDay1, afterDay60, currentTime, day1, day60 } from '../date';
+import { currentKoreaTime, oneDay } from '../date';
 import { AUTH_KEYS } from '@/constants/token';
 
 import type { CookieKeyType } from '@/types';
@@ -27,24 +27,18 @@ export const setTokenAtCookie = async ({ accessToken, refreshToken, userId }: Co
     const { cookies } = await import('next/headers');
     const cookieStore = cookies();
     cookieStore.set(AUTH_KEYS.accessToken, accessToken, {
-      expires: afterDay60,
+      expires: new Date(currentKoreaTime.getTime() + oneDay),
     });
     cookieStore.set(AUTH_KEYS.refreshToken, refreshToken, {
-      expires: afterDay60,
+      expires: new Date(currentKoreaTime.getTime() + oneDay * 60),
     });
-    cookieStore.set(AUTH_KEYS.accessTokenExpireTime, String(afterDay1.getTime()), {
-      expires: afterDay60,
-    });
-
-    cookieStore.set(AUTH_KEYS.userId, '' + userId, {
-      expires: afterDay60,
-    });
+    cookieStore.set(AUTH_KEYS.userId, '' + userId);
   } else {
     setLocalCookie(AUTH_KEYS.accessToken, accessToken, {
-      expires: afterDay60,
+      expires: new Date(currentKoreaTime.getTime() + oneDay),
     });
     setLocalCookie(AUTH_KEYS.refreshToken, refreshToken, {
-      expires: afterDay60,
+      expires: new Date(currentKoreaTime.getTime() + oneDay * 60),
     });
     setLocalCookie(AUTH_KEYS.userId, '' + userId);
   }

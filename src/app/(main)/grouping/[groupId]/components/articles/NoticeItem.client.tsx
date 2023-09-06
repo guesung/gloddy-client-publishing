@@ -1,8 +1,8 @@
 import WarningModal from '../../../components/WarningModal.client';
 import { type Notice, useDeleteArticle } from '@/apis/groups';
-import { Icon } from '@/components/Icon';
 import { Flex } from '@/components/Layout';
 import { useModal } from '@/hooks/useModal';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 interface NoticeItemProps {
@@ -34,11 +34,14 @@ export default function NoticeItem({ notice, groupId, isCaptain }: NoticeItemPro
   return (
     <Flex align="center" className="gap-12 py-4">
       <Flex align="center" className="gap-4 overflow-hidden">
-        <Icon id="24-announcement" className="shrink-0" />
+        <Image src="/icons/24/announcement.svg" alt="announcement" width={24} height={24} />
         <p className="truncate">{content}</p>
         {isCaptain && (
-          <Icon
-            id="24-delete"
+          <Image
+            src="/icons/24/delete.svg"
+            alt="delete"
+            width={24}
+            height={24}
             onClick={() => {
               open(() => (
                 <WarningModal
@@ -51,9 +54,11 @@ export default function NoticeItem({ notice, groupId, isCaptain }: NoticeItemPro
           />
         )}
       </Flex>
-      <Icon
-        id="24-navigate_next"
-        className="shrink-0"
+      <Image
+        src="/icons/24/navigate_next.svg"
+        alt="navigate_next"
+        width={24}
+        height={24}
         onClick={() => router.push(`/grouping/${groupId}/articles/${noticeId}`)}
       />
     </Flex>

@@ -1,8 +1,8 @@
 import DeleteCompleteModal from './DeleteCompleteModal.client';
-import { Icon } from '@/components/Icon';
+import { Spacing } from '@/components/common/Spacing';
 import { Modal } from '@/components/Modal';
-import { Spacing } from '@/components/Spacing';
 import { useModal } from '@/hooks/useModal';
+import Image from 'next/image';
 
 interface DeleteModalProps {
   onCancelClick: () => void;
@@ -18,7 +18,7 @@ export default function DeleteModal({ onCancelClick }: DeleteModalProps) {
       onOkClick={() => open(() => <DeleteCompleteModal />)}
     >
       <Spacing size={32} />
-      <Icon id="48-warning" width={48} height={48} />
+      <Image src="/icons/48/warning.svg" width={48} height={48} alt="warning" />
       <Spacing size={12} />
       <p className="text-subtitle-1">정말 탈퇴하시겠어요?</p>
       <Spacing size={4} />
