@@ -4,10 +4,11 @@ import { useGetGroupDetail } from '@/apis/groups';
 import { Icon } from '@/components/Icon';
 import { Toast } from '@/components/Modal';
 import { Spacing } from '@/components/Spacing';
+import { GOOGLE_API_KEY } from '@/constants';
 import { useModal } from '@/hooks/useModal';
 import { useNumberParams } from '@/hooks/useNumberParams';
 import { copyToClipboard } from '@/utils/copyToClipboard';
-import { Map, MapMarker } from 'react-kakao-maps-sdk';
+import GoogleMapReact from 'google-map-react';
 
 export default function LocationSection() {
   const { groupId } = useNumberParams<['groupId']>();
@@ -26,26 +27,29 @@ export default function LocationSection() {
     <section>
       <h2 className="pl-4 text-subtitle-3 text-sign-secondary">모임 위치</h2>
       <Spacing size={4} />
-      <div className="relative rounded-8 bg-divider" onClick={handleClipboardClick}>
+      <div className="relative overflow-hidden rounded-8 bg-divider" onClick={handleClipboardClick}>
         <Icon id="24-copy" className="absolute right-12 top-12 z-10" />
         <div className="absolute left-0 top-0 z-[2] aspect-video w-full opacity-0" />
-        <Map
-          center={{
-            lat: +placeLatitude,
-            lng: +placeLongitude,
-          }}
-          className="aspect-video rounded-t-8"
-          level={4}
-          draggable={false}
-          disableDoubleClick
-        >
-          <MapMarker
-            position={{
-              lat: +placeLatitude,
-              lng: +placeLongitude,
+        <div className="aspect-video w-full">
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: GOOGLE_API_KEY as string }}
+            defaultCenter={{ lat: +placeLatitude, lng: +placeLongitude }}
+            center={{ lat: +placeLatitude, lng: +placeLongitude }}
+            defaultZoom={15}
+            options={{
+              disableDefaultUI: true,
+              draggable: false,
+            }}
+            yesIWantToUseGoogleMapApiInternals
+            onGoogleApiLoaded={({ map, maps }) => {
+              new maps.Marker({
+                position: { lat: +placeLatitude, lng: +placeLongitude },
+                map,
+              });
             }}
           />
-        </Map>
+        </div>
+
         <div className="p-16">
           <p>
             <span className="text-subtitle-2">{placeName}</span>

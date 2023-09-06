@@ -3,8 +3,7 @@ import { IconButton } from '../Button';
 import { Header } from '../Header';
 import { Icon } from '../Icon';
 import { Spacing } from '../Spacing';
-import { usePathname } from 'next/navigation';
-import { forwardRef, useEffect } from 'react';
+import { forwardRef } from 'react';
 import Sheet, { type SheetRef } from 'react-modal-sheet';
 
 import type { StrictPropsWithChildren } from '@/types';
@@ -33,22 +32,6 @@ export default forwardRef(function BottomSheet(
   }: StrictPropsWithChildren<BottomSheetProps>,
   ref?: React.ForwardedRef<SheetRef>
 ) {
-  let isGoBackClicked = false;
-  useEffect(() => {
-    const goBack = () => {
-      isGoBackClicked = true;
-      onClose();
-    };
-    history.pushState({ page: 'modal' }, document.title);
-    window.addEventListener('popstate', goBack);
-    return () => {
-      window.removeEventListener('popstate', goBack);
-      if (!isGoBackClicked) {
-        history.back();
-      }
-    };
-  }, [isGoBackClicked]);
-
   return (
     <Sheet
       ref={ref}
