@@ -11,7 +11,6 @@ interface FlexProps<T extends React.ElementType> extends React.HTMLAttributes<T>
   align?: 'center' | 'start' | 'end' | 'between' | 'around' | 'evenly' | 'stretch';
   wrap?: 'wrap' | 'nowrap' | 'wrap-reverse';
   className?: string;
-  gap?: number;
 }
 
 export default forwardRef(function Flex<T extends React.ElementType>(
@@ -23,7 +22,6 @@ export default forwardRef(function Flex<T extends React.ElementType>(
     align,
     wrap,
     className,
-    gap,
     ...props
   }: StrictPropsWithChildren<FlexProps<T> & React.ComponentPropsWithoutRef<T>>,
   ref: React.ComponentPropsWithRef<T>['ref']
@@ -64,7 +62,6 @@ export default forwardRef(function Flex<T extends React.ElementType>(
         },
         className
       )}
-      style={{ gap }}
       {...props}
     >
       {children}
