@@ -2,8 +2,10 @@
 import { ModalControlRef, ModalController } from './ModalController';
 import { ModalContext } from './ModalProvider';
 import { CreateModalElement } from './type';
+import { useDidMount } from '../common/useDidMount';
+import { useDidUnMount } from '../common/useDidUnMount';
 import { useUnmountEffect } from 'framer-motion';
-import { useContext, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 let elementId = 1;
 
@@ -41,6 +43,7 @@ export default function useModal({ delay = 0, isUnmountExit = true }: UseModalPr
             }}
           />
         );
+
         if (delay) {
           setTimeout(() => {
             removeModal(id);
