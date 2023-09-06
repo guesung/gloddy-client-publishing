@@ -81,7 +81,7 @@ export const DUMMY_SIGN_UP_DATA = {
   personalities: ['OUTGOING'],
 };
 
-export const DUMMY_ARTICLES_DATA = [
+export const DUMMY_ARTICLES_DATA: Article[] = [
   {
     articleId: 1,
     images: ['/images/dummy_avatar.png', '/images/dummy_image.png'],
@@ -226,7 +226,7 @@ export const MEMBER_DUMMY_DATA: GroupMember[] = [
   },
 ];
 
-export const DUMMY_COMMENTS_DATA = [
+export const DUMMY_COMMENTS_DATA: Comment[] = [
   {
     commentId: 1,
     userImageUrl: '/images/dummy_avatar.png',
