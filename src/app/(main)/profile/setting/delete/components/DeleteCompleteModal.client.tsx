@@ -1,6 +1,5 @@
 import { Modal } from '@/components/Modal';
 import { Spacing } from '@/components/Spacing';
-import { sendMessageToReactNative } from '@/utils/sendMessageToReactNative';
 
 export default function DeleteCompleteModal() {
   const handleDeleteAccount = () => {
