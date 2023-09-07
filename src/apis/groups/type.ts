@@ -12,8 +12,8 @@ export interface Grouping {
   startTime: string; // '19:00'
   placeName: string;
   placeAddress: string;
-  placeLatitude: number;
-  placeLongitude: number;
+  placeLatitude: string;
+  placeLongitude: string;
 }
 
 export interface Article {
@@ -185,31 +185,7 @@ export interface ScrapRequest {
 export interface EstimateResponse {
   groupMemberList: Array<{
     imageUrl: string;
-    isCaptain: boolean;
-    nickName: string;
-    reliabilityLevel: ReliabilityType;
+    name: string;
     userId: number;
   }>;
 }
-
-export interface EstimateRequest {
-  params: {
-    groupId: number;
-  };
-  payload: {
-    praiseInfos: Array<{
-      userId: number;
-      praiseValue?: string;
-    }>;
-
-    mateInfo: {
-      userId: number;
-      selectionReason: string;
-    };
-  };
-}
-
-export type PraiseInfoType = {
-  userId: number;
-  praiseValue?: string;
-};
