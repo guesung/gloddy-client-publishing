@@ -56,12 +56,12 @@ function TitleAction({ groupId }: ActionProps) {
 function ManageButtonAction({ groupId }: ActionProps) {
   const router = useRouter();
   const { data: groupDetailData } = useGetGroupDetail(groupId);
-  const { isCaptain, isExistNewApply } = groupDetailData;
+  const { isCaptain } = groupDetailData;
 
   return (
     isCaptain && (
       <IconButton size="large" onClick={() => router.push(`/grouping/${groupId}/manage`)}>
-        {isExistNewApply ? <Icon id="24-application_notification" /> : <Icon id="24-application" />}
+        <Icon id="24-application" />
       </IconButton>
     )
   );

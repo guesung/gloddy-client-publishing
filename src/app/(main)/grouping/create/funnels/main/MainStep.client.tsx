@@ -27,9 +27,9 @@ interface MainStepProps {
 
 export default function MainStep({ onSelectMeetDate }: MainStepProps) {
   const hookForm = useCreateGroupContext();
-  const { handleSubmit, formState, control } = hookForm;
+  const { handleSubmit, formState } = hookForm;
 
-  const { mutate: mutateCreateGroup, isLoading } = usePostCreateGroup();
+  const { mutate: mutateCreateGroup } = usePostCreateGroup();
   const { open: openCreateModal, exit: exitCreateModal } = useModal();
 
   const isAllInput = Object.values(hookForm.watch()).every((value) => {
@@ -64,14 +64,14 @@ export default function MainStep({ onSelectMeetDate }: MainStepProps) {
       <CreateModal
         onCancelClick={exitCreateModal}
         onOkClick={handleSubmit(onsubmit)}
-        isLoading={isLoading}
+        okDisabled={formState.isSubmitting}
       />
     ));
   };
 
   return (
     <>
-      <UploadSection control={control} />
+      <UploadSection />
       <InputSection />
       <Divider thickness="thick" />
       <SettingSection onSelectMeetDate={onSelectMeetDate} />
