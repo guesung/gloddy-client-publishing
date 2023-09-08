@@ -5,16 +5,13 @@ import ReportDoneModal from '../../components/ReportDoneModal.client';
 import WarningModal from '../../components/WarningModal.client';
 import { useDeleteGroupMember, useGetGroupDetail } from '@/apis/groups';
 import { IconButton } from '@/components/Button';
-import { RejectedFallback } from '@/components/ErrorBoundary';
 import { Header } from '@/components/Header';
 import { Icon } from '@/components/Icon';
 import { Flex } from '@/components/Layout';
 import MoreBottomSheet from '@/components/Modal/MoreBottomSheet.client';
-import { PageAnimation } from '@/components/PageAnimation';
 import { useModal } from '@/hooks/useModal';
 import { useNumberParams } from '@/hooks/useNumberParams';
-import { QueryAsyncBoundary } from '@suspensive/react-query';
-import { Loading } from 'antd-mobile';
+import { Suspense } from '@suspensive/react';
 import { useRouter } from 'next/navigation';
 
 export default function GroupDetailHeader() {
@@ -28,21 +25,17 @@ export default function GroupDetailHeader() {
           <IconButton size="large" onClick={() => router.back()}>
             <Icon id="24-arrow_back" />
           </IconButton>
-          <QueryAsyncBoundary rejectedFallback={RejectedFallback} pendingFallback={<Loading />}>
-            <PageAnimation>
-              <TitleAction groupId={groupId} />
-            </PageAnimation>
-          </QueryAsyncBoundary>
+          <Suspense>
+            <TitleAction groupId={groupId} />
+          </Suspense>
         </Flex>
       </Header.Left>
       <Header.Right>
         <Flex align="center">
-          <QueryAsyncBoundary rejectedFallback={RejectedFallback} pendingFallback={<Loading />}>
-            <PageAnimation>
-              <ManageButtonAction groupId={groupId} />
-              <MoreButtonAction groupId={groupId} />
-            </PageAnimation>
-          </QueryAsyncBoundary>
+          <Suspense>
+            <ManageButtonAction groupId={groupId} />
+            <MoreButtonAction groupId={groupId} />
+          </Suspense>
         </Flex>
       </Header.Right>
     </Header>
