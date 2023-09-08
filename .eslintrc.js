@@ -1,6 +1,3 @@
-/**
- * @type {import('eslint').Linter.Config}
- */
 module.exports = {
   root: true,
   env: {
@@ -22,9 +19,7 @@ module.exports = {
       },
     },
   },
-  globals: {
-    google: 'readonly',
-  },
+
   rules: {
     'prettier/prettier': [
       'error',
