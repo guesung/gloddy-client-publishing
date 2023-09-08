@@ -83,7 +83,7 @@ privateApi.interceptors.response.use(
           return Promise.reject(e);
         }
       }
-      return Promise.reject(error.response.data.reason);
+      return Promise.reject(new Error('요청 도중 에러 발생'));
     } catch (e) {
       return Promise.reject(e);
     }
