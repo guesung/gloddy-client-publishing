@@ -14,6 +14,7 @@ export interface Grouping {
   placeAddress: string;
   placeLatitude: number;
   placeLongitude: number;
+  placeId: string;
 }
 
 export interface Article {
@@ -93,9 +94,10 @@ export interface CreateGroupRequest {
   startTime: string;
   placeName: string;
   placeAddress: string;
-  placeLatitude: string;
-  placeLongitude: string;
+  placeLatitude: number;
+  placeLongitude: number;
   maxUser: number;
+  placeId: string;
 }
 
 export interface CreateGroupResponse {
@@ -185,31 +187,7 @@ export interface ScrapRequest {
 export interface EstimateResponse {
   groupMemberList: Array<{
     imageUrl: string;
-    isCaptain: boolean;
-    nickName: string;
-    reliabilityLevel: ReliabilityType;
+    name: string;
     userId: number;
   }>;
 }
-
-export interface EstimateRequest {
-  params: {
-    groupId: number;
-  };
-  payload: {
-    praiseInfos: Array<{
-      userId: number;
-      praiseValue?: string;
-    }>;
-
-    mateInfo: {
-      userId: number;
-      selectionReason: string;
-    };
-  };
-}
-
-export type PraiseInfoType = {
-  userId: number;
-  praiseValue?: string;
-};

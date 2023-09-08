@@ -21,9 +21,16 @@ export default memo(function VerifyBottomSheet({
   isOpen,
 }: VerifyBottomSheetProps) {
   const hookForm = useJoinContext();
-  const { register, handleSubmit, setValue, watch, setError, resetField } = hookForm;
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { isValid },
+    setError,
+    resetField,
+  } = hookForm;
 
-  const { time: verifyTime } = useTimer({
+  const { status: timerStatus, time: verifyTime } = useTimer({
     initialTime: 180,
     timerType: 'DECREMENTAL',
     endTime: 0,
@@ -31,8 +38,6 @@ export default memo(function VerifyBottomSheet({
   });
 
   const { mutate: mutateEmailVerify } = useEmailVerifyMutation();
-
-  console.log(watch('verifyEmailNumber'));
 
   const onSubmit = (data: Pick<SignUpState, 'schoolInfo' | 'verifyEmailNumber'>) => {
     if (!data.verifyEmailNumber || !data.schoolInfo.email) return;
@@ -96,7 +101,7 @@ export default memo(function VerifyBottomSheet({
           <Button type="button" onClick={handleResend}>
             재전송
           </Button>
-          <Button type="submit" disabled={!watch('verifyEmailNumber').match(regexr.verifyNumber)}>
+          <Button type="submit" disabled={!isValid}>
             확인
           </Button>
         </ButtonGroup>
