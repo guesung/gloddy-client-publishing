@@ -1,5 +1,7 @@
 import type {
   Apply,
+  Article,
+  Comment,
   CreateGroupRequest,
   EstimateResponse,
   GroupDetailResponse,
@@ -22,7 +24,6 @@ export const DUMMY_GROUPING_DATA: Grouping[] = [
     placeAddress: '123 Sample Street, Sample City, 12345',
     placeLatitude: 37.7749,
     placeLongitude: -122.4194,
-    placeId: 'ChIJgUbEo8cfqokR5lP9_Wh_DaM',
   },
   {
     groupId: 12346,
@@ -37,7 +38,6 @@ export const DUMMY_GROUPING_DATA: Grouping[] = [
     placeAddress: '123 Sample Street, Sample City, 12345',
     placeLatitude: 37.7749,
     placeLongitude: -122.4194,
-    placeId: 'ChIJgUbEo8cfqokR5lP9_Wh_DaM',
   },
   {
     groupId: 12346,
@@ -52,7 +52,6 @@ export const DUMMY_GROUPING_DATA: Grouping[] = [
     placeAddress: '123 Sample Street, Sample City, 12345',
     placeLatitude: 37.7749,
     placeLongitude: -122.4194,
-    placeId: 'ChIJgUbEo8cfqokR5lP9_Wh_DaM',
   },
 ];
 
@@ -64,9 +63,8 @@ export const CREATE_GROUP_DUMMY_DATA: CreateGroupRequest = {
   startTime: '17:00',
   placeName: '서울특별시 강남구 테헤란로 16',
   placeAddress: '123 Sample Street, Sample City, 12345',
-  placeLatitude: 23,
-  placeLongitude: 123,
-  placeId: 'ChIJgUbEo8cfqokR5lP9_Wh_DaM',
+  placeLatitude: '23',
+  placeLongitude: '123',
   maxUser: 4,
 };
 
@@ -146,7 +144,6 @@ export const DETAIL_DUMMY_DATA: GroupDetailResponse = {
   placeAddress: '서울특별시 동대문구 회기동',
   placeLatitude: 37.589039,
   placeLongitude: 127.057761,
-  placeId: 'ChIJgUbEo8cfqokR5lP9_Wh_DaM',
   isCaptain: true,
   myGroup: true,
 };
