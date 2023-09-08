@@ -1,24 +1,20 @@
 import ContentSection from './components/ContentSection.client';
 import MeetingScrapHeader from './components/MeetingScrapHeader';
 import { Keys, getMeetingScrap } from '@/apis/meeting';
-import { RejectedFallback } from '@/components/ErrorBoundary';
 import { Footer } from '@/components/Footer';
 import { Loading } from '@/components/Loading';
-import { PageAnimation } from '@/components/PageAnimation';
 import { HydrationProvider } from '@/components/Provider';
-import { QueryAsyncBoundary } from '@suspensive/react-query';
+import { Suspense } from 'react';
 
 export default function MeetingPage() {
   return (
     <>
       <MeetingScrapHeader />
-      <QueryAsyncBoundary rejectedFallback={RejectedFallback} pendingFallback={<Loading />}>
-        <PageAnimation>
-          <HydrationProvider queryFn={getMeetingScrap} queryKey={Keys.getMeetingScraps()}>
-            <ContentSection />
-          </HydrationProvider>
-        </PageAnimation>
-      </QueryAsyncBoundary>
+      <Suspense fallback={<Loading />}>
+        <HydrationProvider queryFn={getMeetingScrap} queryKey={Keys.getMeetingScraps()}>
+          <ContentSection />
+        </HydrationProvider>
+      </Suspense>
       <Footer page="meeting" />
     </>
   );

@@ -8,15 +8,12 @@ import {
   postArticle,
   postComment,
   postCreateGroup,
-  postEstimate,
   postScrap,
 } from './apis';
 import { Keys as GroupsKeys } from './keys';
 import { GroupDetailResponse } from './type';
 import { MeetingScrapResponse } from '../meeting';
 import { Keys as MeetingKeys } from '../meeting/keys';
-import FeedbackCompleteModal from '@/app/(main)/meeting/participate/feedback/[groupId]/funnels/step3/FeedbackCompleteModal.client';
-import { useModal } from '@/hooks/useModal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
@@ -26,7 +23,7 @@ export const usePostCreateGroup = () => {
 
   return useMutation(postCreateGroup, {
     onSuccess: (data) => {
-      queryClient.invalidateQueries(GroupsKeys.getGroups());
+      queryClient.removeQueries(GroupsKeys.getGroups());
       router.replace(`/grouping/${data.groupId}`);
     },
   });
@@ -180,22 +177,10 @@ export const useDeleteGroupMember = (groupId: number) => {
 
   return useMutation(deleteGroupMember, {
     onSuccess: () => {
-      queryClient.invalidateQueries(GroupsKeys.getGroups());
+      queryClient.removeQueries(GroupsKeys.getGroups());
       queryClient.invalidateQueries(GroupsKeys.getGroupDetail(groupId));
       queryClient.invalidateQueries(GroupsKeys.getGroupMembers(groupId));
       router.push('/grouping');
-    },
-  });
-};
-
-export const usePostEstimate = () => {
-  const router = useRouter();
-  const { open } = useModal({ isUnmountExit: false });
-
-  return useMutation(postEstimate, {
-    onSuccess: () => {
-      open(({ exit }) => <FeedbackCompleteModal onClose={exit} />);
-      router.push('/meeting/participate?tab=participating');
     },
   });
 };

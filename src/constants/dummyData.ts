@@ -319,7 +319,7 @@ export const DUMMY_APPLY_DATA: Apply[] = [
   },
 ];
 
-export const DUMMY_DATA_ESTIMATE = {
+export const DUMMY_DATA_ESTIMATE: EstimateResponse = {
   groupMemberList: [
     {
       imageUrl: '/images/dummy_avatar.png',

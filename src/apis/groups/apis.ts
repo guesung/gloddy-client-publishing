@@ -15,7 +15,6 @@ import type {
   CommentsReponse,
   CreateGroupRequest,
   CreateGroupResponse,
-  EstimateRequest,
   EstimateResponse,
   GroupDetailResponse,
   GroupMembersDeleteRequest,
@@ -104,6 +103,3 @@ export const deleteScrap = ({ params: { groupId } }: ScrapRequest) => {
 
 export const getEstimate = (groupId: number) =>
   privateApi.get<EstimateResponse>(`/groups/${groupId}/estimate`);
-
-export const postEstimate = ({ params: { groupId }, payload }: EstimateRequest) =>
-  privateApi.post(`/groups/${groupId}/group_members/estimate`, payload);

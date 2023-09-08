@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 'use client';
 
 import { Toast } from '@/components/Modal';
@@ -16,16 +15,10 @@ export default function QueryProvider({ children }: StrictPropsWithChildren) {
   queryClient.setDefaultOptions({
     queries: {
       retry: 1,
+      refetchOnWindowFocus: false,
     },
     mutations: {
-      onError: (error) => {
-        const errorMessage = error ?? '오류가 발생했습니다. 다시 시도해주세요.';
-        open(() => (
-          <Toast>
-            <>{errorMessage}</>
-          </Toast>
-        ));
-      },
+      onError: () => open(() => <Toast>오류가 발생했습니다. 다시 시도해주세요.</Toast>),
     },
   });
 
