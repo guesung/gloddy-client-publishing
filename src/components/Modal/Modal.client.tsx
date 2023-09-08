@@ -4,7 +4,6 @@ import { Button } from '../Button';
 import { Spacing } from '../Spacing';
 import { StrictPropsWithChildren } from '@/types';
 import cn from '@/utils/cn';
-import { useEffect, useRef } from 'react';
 
 export interface ModalProps {
   onOkClick?: () => void;
@@ -41,22 +40,6 @@ export function Modal({
   okMessage,
   isLoading,
 }: StrictPropsWithChildren<ModalProps>) {
-  const pageRef = useRef(false);
-  useEffect(() => {
-    const goBack = () => {
-      pageRef.current = true;
-      onCancelClick && onCancelClick();
-    };
-    history.pushState({ page: 'modal' }, document.title);
-    window.addEventListener('popstate', goBack);
-    return () => {
-      window.removeEventListener('popstate', goBack);
-      if (!pageRef.current) {
-        history.back();
-      }
-    };
-  }, [onCancelClick]);
-
   return (
     <ModalWrapper onClose={onCancelClick}>
       <div
