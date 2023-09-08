@@ -24,7 +24,7 @@ export default function InputForm() {
       images: [],
     },
   });
-  const { register, handleSubmit, watch, setValue, control, formState } = hookForm;
+  const { register, handleSubmit, watch, setValue, control } = hookForm;
 
   const { mutate: mutateArticle, isLoading } = usePostArticle(groupId);
   const { data: groupDetailData } = useGetGroupDetail(groupId);
@@ -32,6 +32,8 @@ export default function InputForm() {
   const { isCaptain } = groupDetailData;
 
   const onSubmit = async (data: WriteFormValues) => {
+    if (isLoading) return;
+
     mutateArticle(
       {
         params: { groupId },
@@ -42,7 +44,6 @@ export default function InputForm() {
       }
     );
   };
-  console.log(isLoading, formState.isSubmitting);
 
   return (
     <>
@@ -68,12 +69,7 @@ export default function InputForm() {
         <Button
           onClick={() =>
             open(() => (
-              <WriteModal
-                type="write"
-                onCancelClick={exit}
-                onOkClick={handleSubmit(onSubmit)}
-                isLoading={isLoading}
-              />
+              <WriteModal type="write" onCancelClick={exit} onOkClick={handleSubmit(onSubmit)} />
             ))
           }
           disabled={watch('content').length < 20}

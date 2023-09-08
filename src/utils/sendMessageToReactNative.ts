@@ -1,3 +1,3 @@
-export function sendMessageToReactNative(message: string) {
-  window.ReactNativeWebView && window.ReactNativeWebView.postMessage(message);
+function sendMessageToReactNative(message: string) {
+  window.ReactNativeWebView.postMessage(message);
 }
