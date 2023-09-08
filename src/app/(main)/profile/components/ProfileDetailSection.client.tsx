@@ -13,7 +13,7 @@ import cn from '@/utils/cn';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 
 interface ProfileDetailProps {
   profileData: ReturnType<typeof useGetProfile>['data'];
@@ -22,7 +22,6 @@ interface ProfileDetailProps {
 export default function ProfileDetailSection({ profileData }: ProfileDetailProps) {
   const pathname = usePathname();
   const params = useParams();
-  const router = useRouter();
   const isPrivateProfile = !params.userId;
 
   const {
@@ -59,7 +58,6 @@ export default function ProfileDetailSection({ profileData }: ProfileDetailProps
                 align="center"
                 justify="center"
                 className="absolute bottom-0 rounded-8 border border-warning bg-warning-color px-2 py-4 text-caption text-warning"
-                onClick={() => router.push('/profile/verfify')}
               >
                 재학생 인증 필요
               </Flex>
@@ -120,7 +118,7 @@ export default function ProfileDetailSection({ profileData }: ProfileDetailProps
             <div className="h-16 overflow-hidden rounded-10 bg-white">
               <motion.div
                 initial={{ width: 0 }}
-                animate={{ width: `${reliabilityScore / 3}%` }}
+                animate={{ width: `${reliabilityScore / 2}%` }}
                 transition={{ duration: 0.5 }}
                 className="h-full rounded-10 bg-primary"
               />
@@ -176,13 +174,7 @@ export default function ProfileDetailSection({ profileData }: ProfileDetailProps
       </section>
       <section className="px-20 py-40">
         <p className="px-4 text-subtitle-3 text-sign-secondary">자기소개</p>
-        <TextField
-          as="textarea"
-          readOnly
-          value={introduce}
-          className="text-paragraph-2"
-          placeholder={!introduce ? '자기소개가 아직 등록되지 않았어요!' : ''}
-        />
+        <TextField as="textarea" readOnly value={introduce} className="text-paragraph-2" />
       </section>
     </>
   );
