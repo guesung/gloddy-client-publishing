@@ -1,7 +1,7 @@
 'use client';
 import { Spacing } from '../Spacing';
 import cn from '@/utils/cn';
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useState } from 'react';
 
 import type { UseFormRegisterReturn } from 'react-hook-form';
 
@@ -46,14 +46,10 @@ function TextField<T extends React.ElementType = 'input'>(
   const [isFocus, setIsFocus] = useState(false);
   const Element = as || 'input';
 
-  const [id, setId] = useState<number | null>(null);
-
-  useEffect(() => {
-    setId(elementId++);
-  }, []);
+  const [id] = useState(() => String(elementId++));
 
   return (
-    <label htmlFor={'' + id} className="relative">
+    <label htmlFor={id} className="relative">
       <section
         className={cn(
           'w-full rounded-8 border-1 p-16',
