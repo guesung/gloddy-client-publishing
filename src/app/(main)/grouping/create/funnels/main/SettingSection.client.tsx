@@ -6,7 +6,6 @@ import { Spacing } from '@/components/Spacing';
 import { SpinBox } from '@/components/SpinBox';
 import { TextField } from '@/components/TextField';
 import { useModal } from '@/hooks/useModal';
-import { useController } from 'react-hook-form';
 
 interface SettingSectionProps {
   onSelectMeetDate: () => void;
@@ -14,15 +13,7 @@ interface SettingSectionProps {
 
 export default function SettingSection({ onSelectMeetDate }: SettingSectionProps) {
   const { open: openLocationSheet, close: closeLocationSheet } = useModal();
-  const { watch, control } = useCreateGroupContext();
-
-  const { field: maxUser } = useController({
-    name: 'maxUser',
-    control,
-    rules: {
-      required: true,
-    },
-  });
+  const { watch, setValue, control } = useCreateGroupContext();
 
   return (
     <section id="setting">
@@ -57,7 +48,12 @@ export default function SettingSection({ onSelectMeetDate }: SettingSectionProps
       <section className="px-20 py-8">
         <p className="px-4 text-subtitle-3 text-sign-secondary">모임 인원</p>
         <Spacing size={4} />
-        <SpinBox value={maxUser.value} min={3} max={20} onChange={maxUser.onChange} />
+        <SpinBox
+          value={watch('maxUser')}
+          min={3}
+          max={20}
+          onChange={(value) => setValue('maxUser', value)}
+        />
       </section>
     </section>
   );

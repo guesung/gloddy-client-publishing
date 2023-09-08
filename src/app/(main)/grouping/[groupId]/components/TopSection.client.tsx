@@ -2,16 +2,13 @@
 import { useDeleteScrapGroups, useGetGroupDetail, usePostScrap } from '@/apis/groups';
 import { IconButton } from '@/components/Button';
 import { Icon } from '@/components/Icon';
-import { ImageModal } from '@/components/Modal';
 import { Spacing } from '@/components/Spacing';
-import { useModal } from '@/hooks/useModal';
 import { useNumberParams } from '@/hooks/useNumberParams';
 import { useShowMore } from '@/hooks/useShowMore';
 import Image from 'next/image';
 
 export default function TopSection() {
   const { groupId } = useNumberParams<['groupId']>();
-  const { open, exit } = useModal();
   const { contentRef, toggleShowFullText, shouldShowButton, showFullText } = useShowMore({
     maxLines: 6,
   });
@@ -36,15 +33,6 @@ export default function TopSection() {
           src={fileUrl || imageUrl || '/images/dummy_image.png'}
           alt="thumbnail"
           className="object-cover"
-          onClick={() =>
-            open(() => (
-              <ImageModal
-                images={[fileUrl || imageUrl]}
-                currentImage={fileUrl || imageUrl}
-                onClose={exit}
-              />
-            ))
-          }
           fill
         />
         <IconButton

@@ -45,9 +45,7 @@ export default function InputForm() {
     nextStep();
   };
 
-  const { handleFileUploadClick, isLoading } = useFileUpload((files) =>
-    setValue('imageUrl', files[0])
-  );
+  const { handleFileUploadClick } = useFileUpload((files) => setValue('imageUrl', files[0]));
 
   const birth = watch('birth');
   const isBirthDayEntered = !!birth.year && !!birth.month && !!birth.date;
@@ -64,7 +62,6 @@ export default function InputForm() {
           imageUrl={watch('imageUrl') || ''}
           size="large"
           iconVariant="add"
-          isLoading={isLoading}
           onClick={handleFileUploadClick}
         />
       </Flex>

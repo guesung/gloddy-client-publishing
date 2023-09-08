@@ -14,7 +14,6 @@ export interface Grouping {
   placeAddress: string;
   placeLatitude: number;
   placeLongitude: number;
-  placeId: string;
 }
 
 export interface Article {
@@ -84,7 +83,6 @@ export interface GroupDetailResponse extends Grouping {
   isCaptain: boolean;
   isScraped: boolean;
   isApplyWaited: boolean;
-  isExistNewApply: boolean;
 }
 
 export interface CreateGroupRequest {
@@ -95,10 +93,9 @@ export interface CreateGroupRequest {
   startTime: string;
   placeName: string;
   placeAddress: string;
-  placeLatitude: number;
-  placeLongitude: number;
+  placeLatitude: string;
+  placeLongitude: string;
   maxUser: number;
-  placeId: string;
 }
 
 export interface CreateGroupResponse {
