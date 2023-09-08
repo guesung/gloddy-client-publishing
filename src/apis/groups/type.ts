@@ -98,8 +98,7 @@ export interface CreateGroupRequest {
   placeLatitude: number;
   placeLongitude: number;
   maxUser: number;
-  placeId?: string;
-  placeUrl?: string;
+  placeId: string;
 }
 
 export interface CreateGroupResponse {
@@ -189,7 +188,31 @@ export interface ScrapRequest {
 export interface EstimateResponse {
   groupMemberList: Array<{
     imageUrl: string;
-    name: string;
+    isCaptain: boolean;
+    nickName: string;
+    reliabilityLevel: ReliabilityType;
     userId: number;
   }>;
 }
+
+export interface EstimateRequest {
+  params: {
+    groupId: number;
+  };
+  payload: {
+    praiseInfos: Array<{
+      userId: number;
+      praiseValue?: string;
+    }>;
+
+    mateInfo: {
+      userId: number;
+      selectionReason: string;
+    };
+  };
+}
+
+export type PraiseInfoType = {
+  userId: number;
+  praiseValue?: string;
+};
