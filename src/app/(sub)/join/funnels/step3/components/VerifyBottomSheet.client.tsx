@@ -21,9 +21,16 @@ export default memo(function VerifyBottomSheet({
   isOpen,
 }: VerifyBottomSheetProps) {
   const hookForm = useJoinContext();
-  const { register, handleSubmit, setValue, watch, setError, resetField } = hookForm;
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { isValid },
+    setError,
+    resetField,
+  } = hookForm;
 
-  const { time: verifyTime } = useTimer({
+  const { status: timerStatus, time: verifyTime } = useTimer({
     initialTime: 180,
     timerType: 'DECREMENTAL',
     endTime: 0,
@@ -73,7 +80,6 @@ export default memo(function VerifyBottomSheet({
       title="인증번호 입력"
       isRightCloseIcon={false}
       isOpen={isOpen}
-      disableDrag
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="my-20">
@@ -86,10 +92,8 @@ export default memo(function VerifyBottomSheet({
                 message: '인증 번호를 다시 확인해주세요.',
               },
             })}
-            timer={verifyTime}
-            type="text"
-            pattern="\d*"
             maxLength={6}
+            timer={verifyTime}
           />
         </section>
 
@@ -97,7 +101,7 @@ export default memo(function VerifyBottomSheet({
           <Button type="button" onClick={handleResend}>
             재전송
           </Button>
-          <Button type="submit" disabled={!watch('verifyEmailNumber').match(regexr.verifyNumber)}>
+          <Button type="submit" disabled={!isValid}>
             확인
           </Button>
         </ButtonGroup>

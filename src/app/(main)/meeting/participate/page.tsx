@@ -7,13 +7,10 @@ import {
   getMeetingParticipating,
   getMeetingRejected,
 } from '@/apis/meeting';
-import { RejectedFallback } from '@/components/ErrorBoundary';
 import { Footer } from '@/components/Footer';
-import { Loading } from '@/components/Loading';
-import { PageAnimation } from '@/components/PageAnimation';
 import { HydrationProvider } from '@/components/Provider';
-import { QueryAsyncBoundary } from '@suspensive/react-query';
 import { redirect } from 'next/navigation';
+import React, { Suspense } from 'react';
 
 interface MeetingPageProps {
   searchParams: {
@@ -27,28 +24,26 @@ export default function MeetingPage({ searchParams }: MeetingPageProps) {
   return (
     <>
       <MeetingParticipateHeader />
-      <QueryAsyncBoundary rejectedFallback={RejectedFallback} pendingFallback={<Loading />}>
-        <PageAnimation>
-          <HydrationProvider
-            queryMultipleFn={[
-              getMeetingParticipating,
-              getMeetingHosting,
-              getMeetingRejected,
-              getMeetingNotEstimated,
-              getMeetingNotEstimated,
-            ]}
-            queryKey={[
-              Keys.getMeetingParticipating(),
-              Keys.getMeetingHosting(),
-              Keys.getMeetingRejected(),
-              Keys.getMeetingNotEstimated(),
-              Keys.getMeetingNotEstimated(),
-            ]}
-          >
-            <ContentSection />
-          </HydrationProvider>
-        </PageAnimation>
-      </QueryAsyncBoundary>
+      <Suspense fallback={null}>
+        <HydrationProvider
+          queryMultipleFn={[
+            getMeetingParticipating,
+            getMeetingHosting,
+            getMeetingRejected,
+            getMeetingNotEstimated,
+            getMeetingNotEstimated,
+          ]}
+          queryKey={[
+            Keys.getMeetingParticipating(),
+            Keys.getMeetingHosting(),
+            Keys.getMeetingRejected(),
+            Keys.getMeetingNotEstimated(),
+            Keys.getMeetingNotEstimated(),
+          ]}
+        >
+          <ContentSection />
+        </HydrationProvider>
+      </Suspense>
       <Footer page="meeting" />
     </>
   );

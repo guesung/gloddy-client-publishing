@@ -1,4 +1,3 @@
-'use client';
 import { useOnClickOutside } from '@/hooks/useOnClickOutside';
 import cn from '@/utils/cn';
 import { motion } from 'framer-motion';
