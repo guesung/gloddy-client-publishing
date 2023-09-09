@@ -61,7 +61,6 @@ export default function MainStep({ onSelectMeetDate }: MainStepProps) {
   const onsubmit: SubmitHandler<CreateGroupContextValue> = (data) => {
     mutateCreateGroup(
       {
-        placeUrl: data.place.id, // TODO: api 나오면 삭제
         placeId: data.place.id,
         placeName: data.place.name,
         placeAddress: data.place.address,

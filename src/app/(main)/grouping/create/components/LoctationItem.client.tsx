@@ -1,23 +1,20 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 import { Icon } from '@/components/Icon';
 import { Flex } from '@/components/Layout';
 
-interface LocationItemProps<T = google.maps.places.AutocompletePrediction> {
-  place: T;
-  onSelect: (place: T) => void;
+interface LocationItemProps {
+  place: google.maps.places.PlaceResult;
+  onSelect: (place: google.maps.places.PlaceResult) => void;
 }
 
 export default function LocationItem({ place, onSelect }: LocationItemProps) {
-  const {
-    structured_formatting: { main_text, secondary_text },
-  } = place;
+  const { name, formatted_address: address } = place;
 
   return (
     <Flex align="start" className="gap-8 py-12 hover:bg-sub" onClick={() => onSelect(place)}>
-      <Icon id="24-location_on" className="shrink-0" />
+      <Icon id="24-location_on" />
       <div className="overflow-hidden">
-        <p className="truncate text-subtitle-2">{main_text}</p>
-        <p className="truncate text-paragraph-2 text-sign-tertiary">{secondary_text}</p>
+        <p className="truncate text-subtitle-2">{name}</p>
+        <p className="truncate text-paragraph-2 text-sign-tertiary">{address}</p>
       </div>
     </Flex>
   );

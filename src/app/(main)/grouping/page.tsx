@@ -20,11 +20,15 @@ export default function Grouping() {
         rejectedFallback={RejectedFallback}
         pendingFallback={<Loading className="h-[calc(100dvh-178px)]" />}
       >
-        <HydrationProvider queryKey={Keys.getGroups()} queryFn={() => getGroups(0)} isInfiniteQuery>
-          <PageAnimation>
+        <PageAnimation>
+          <HydrationProvider
+            queryKey={Keys.getGroups()}
+            queryFn={() => getGroups(0)}
+            isInfiniteQuery
+          >
             <GroupingCardList />
-          </PageAnimation>
-        </HydrationProvider>
+          </HydrationProvider>
+        </PageAnimation>
       </QueryAsyncBoundary>
       <CreateGroupButton />
       <Spacing size={60} />
