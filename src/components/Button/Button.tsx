@@ -1,12 +1,11 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Loading } from '../Loading';
 import cn from '@/utils/cn';
-import { debounce, throttle } from 'lodash';
+import { debounce } from 'lodash';
 import { useCallback } from 'react';
 
 import type { StrictPropsWithChildren } from '@/types';
 
-interface ButtonProps<T extends React.ElementType> extends React.HTMLAttributes<T> {
+interface ButtonProps<T extends React.ElementType> extends React.ButtonHTMLAttributes<T> {
   as?: T;
   /**
    * 버튼의 크기를 설정합니다. small: 48px, medium: 56px (default: medium)
@@ -30,18 +29,9 @@ interface ButtonProps<T extends React.ElementType> extends React.HTMLAttributes<
    */
   isLoading?: boolean;
   /**
-   * 클릭 이벤트를 설정합니다.
-   */
-  actionType?: 'debounce' | 'throttle' | 'none';
-  /**
    * 디바운스 딜레이를 설정합니다. (default: 200)
    */
   debounceDelay?: number;
-  /**
-   * 스로틀 딜레이를 설정합니다. (default: 300)
-   */
-  throttleDelay?: number;
-  onClick?: (event?: any) => void;
 }
 
 export default function Button<T extends React.ElementType>({
@@ -54,25 +44,17 @@ export default function Button<T extends React.ElementType>({
   size = 'medium',
   variant = 'solid-primary',
   fullWidth = true,
-  actionType = 'none',
   debounceDelay = 200,
-  throttleDelay = 300,
   ...props
 }: StrictPropsWithChildren<ButtonProps<T> & React.ComponentPropsWithoutRef<T>>) {
-  const Element = as || 'button';
+  const Element = as ?? 'button';
 
-  const handleDebounceClick = useCallback(
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleClick = useCallback(
     debounce((event) => {
       onClick?.(event);
     }, debounceDelay),
     [onClick, debounceDelay]
-  );
-
-  const handleThrottleClick = useCallback(
-    throttle((event) => {
-      onClick?.(event);
-    }, throttleDelay),
-    [throttleDelay]
   );
 
   return (
@@ -94,13 +76,7 @@ export default function Button<T extends React.ElementType>({
         },
         className
       )}
-      onClick={
-        actionType === 'debounce'
-          ? handleDebounceClick
-          : actionType === 'throttle'
-          ? handleThrottleClick
-          : onClick
-      }
+      onClick={handleClick}
       disabled={disabled || isLoading}
       {...props}
     >

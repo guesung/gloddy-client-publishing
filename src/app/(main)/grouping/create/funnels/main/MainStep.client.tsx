@@ -6,7 +6,6 @@ import CreateModal from '../../components/CreateModal.client';
 import { usePostCreateGroup } from '@/apis/groups';
 import { Button, ButtonGroup } from '@/components/Button';
 import { Divider } from '@/components/Divider';
-import { LayerLoading } from '@/components/Loading';
 import { Toast } from '@/components/Modal';
 import { Spacing } from '@/components/Spacing';
 import { useModal } from '@/hooks/useModal';
@@ -48,7 +47,7 @@ export default function MainStep({ onSelectMeetDate }: MainStepProps) {
   const hookForm = useCreateGroupContext();
   const { handleSubmit, watch, control } = hookForm;
 
-  const { mutate: mutateCreateGroup, status } = usePostCreateGroup();
+  const { mutate: mutateCreateGroup, isLoading } = usePostCreateGroup();
   const { open: openCreateModal, exit: exitCreateModal } = useModal();
   const { open: openToast } = useModal({ delay: 2000 });
 
@@ -60,22 +59,25 @@ export default function MainStep({ onSelectMeetDate }: MainStepProps) {
   });
 
   const onsubmit: SubmitHandler<CreateGroupContextValue> = (data) => {
-    mutateCreateGroup({
-      placeUrl: data.place.id, // TODO: api 나오면 삭제
-      placeId: data.place.id,
-      placeName: data.place.name,
-      placeAddress: data.place.address,
-      placeLatitude: data.place.latitude,
-      placeLongitude: data.place.longitude,
-      content: data.content,
-      maxUser: data.maxUser,
-      meetDate: format(data.meetDate, 'yyyy-MM-dd'),
-      title: data.title,
-      imageUrl: data.imageUrl,
-      startTime: formatTime(data.time),
-    });
-
-    exitCreateModal();
+    mutateCreateGroup(
+      {
+        placeUrl: data.place.id, // TODO: api 나오면 삭제
+        placeId: data.place.id,
+        placeName: data.place.name,
+        placeAddress: data.place.address,
+        placeLatitude: data.place.latitude,
+        placeLongitude: data.place.longitude,
+        content: data.content,
+        maxUser: data.maxUser,
+        meetDate: format(data.meetDate, 'yyyy-MM-dd'),
+        title: data.title,
+        imageUrl: data.imageUrl,
+        startTime: formatTime(data.time),
+      },
+      {
+        onSettled: exitCreateModal,
+      }
+    );
   };
 
   const handleCreateClick = () => {
@@ -85,7 +87,11 @@ export default function MainStep({ onSelectMeetDate }: MainStepProps) {
     }
 
     openCreateModal(() => (
-      <CreateModal onCancelClick={exitCreateModal} onOkClick={handleSubmit(onsubmit)} />
+      <CreateModal
+        onCancelClick={exitCreateModal}
+        onOkClick={handleSubmit(onsubmit)}
+        isLoading={isLoading}
+      />
     ));
   };
 
@@ -101,7 +107,6 @@ export default function MainStep({ onSelectMeetDate }: MainStepProps) {
           완료
         </Button>
       </ButtonGroup>
-      <LayerLoading isLoading={status !== 'idle' && status !== 'error'} />
     </>
   );
 }

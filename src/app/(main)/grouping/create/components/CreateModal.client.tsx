@@ -5,11 +5,17 @@ import { Spacing } from '@/components/Spacing';
 interface CreateModalProps {
   onOkClick: () => void;
   onCancelClick: () => void;
+  isLoading?: boolean;
 }
 
-export default function CreateModal({ onOkClick, onCancelClick }: CreateModalProps) {
+export default function CreateModal({ onOkClick, onCancelClick, isLoading }: CreateModalProps) {
   return (
-    <Modal variant="warning" onOkClick={onOkClick} onCancelClick={onCancelClick}>
+    <Modal
+      variant="warning"
+      onOkClick={onOkClick}
+      onCancelClick={onCancelClick}
+      isLoading={isLoading}
+    >
       <Spacing size={32} />
       <Icon id="48-warning" width={48} height={48} />
       <Spacing size={12} />
