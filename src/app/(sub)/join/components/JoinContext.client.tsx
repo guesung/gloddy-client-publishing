@@ -15,7 +15,11 @@ const defaultValues = {
   },
   verifyEmailNumber: '',
   nickname: '',
-  birth: '',
+  birth: {
+    year: '',
+    month: '',
+    date: '',
+  },
   gender: undefined,
   personalityIdList: [],
 };

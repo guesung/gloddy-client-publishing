@@ -1,3 +1,4 @@
+import BirthdayBottomSheet from './BirthdayBottomSheet.client';
 import { useEditContext } from '../EditProvider.client';
 import { usePatchProfile } from '@/apis/profile';
 import { Avatar } from '@/components/Avatar';
@@ -10,6 +11,8 @@ import { Tag } from '@/components/Tag';
 import { TextField, TextFieldController } from '@/components/TextField';
 import { personalityList } from '@/constants/personalityList';
 import { useFileUpload } from '@/hooks/useFileUpload';
+import { useModal } from '@/hooks/useModal';
+import { formatDateDTO } from '@/utils/formatDateDTO';
 import { useController } from 'react-hook-form';
 
 import type { ProfileEditState } from '../../type';
@@ -19,8 +22,10 @@ interface Step1InputFormProps {
 }
 export default function Step1InputForm({ onNext }: Step1InputFormProps) {
   const { mutate } = usePatchProfile();
+
   const hookForm = useEditContext();
   const { control, watch, handleSubmit, setValue, register, formState } = hookForm;
+  const birth = watch('birth');
   const personalities = watch('personalities');
 
   const {
@@ -31,16 +36,22 @@ export default function Step1InputForm({ onNext }: Step1InputFormProps) {
   });
   const { handleFileUploadClick, isLoading } = useFileUpload((files) => onChange(files[0]));
 
-  const isAllTyped = formState.isValid && !!watch('gender');
-  const formatBirthDTO = (birth: string) => birth.replace(/\./g, '-');
+  const { open: openBirthdayBottomSheet, close: closeBirthdayBottomSheet } = useModal();
 
   const onSubmit = (data: ProfileEditState) => {
-    const { birth } = data;
-
     if (!isAllTyped) return;
+    const { birth, ...rest } = data;
 
-    mutate({ ...data, birth: formatBirthDTO(birth) });
+    const profileData = {
+      ...rest,
+      birth: formatDateDTO(birth),
+    };
+
+    mutate(profileData);
   };
+
+  const isBirthDayEntered = !!birth.year && !!birth.month && !!birth.date;
+  const isAllTyped = formState.isValid && isBirthDayEntered && !!watch('gender');
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col px-20">
@@ -64,7 +75,16 @@ export default function Step1InputForm({ onNext }: Step1InputFormProps) {
 
       <p className="text-subtitle-3">생년월일</p>
       <Spacing size={4} />
-      <TextField placeholder="생년월일을 선택해주세요." value={watch('birth')} readOnly />
+      <TextField
+        placeholder="생년월일을 선택해주세요."
+        onClick={() =>
+          openBirthdayBottomSheet(({ isOpen }) => (
+            <BirthdayBottomSheet onClose={closeBirthdayBottomSheet} isOpen={isOpen} />
+          ))
+        }
+        value={isBirthDayEntered ? `${birth.year} ${birth.month} ${birth.date}` : ''}
+        readOnly
+      />
 
       <Spacing size={8} />
 
