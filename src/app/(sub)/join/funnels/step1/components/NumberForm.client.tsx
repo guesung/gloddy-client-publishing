@@ -1,3 +1,5 @@
+'use client';
+
 import { useJoinContext } from '../../../components/JoinContext.client';
 import { formatNumber, formatNumberBackSpace } from '../util';
 import { useSMSMutation } from '@/apis/auth';
@@ -28,6 +30,7 @@ export default function NumberForm({ inputStatus, setInputStatus }: NumberSectio
   ): any => {
     const phoneNumber = e.currentTarget.value.replace(/[^0-9-]/g, '');
     const phoneNumberWithoutHyphen = phoneNumber.replace(/-/g, '');
+    console.log(phoneNumber, phoneNumberWithoutHyphen);
 
     if ('key' in e && e.key === 'Backspace') {
       setValue('phoneNumber', formatNumberBackSpace(phoneNumberWithoutHyphen));
@@ -66,7 +69,6 @@ export default function NumberForm({ inputStatus, setInputStatus }: NumberSectio
         isSpacing={false}
         readOnly={inputStatus === 'afterSend'}
         isLeftCaptionWrap={false}
-        type="tel"
       />
 
       <Spacing size={8} />

@@ -4,7 +4,6 @@ import { useMoreSheet } from '@/app/(main)/grouping/hooks/useMoreSheet';
 import { IconButton } from '@/components/Button';
 import { Header } from '@/components/Header';
 import { Icon } from '@/components/Icon';
-import { PageAnimation } from '@/components/PageAnimation';
 import { useNumberParams } from '@/hooks/useNumberParams';
 import { useRouter } from 'next/navigation';
 import { Suspense } from 'react';
@@ -22,9 +21,7 @@ export default function ArticleHeader() {
       </Header.Left>
       <Header.Right>
         <Suspense>
-          <PageAnimation>
-            <IconButtonAction />
-          </PageAnimation>
+          <IconButtonAction />
         </Suspense>
       </Header.Right>
     </Header>

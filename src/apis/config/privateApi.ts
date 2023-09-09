@@ -37,19 +37,16 @@ privateApi.interceptors.response.use(
     try {
       if (!error.response) return Promise.reject(error);
       if (
-        error.response.status === AUTH_ERROR_CODES.UNAUTHORIZED ||
-        error.response.status === AUTH_ERROR_CODES.NOT_FOUND
+        error.response.status === AUTH_ERROR_CODES.EXPIRED_TOKEN_ERROR ||
+        error.response.status === AUTH_ERROR_CODES.TOKEN_ERROR
       ) {
-        window.location.href = '/join?step=1';
-      }
-      if (error.response.status === AUTH_ERROR_CODES.TOKEN_ERROR) {
         try {
           const { refreshToken, accessToken } = await getTokenFromCookie();
           if (!refreshToken || !accessToken) {
             throw new ApiError(
               '에러 발생',
               '토큰이 없습니다.',
-              AUTH_ERROR_CODES.UNAUTHORIZED,
+              AUTH_ERROR_CODES.EXPIRED_TOKEN_ERROR,
               new Date()
             );
           }
@@ -65,7 +62,7 @@ privateApi.interceptors.response.use(
             throw new ApiError(
               '에러 발생',
               'accessToken 발급 중 오류가 발생했습니다.',
-              AUTH_ERROR_CODES.UNAUTHORIZED,
+              AUTH_ERROR_CODES.EXPIRED_TOKEN_ERROR,
               new Date()
             );
           }
@@ -75,13 +72,13 @@ privateApi.interceptors.response.use(
             throw new ApiError(
               '에러 발생',
               '이전 정보가 없습니다.',
-              AUTH_ERROR_CODES.UNAUTHORIZED,
+              AUTH_ERROR_CODES.EXPIRED_TOKEN_ERROR,
               new Date()
             );
           }
 
           prevRequest.headers['X-AUTH-TOKEN'] = reIssuedAccessToken;
-          return privateApi(prevRequest);
+          Promise.reject(new Error('요청 도중 에러 발생'));
         } catch (e) {
           return Promise.reject(e);
         }
