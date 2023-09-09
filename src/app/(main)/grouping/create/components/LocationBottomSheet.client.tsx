@@ -1,4 +1,4 @@
-import LocationItem from './LocationItem.client';
+import LocationItem from './LoctationItem.client';
 import { CreateGroupContextValue } from '../type';
 import { Button, ButtonGroup } from '@/components/Button';
 import { Icon } from '@/components/Icon';
@@ -7,11 +7,16 @@ import { ItemList } from '@/components/List';
 import { BottomSheet } from '@/components/Modal';
 import { Spacing } from '@/components/Spacing';
 import { TextField } from '@/components/TextField';
-import { LatLng } from '@/types';
-import { GoogleMap, Marker } from '@react-google-maps/api';
-import { useEffect, useState } from 'react';
+import { GOOGLE_API_KEY } from '@/constants';
+import {
+  GoogleMap,
+  type Libraries,
+  Marker,
+  StandaloneSearchBox,
+  useJsApiLoader,
+} from '@react-google-maps/api';
+import { useEffect, useRef, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
-import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
 
 interface LocationBottomSheetProps {
   control: Control<CreateGroupContextValue>;
@@ -19,24 +24,25 @@ interface LocationBottomSheetProps {
   isOpen: boolean;
 }
 
+const libraries: Libraries = ['places'];
+
 export default function LocationBottomSheet({
   control,
   onClose,
   isOpen,
 }: LocationBottomSheetProps) {
-  const [snapPoints, setSnapPoints] = useState<number[]>([550, 0]);
-  const {
-    ready,
-    value,
-    suggestions: { status, data },
-    setValue,
-    clearSuggestions,
-  } = usePlacesAutocomplete({
-    requestOptions: {
-      language: 'en', // 언어설정
-      region: 'KR',
-    },
+  const { isLoaded } = useJsApiLoader({
+    preventGoogleFontsLoading: true,
+    id: 'google-map-script',
+    googleMapsApiKey: GOOGLE_API_KEY as string,
+    libraries,
+    language: 'en', // 언어 설정
+    region: 'KR',
   });
+  const [searchBox, setSearchBox] = useState<google.maps.places.SearchBox>();
+  const [places, setPlaces] = useState<google.maps.places.PlaceResult[]>([]);
+  const [snapPoints, setSnapPoints] = useState<number[]>([-100, 0]);
+  const ref = useRef<HTMLInputElement>(null);
 
   const { field, fieldState } = useController({
     name: 'place',
@@ -46,16 +52,7 @@ export default function LocationBottomSheet({
     },
   });
 
-  const [latLng, setLatLng] = useState<LatLng | undefined>(
-    field.value.latitude && field.value.longitude
-      ? {
-          lat: field.value.latitude,
-          lng: field.value.longitude,
-        }
-      : undefined
-  );
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
     field.onChange({
       id: '',
       name: '',
@@ -63,32 +60,9 @@ export default function LocationBottomSheet({
       latitude: undefined,
       longitude: undefined,
     });
-    setValue(e.target.value);
-    setLatLng(undefined);
-  };
 
-  const handleSelect = async (place: google.maps.places.AutocompletePrediction) => {
-    const geocode = await getGeocode({ address: place.description });
-    const latLng = getLatLng(geocode[0]);
-    setLatLng(latLng);
-    field.onChange({
-      id: place.place_id,
-      name: place.structured_formatting.main_text,
-      address: place.structured_formatting.secondary_text,
-      latitude: latLng.lat,
-      longitude: latLng.lng,
-    });
-    setValue(place.structured_formatting.main_text, false);
-    clearSuggestions();
-  };
-
-  useEffect(() => {
-    if (field.value.name) {
-      setValue(field.value.name, false);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, [places]);
   return (
     <BottomSheet
       snapPoints={snapPoints}
@@ -98,23 +72,28 @@ export default function LocationBottomSheet({
       disableDrag
       isOpen={isOpen}
     >
-      <TextField
-        as="input"
-        placeholder="모임 위치를 입력해주세요."
-        leftIcon={<Icon id="24-search" width={24} height={24} />}
-        value={value}
-        onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}
-        readOnly={!ready}
-      />
-      <Spacing size={20} />
-      {fieldState.isDirty && (
+      {isLoaded && (
         <>
+          <StandaloneSearchBox
+            onLoad={(searchBox) => setSearchBox(searchBox)}
+            onPlacesChanged={() => {
+              const places = searchBox?.getPlaces() || [];
+              setPlaces(places);
+            }}
+          >
+            <TextField
+              ref={ref}
+              placeholder="모임 위치를 입력해주세요."
+              leftIcon={<Icon id="24-search" width={24} height={24} />}
+            />
+          </StandaloneSearchBox>
+          <Spacing size={20} />
           <div className="aspect-video">
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '200px', borderRadius: '8px' }}
               center={{
-                lat: latLng?.lat || 37.566,
-                lng: latLng?.lng || 126.978,
+                lat: field.value.latitude || places[0]?.geometry?.location?.lat() || 37.566,
+                lng: field.value.longitude || places[0]?.geometry?.location?.lng() || 126.978,
               }}
               zoom={15}
               options={{
@@ -122,22 +101,54 @@ export default function LocationBottomSheet({
                 keyboardShortcuts: false,
               }}
             >
-              {latLng && <Marker position={latLng} />}
+              {places.map((place) => (
+                <Marker
+                  key={place.place_id}
+                  position={{
+                    lat: place.geometry?.location?.lat() || 0,
+                    lng: place.geometry?.location?.lng() || 0,
+                  }}
+                  onClick={() => {
+                    field.onChange({
+                      id: place.place_id,
+                      name: place.name,
+                      address: place.formatted_address,
+                      latitude: place.geometry?.location?.lat(),
+                      longitude: place.geometry?.location?.lng(),
+                    });
+                  }}
+                />
+              ))}
             </GoogleMap>
           </div>
-          <Spacing size={20} />
-          <Flex direction="column" className="gap-2 rounded-8 bg-divider p-16">
-            <p className="truncate text-subtitle-2">{field.value.name}</p>
-            <p className="truncate text-paragraph-2 text-sign-secondary">{field.value.address}</p>
-          </Flex>
         </>
       )}
       <div className="scrollbar h-full overflow-hidden overflow-y-scroll">
-        {status === 'ZERO_RESULTS' && <p className="text-center">검색 결과가 없습니다.</p>}
-        {status === 'OK' && (
+        {fieldState.isDirty ? (
+          <Flex
+            direction="column"
+            className="mt-20 gap-2 overflow-hidden rounded-8 bg-divider p-16"
+          >
+            <p className="truncate text-subtitle-2">{field.value.name}</p>
+            <p className="truncate text-paragraph-2 text-sign-secondary">{field.value.address}</p>
+          </Flex>
+        ) : (
           <ItemList
-            data={data}
-            renderItem={(place) => <LocationItem place={place} onSelect={handleSelect} />}
+            data={places || []}
+            renderItem={(place) => (
+              <LocationItem
+                place={place}
+                onSelect={(place) => {
+                  field.onChange({
+                    id: place.place_id,
+                    name: place.name,
+                    address: place.formatted_address,
+                    latitude: place.geometry?.location?.lat(),
+                    longitude: place.geometry?.location?.lng(),
+                  });
+                }}
+              />
+            )}
             hasDivider={false}
             className="py-8"
           />

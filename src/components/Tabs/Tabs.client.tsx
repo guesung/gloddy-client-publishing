@@ -1,7 +1,7 @@
 'use client';
 import { PageAnimation } from '../PageAnimation';
 import cn from '@/utils/cn';
-import { LayoutGroup, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import {
@@ -10,17 +10,13 @@ import {
   ReactElement,
   cloneElement,
   isValidElement,
-  useState,
 } from 'react';
 
 import type { StrictPropsWithChildren } from '@/types';
 
-let elementId = 1;
-
 export default function Tabs({ children }: StrictPropsWithChildren) {
-  const [id] = useState(() => String(elementId++));
-
-  return <LayoutGroup id={id}>{children}</LayoutGroup>;
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  return <>{children}</>;
 }
 
 const renderTabElement = (

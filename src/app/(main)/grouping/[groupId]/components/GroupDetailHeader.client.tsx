@@ -5,13 +5,16 @@ import ReportDoneModal from '../../components/ReportDoneModal.client';
 import WarningModal from '../../components/WarningModal.client';
 import { useDeleteGroupMember, useGetGroupDetail } from '@/apis/groups';
 import { IconButton } from '@/components/Button';
+import { RejectedFallback } from '@/components/ErrorBoundary';
 import { Header } from '@/components/Header';
 import { Icon } from '@/components/Icon';
 import { Flex } from '@/components/Layout';
+import { Loading } from '@/components/Loading';
 import MoreBottomSheet from '@/components/Modal/MoreBottomSheet.client';
+import { PageAnimation } from '@/components/PageAnimation';
 import { useModal } from '@/hooks/useModal';
 import { useNumberParams } from '@/hooks/useNumberParams';
-import { Suspense } from '@suspensive/react';
+import { QueryAsyncBoundary } from '@suspensive/react-query';
 import { useRouter } from 'next/navigation';
 
 export default function GroupDetailHeader() {
@@ -21,18 +24,26 @@ export default function GroupDetailHeader() {
   return (
     <Header className="px-4">
       <Header.Left>
-        <IconButton size="large" onClick={() => router.back()}>
-          <Icon id="24-arrow_back" />
-        </IconButton>
-        <Suspense>
-          <TitleAction groupId={groupId} />
-        </Suspense>
+        <Flex align="center">
+          <IconButton size="large" onClick={() => router.back()}>
+            <Icon id="24-arrow_back" />
+          </IconButton>
+          <QueryAsyncBoundary rejectedFallback={RejectedFallback} pendingFallback={<Loading />}>
+            <PageAnimation>
+              <TitleAction groupId={groupId} />
+            </PageAnimation>
+          </QueryAsyncBoundary>
+        </Flex>
       </Header.Left>
       <Header.Right>
-        <Suspense>
-          <ManageButtonAction groupId={groupId} />
-          <MoreButtonAction groupId={groupId} />
-        </Suspense>
+        <Flex align="center">
+          <QueryAsyncBoundary rejectedFallback={RejectedFallback} pendingFallback={<Loading />}>
+            <PageAnimation>
+              <ManageButtonAction groupId={groupId} />
+              <MoreButtonAction groupId={groupId} />
+            </PageAnimation>
+          </QueryAsyncBoundary>
+        </Flex>
       </Header.Right>
     </Header>
   );
@@ -46,7 +57,7 @@ function TitleAction({ groupId }: ActionProps) {
   const { data: groupDetailData } = useGetGroupDetail(groupId);
   const { title } = groupDetailData;
 
-  return <p className="w-full truncate">{title}</p>;
+  return <p>{title}</p>;
 }
 
 function ManageButtonAction({ groupId }: ActionProps) {

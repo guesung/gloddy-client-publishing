@@ -1,5 +1,3 @@
-'use client';
-
 import { useJoinContext } from '../../../components/JoinContext.client';
 import { formatNumber, formatNumberBackSpace } from '../util';
 import { useSMSMutation } from '@/apis/auth';
@@ -67,6 +65,8 @@ export default function NumberForm({ inputStatus, setInputStatus }: NumberSectio
         placeholder="010-0000-0000"
         isSpacing={false}
         readOnly={inputStatus === 'afterSend'}
+        isLeftCaptionWrap={false}
+        type="tel"
       />
 
       <Spacing size={8} />
