@@ -1,5 +1,5 @@
 'use client';
-import { useGetProfile } from '@/apis/profile';
+import { useGetProfile, useGetProfileById } from '@/apis/profile';
 import { Avatar } from '@/components/Avatar';
 import { Divider } from '@/components/Divider';
 import { Icon } from '@/components/Icon';
@@ -16,7 +16,7 @@ import Link from 'next/link';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 
 interface ProfileDetailProps {
-  profileData: ReturnType<typeof useGetProfile>['data'];
+  profileData: ReturnType<typeof useGetProfileById>['data'];
 }
 
 export default function ProfileDetailSection({ profileData }: ProfileDetailProps) {
@@ -59,7 +59,7 @@ export default function ProfileDetailSection({ profileData }: ProfileDetailProps
                 align="center"
                 justify="center"
                 className="absolute bottom-0 rounded-8 border border-warning bg-warning-color px-2 py-4 text-caption text-warning"
-                onClick={() => router.push('/profile/verfify')}
+                onClick={() => router.push('/profile/verify')}
               >
                 재학생 인증 필요
               </Flex>
