@@ -79,15 +79,14 @@ export default function ButtonGroup({
   return (
     <>
       {position === 'bottom' && isSpacing && <Spacing size={buttonHeight + 28} />}
-      <div
+      <BottomFixedDiv
         className={cn({
-          'fixed inset-x-0 bottom-0 z-50 mx-auto max-w-450 bg-white p-20 pt-7':
-            position === 'bottom',
+          'z-50 bg-white p-20 pt-7': position === 'bottom',
           'border-t-1 border-divider': hasDivider,
         })}
       >
         {renderElements(validChildren, props)}
-      </div>
+      </BottomFixedDiv>
     </>
   );
 }
