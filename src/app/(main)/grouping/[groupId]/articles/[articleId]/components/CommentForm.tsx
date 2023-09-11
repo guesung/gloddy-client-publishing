@@ -1,6 +1,7 @@
 'use client';
 
 import { usePostComment } from '@/apis/groups';
+import { BottomFixedDiv } from '@/components/BottomFixedDiv';
 import { Icon } from '@/components/Icon';
 import { TextFieldController } from '@/components/TextField';
 import { useNumberParams } from '@/hooks/useNumberParams';
@@ -31,7 +32,7 @@ export default function CommentForm() {
   };
 
   return (
-    <div className="bottom-fixed bg-white">
+    <BottomFixedDiv className="bg-white">
       <form className="flex items-start gap-8">
         <div className="grow">
           <TextFieldController
@@ -62,6 +63,6 @@ export default function CommentForm() {
           <Icon id="24-send" />
         </button>
       </form>
-    </div>
+    </BottomFixedDiv>
   );
 }

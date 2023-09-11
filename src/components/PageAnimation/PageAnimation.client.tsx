@@ -1,5 +1,4 @@
 'use client';
-import { fadeInVariants } from '@/constants/motions';
 import cn from '@/utils/cn';
 import { type AnimationProps, motion } from 'framer-motion';
 
@@ -15,7 +14,13 @@ export default function PageAnimation({
   ...props
 }: StrictPropsWithChildren<PageAnimationProps>) {
   return (
-    <motion.div {...fadeInVariants()} className={cn('flex-grow', className)} {...props}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className={cn('flex-grow', className)}
+      {...props}
+    >
       {children}
     </motion.div>
   );

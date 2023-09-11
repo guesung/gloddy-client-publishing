@@ -1,11 +1,4 @@
-const {
-  colors,
-  boxShadow,
-  pxToRemTailwind,
-  keyframes,
-  animation,
-  fontSize,
-} = require('./src/style/theme');
+const { colors, boxShadow, pxToRemTailwind, animations, fontSizes } = require('./src/style/theme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -15,12 +8,17 @@ module.exports = {
       ...pxToRemTailwind,
       colors,
       boxShadow,
-      keyframes,
-      animation,
-      fontSize,
+      keyframes: animations,
+      animation: {
+        sizeUpAndDown1: 'sizeUpAndDown 2s ease infinite ',
+        sizeUpAndDown2: 'sizeUpAndDown 2s 0.25s ease infinite ',
+        sizeUpAndDown3: 'sizeUpAndDown 2s 0.5s ease infinite ',
+        sizeUpAndDown4: 'sizeUpAndDown 2s 0.75s ease infinite ',
+      },
       zIndex: {
         modal: '10000000',
       },
     },
+    fontSize: fontSizes,
   },
 };
