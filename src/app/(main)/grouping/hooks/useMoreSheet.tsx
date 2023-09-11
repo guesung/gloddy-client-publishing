@@ -5,8 +5,6 @@ import WarningModal from '../components/WarningModal.client';
 import { useDeleteArticle, useDeleteComment } from '@/apis/groups';
 import MoreBottomSheet from '@/components/Modal/MoreBottomSheet.client';
 import { useModal } from '@/hooks/useModal';
-import { useBlockStore } from '@/store/useBlockStore';
-import { useRouter } from 'next/navigation';
 
 type CommentId<T> = T extends 'comment' ? { commentId: number } : { commentId?: never };
 
@@ -26,8 +24,6 @@ export function useMoreSheet<T extends 'article' | 'comment' | 'notice'>({
   articleId,
   commentId,
 }: MoreSheetProps<T> & CommentId<T>) {
-  const router = useRouter();
-  const { setBlockId } = useBlockStore();
   const { open: openBottomSheet, close: closeBottomSheet } = useModal();
   const { open: openItemModal, exit: exitItemModal } = useModal();
   const { open: openDoneModal, exit: exitDoneModal } = useModal();
@@ -67,39 +63,15 @@ export function useMoreSheet<T extends 'article' | 'comment' | 'notice'>({
   };
 
   const handleReportClick = () => {
-    const blockId = type === 'comment' ? commentId! : articleId;
-
     exitItemModal();
     closeBottomSheet();
-    openDoneModal(() => (
-      <ReportDoneModal
-        onOkClick={() => {
-          setBlockId(blockId, type);
-          exitDoneModal();
-          if (type !== 'comment') {
-            router.replace(`/grouping/${groupId}?tab=articles`);
-          }
-        }}
-      />
-    ));
+    openDoneModal(() => <ReportDoneModal onOkClick={exitDoneModal} />);
   };
 
   const handleBlockClick = () => {
-    const blockId = type === 'comment' ? commentId! : articleId;
-
     exitItemModal();
     closeBottomSheet();
-    openDoneModal(() => (
-      <BlockDoneModal
-        onOkClick={() => {
-          setBlockId(blockId, type);
-          exitDoneModal();
-          if (type !== 'comment') {
-            router.replace(`/grouping/${groupId}?tab=articles`);
-          }
-        }}
-      />
-    ));
+    openDoneModal(() => <BlockDoneModal onOkClick={exitDoneModal} />);
   };
 
   const handleMoreClick = () => {
@@ -147,6 +119,18 @@ export function useMoreSheet<T extends 'article' | 'comment' | 'notice'>({
       </MoreBottomSheet>
     ));
   };
+
+  function DeleteItem() {
+    const { open, close } = useModal();
+
+    open(() => (
+      <WarningModal
+        content={`해당 ${content}을 삭제하시겠습니까?`}
+        onCancelClick={close}
+        onOkClick={handleDeleteClick}
+      />
+    ));
+  }
 
   return {
     handleMoreClick,

@@ -23,10 +23,7 @@ export default function ArticlePage({ params }: ArticleDetailPageProps) {
   return (
     <>
       <ArticleHeader />
-      <QueryAsyncBoundary
-        rejectedFallback={RejectedFallback}
-        pendingFallback={<Loading className="h-[calc(100dvh-250px)]" />}
-      >
+      <QueryAsyncBoundary rejectedFallback={RejectedFallback} pendingFallback={<Loading />}>
         <PageAnimation>
           <HydrationProvider
             queryFn={() => getArticle(groupId, articleId)}
