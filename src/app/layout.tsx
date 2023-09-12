@@ -1,10 +1,11 @@
 import './globals.css';
 
+import { readFileSync } from 'fs';
+
 import { QueryProvider } from '@/components/Provider';
 import QueryProviderWrapModal from '@/components/Provider/QueryProviderWrapModal.client';
-import { BASE_WEB_URL, KAKAO_SDK_URL } from '@/constants';
+import { BASE_WEB_URL } from '@/constants';
 import ModalProvider from '@/hooks/useModal/ModalProvider';
-import Script from 'next/script';
 
 import type { StrictPropsWithChildren } from '@/types';
 
@@ -45,16 +46,19 @@ export default function RootLayout({ children }: StrictPropsWithChildren) {
           <QueryProvider>{children}</QueryProvider>
         </ModalProvider>
       </QueryProviderWrapModal>
-
-      {/* eslint-disable-next-line @next/next/no-before-interactive-script-outside-document */}
-      <Script type="text/javascript" src={KAKAO_SDK_URL} strategy="beforeInteractive" />
     </Layout>
   );
 }
 
 function Layout({ children }: StrictPropsWithChildren) {
+  const filePath = `src/style/tailwindSSR.css`;
+  const styleSheetContent = readFileSync(filePath, 'utf8');
+
   return (
     <html lang="ko">
+      <head>
+        <style dangerouslySetInnerHTML={{ __html: styleSheetContent }} />
+      </head>
       <body className="flex h-full min-h-[100dvh] w-screen justify-center overflow-y-scroll bg-slate-50">
         <div className="relative min-h-[100dvh] w-full max-w-450 bg-white text-sign-primary">
           {children}

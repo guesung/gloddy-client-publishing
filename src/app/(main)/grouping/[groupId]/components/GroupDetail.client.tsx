@@ -4,6 +4,7 @@ import { ArticleSection, NoticeSection } from './articles';
 import { LocationSection, MemberSection, TimeSection } from './detail';
 import TopSection from './TopSection.client';
 import { useGetGroupDetail } from '@/apis/groups';
+import { BottomFixedDiv } from '@/components/BottomFixedDiv';
 import { Button, ButtonGroup, FloatAddButton } from '@/components/Button';
 import { Divider } from '@/components/Divider';
 import { Spacing } from '@/components/Spacing';
@@ -43,11 +44,11 @@ export default function GroupDetailPage({ groupId }: GroupDetailProps) {
         <Tabs.Panel value="articles">
           <NoticeSection />
           <ArticleSection />
-          <div className="bottom-fixed flex justify-end">
+          <BottomFixedDiv className="flex justify-end">
             <Link href={`/grouping/${groupId}/write`}>
               <FloatAddButton />
             </Link>
-          </div>
+          </BottomFixedDiv>
         </Tabs.Panel>
       </Tabs>
 
