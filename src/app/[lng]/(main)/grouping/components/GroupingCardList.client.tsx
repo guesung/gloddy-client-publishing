@@ -3,20 +3,22 @@ import { useGetGroups } from '@/apis/groups';
 import { GroupingCard } from '@/components/Card';
 import { ItemList } from '@/components/List';
 import { Loading } from '@/components/Loading';
+import useIntersect from '@/hooks/useIntersect';
 import { useBlockStore } from '@/store/useBlockStore';
-import { useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useCallback } from 'react';
 import PullToRefresh from 'react-simple-pull-to-refresh';
 
 export default function GroupingCardList() {
   const { blockGroupIds } = useBlockStore();
-  const { data, fetchNextPage, remove, refetch } = useGetGroups();
+  const { data, fetchNextPage, hasNextPage, remove, isLoading, refetch } = useGetGroups();
 
-  const { ref, inView } = useInView();
+  const onIntersect = useCallback(async () => {
+    if (hasNextPage && !isLoading) {
+      await fetchNextPage();
+    }
+  }, [fetchNextPage, hasNextPage, isLoading]);
 
-  useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView, fetchNextPage]);
+  const target = useIntersect(onIntersect);
 
   const handleRefresh = () => {
     remove();
@@ -38,7 +40,7 @@ export default function GroupingCardList() {
           }
         />
       </PullToRefresh>
-      <div ref={ref} />
+      <div ref={target} />
     </>
   );
 }

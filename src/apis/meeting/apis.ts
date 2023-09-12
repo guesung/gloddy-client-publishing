@@ -23,8 +23,6 @@ export const getMeetingWaiting = () =>
 export const getMeetingRejected = () =>
   privateApi.get<MeetingRejectedResponse>('/users/groups/rejected');
 
-export const postMeetingRejected = (applyId: number) => privateApi.post(`/applies/${applyId}`);
-
 /* 평가 */
 
 export const getMeetingNotEstimated = () =>
