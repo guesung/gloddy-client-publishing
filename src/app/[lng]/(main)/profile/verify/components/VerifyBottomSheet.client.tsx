@@ -1,4 +1,4 @@
-import { useEmailVerifyMutation } from '@/apis/profile';
+import { useEmailVerifyMutation } from '@/apis/auth';
 import { Button, ButtonGroup } from '@/components/Button';
 import { BottomSheet, type ModalProps } from '@/components/Modal';
 import { TextFieldController } from '@/components/TextField';
