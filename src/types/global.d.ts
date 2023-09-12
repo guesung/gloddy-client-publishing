@@ -4,7 +4,6 @@ declare global {
       postMessage(msg: string): void;
     };
     initMap: () => void;
-    dataLayer: Array<Record<string, any>>;
   }
 }
 
