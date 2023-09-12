@@ -15,4 +15,6 @@ export const usePatchProfile = () => {
   });
 };
 
-export const useDeleteMate = () => useMutation(deleteMate);
+export const useDeleteMate = () => {
+  return useMutation(deleteMate);
+};

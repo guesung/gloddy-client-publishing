@@ -4,14 +4,13 @@ import { Icon } from '../Icon';
 import { useDeleteScrapMeeting } from '@/apis/groups';
 import { Flex } from '@/components/Layout';
 import { Spacing } from '@/components/Spacing';
-import usePlaceDetails from '@/hooks/usePlaceDetails';
 import cn from '@/utils/cn';
 import { formatMeetingDate } from '@/utils/formatMeetingDate';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { type HTMLAttributes, type PropsWithChildren, useEffect, useState } from 'react';
 
 import type { Grouping } from '@/apis/groups/type';
+import type { HTMLAttributes, PropsWithChildren } from 'react';
 
 interface GroupingCardProps extends HTMLAttributes<HTMLDivElement> {
   groupingData: Grouping;
@@ -47,7 +46,6 @@ export default function GroupingCard({
     maxMemberCount,
     meetDate,
     placeAddress,
-    placeId,
   } = groupingData;
   const router = useRouter();
 

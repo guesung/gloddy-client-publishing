@@ -24,6 +24,7 @@ export default function LocationBottomSheet({
   onClose,
   isOpen,
 }: LocationBottomSheetProps) {
+  const [snapPoints, setSnapPoints] = useState<number[]>([550, 0]);
   const {
     ready,
     value,
@@ -90,7 +91,7 @@ export default function LocationBottomSheet({
 
   return (
     <BottomSheet
-      snapPoints={[550, 0]}
+      snapPoints={snapPoints}
       onClose={onClose}
       title="모임 장소"
       isTapOutsideToClose
