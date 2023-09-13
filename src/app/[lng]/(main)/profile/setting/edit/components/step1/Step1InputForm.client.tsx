@@ -1,7 +1,6 @@
 import { formatBirthDTO } from '../../util';
 import { useEditContext } from '../EditProvider.client';
 import { usePatchProfile } from '@/apis/profile';
-import { useTranslation } from '@/app/i18n/client';
 import { Avatar } from '@/components/Avatar';
 import { Button, ButtonGroup } from '@/components/Button';
 import { Icon } from '@/components/Icon';
@@ -20,8 +19,6 @@ interface Step1InputFormProps {
   onNext: () => void;
 }
 export default function Step1InputForm({ onNext }: Step1InputFormProps) {
-  const { t: tc } = useTranslation('common');
-  const { t } = useTranslation('profile');
   const { mutate } = usePatchProfile();
   const hookForm = useEditContext();
   const { control, watch, handleSubmit, setValue, register, formState } = hookForm;
@@ -58,34 +55,34 @@ export default function Step1InputForm({ onNext }: Step1InputFormProps) {
       </Flex>
       <Spacing size={16} />
 
-      <p className="text-subtitle-3">{tc('nickname')}</p>
+      <p className="text-subtitle-3">닉네임</p>
       <Spacing size={4} />
 
       <TextField as="input" value={watch('name')} readOnly />
 
       <Spacing size={8} />
 
-      <p className="text-subtitle-3">{t('birth')}</p>
+      <p className="text-subtitle-3">생년월일</p>
       <Spacing size={4} />
       <TextField placeholder="생년월일을 선택해주세요." value={watch('birth')} readOnly />
 
       <Spacing size={8} />
 
       <section className="flex flex-col">
-        <p className="text-subtitle-3">{t('gender')}</p>
+        <p className="text-subtitle-3">성별</p>
         <Spacing size={4} />
         <SegmentGroup
           selectedValue={watch('gender')}
           onChange={(value) => setValue('gender', value)}
         >
-          <SegmentGroup.Segment value={'MAIL'} label={tc('male')} />
-          <SegmentGroup.Segment value={'FEMAIL'} label={tc('female')} />
+          <SegmentGroup.Segment value={'MAIL'} label="남성" />
+          <SegmentGroup.Segment value={'FEMAIL'} label="여성" />
         </SegmentGroup>
       </section>
 
       <Spacing size={8} />
 
-      <p className="text-subtitle-3">{t('introduce')}</p>
+      <p className="text-subtitle-3">자기소개</p>
       <Spacing size={4} />
       <TextFieldController
         as="textarea"
@@ -101,7 +98,7 @@ export default function Step1InputForm({ onNext }: Step1InputFormProps) {
         maxCount={100}
       />
 
-      <p className="text-subtitle-3">{t('personality')}</p>
+      <p className="text-subtitle-3">성격</p>
       <Spacing size={4} />
       <Flex className="flex-wrap gap-4" align="center">
         {personalities.map((personality, index) => (

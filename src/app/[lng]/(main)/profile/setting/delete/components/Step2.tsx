@@ -1,6 +1,5 @@
 import DeleteModal from './DeleteModal.client';
 import { useDeleteContext } from './DeleteProvider.client';
-import { useTranslation } from '@/app/i18n/client';
 import { Button, ButtonGroup } from '@/components/Button';
 import { CircleCheckbox } from '@/components/Checkbox';
 import { Flex } from '@/components/Layout';
@@ -19,7 +18,7 @@ const infoList = [
 
 export default function Step2() {
   const { open, exit } = useModal();
-  const { t } = useTranslation('profile');
+  const handleDeleteClick = () => {};
 
   const { watch, setValue } = useDeleteContext();
   const handleDeleteReason = (index: number) => {
@@ -37,11 +36,11 @@ export default function Step2() {
   return (
     <div>
       <Spacing size={32} />
-      <h3 className="px-20 text-h3">{t('settings.reasonForWithdrawal')}</h3>
+      <h3 className="px-20 text-h3">탈퇴하시려는 이유가 무엇인가요?</h3>
       <Spacing size={8} />
       <div className="px-20 text-subtitle-2 text-sign-tertiary">
-        <p>{t('settings.feedback1')}</p>
-        <p>{t('settings.feedback2')}</p>
+        <p>서비스 이용에 불편한 점이 있으셨나요?</p>
+        <p>보내주신 의견을 꼭 개선할 수 있도록 노력하겠습니다.</p>
       </div>
       <Spacing size={16} />
       <div className="px-20">
@@ -58,7 +57,7 @@ export default function Step2() {
           disabled={watch('deleteReason').length === 0}
           onClick={() => open(() => <DeleteModal onCancelClick={exit} />)}
         >
-          {t('settings.proceedDeletion')}
+          탈퇴하기
         </Button>
       </ButtonGroup>
     </div>

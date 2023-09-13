@@ -1,5 +1,4 @@
 import DeleteCompleteModal from './DeleteCompleteModal.client';
-import { useTranslation } from '@/app/i18n/client';
 import { Icon } from '@/components/Icon';
 import { Modal } from '@/components/Modal';
 import { Spacing } from '@/components/Spacing';
@@ -11,7 +10,6 @@ interface DeleteModalProps {
 
 export default function DeleteModal({ onCancelClick }: DeleteModalProps) {
   const { open } = useModal();
-  const { t } = useTranslation('profile');
 
   return (
     <Modal
@@ -22,7 +20,7 @@ export default function DeleteModal({ onCancelClick }: DeleteModalProps) {
       <Spacing size={32} />
       <Icon id="48-warning" width={48} height={48} />
       <Spacing size={12} />
-      <p className="text-subtitle-1">{t('settings.confirmWithDrawal')}</p>
+      <p className="text-subtitle-1">정말 탈퇴하시겠어요?</p>
       <Spacing size={4} />
       <p className="text-paragraph-1 text-sign-tertiary">
         게정을 삭제하면

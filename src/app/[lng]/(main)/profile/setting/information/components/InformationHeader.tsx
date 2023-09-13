@@ -1,12 +1,10 @@
 'use client';
-import { useTranslation } from '@/app/i18n/client';
 import { IconButton } from '@/components/Button';
 import { Header } from '@/components/Header';
 import { Icon } from '@/components/Icon';
 import { useRouter } from 'next/navigation';
 
 export default function InformationHeader() {
-  const { t } = useTranslation('profile');
   const router = useRouter();
   return (
     <Header>
@@ -14,7 +12,7 @@ export default function InformationHeader() {
         <IconButton size="large" onClick={() => router.back()}>
           <Icon id="24-close" />
         </IconButton>
-        <p className="text-subtitle-1">{t('settings.customerService')}</p>
+        <p className="text-subtitle-1">개인정보 처리 방침</p>
       </Header.Left>
     </Header>
   );
