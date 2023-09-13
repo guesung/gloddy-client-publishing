@@ -1,4 +1,3 @@
-import { useTranslation } from '@/app/i18n/client';
 import { Modal } from '@/components/Modal';
 import { Spacing } from '@/components/Spacing';
 import Image from 'next/image';
@@ -9,7 +8,6 @@ interface FeedbackOutModalProps {
 }
 export default function FeedbackOutModal({ onClose }: FeedbackOutModalProps) {
   const router = useRouter();
-  const { t } = useTranslation('meeting');
 
   return (
     <Modal variant="warning" onOkClick={() => router.back()} onCancelClick={onClose}>
@@ -19,12 +17,12 @@ export default function FeedbackOutModal({ onClose }: FeedbackOutModalProps) {
       </div>
       <Spacing size={8} />
       <p className="text-paragraph-1 text-sign-tertiary">
-        {t('evaluation.evaluationHelp1')}
+        멤버 평가는 앞으로의 매칭에
         <br />
-        {t('evaluation.evaluationHelp2')}
+        많은 도움이 됩니다!
       </p>
       <Spacing size={12} />
-      <p>{t('evaluation.reallyNotEvaluate')} 🥹</p>
+      <p>정말 안 해주실 건가요? 🥹</p>
       <Spacing size={16} />
     </Modal>
   );

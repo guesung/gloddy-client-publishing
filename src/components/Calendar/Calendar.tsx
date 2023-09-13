@@ -4,10 +4,9 @@ import { Icon } from '../Icon';
 import { Spacing } from '../Spacing';
 import { IconButton } from '@/components/Button';
 import { Flex } from '@/components/Layout';
-import { format } from 'date-fns';
-import { enUS, ko } from 'date-fns/esm/locale';
-import { useParams } from 'next/navigation';
-import { useMemo } from 'react';
+import { getMonth, getYear } from 'date-fns';
+import { ko } from 'date-fns/esm/locale';
+import { useEffect, useMemo } from 'react';
 import DatePicker from 'react-datepicker';
 
 interface CalendarProps {
@@ -16,12 +15,14 @@ interface CalendarProps {
 }
 
 export default function Calendar({ dateValue, setDateValue }: CalendarProps) {
-  const { lng } = useParams();
   const currentDate = useMemo(() => new Date(), []);
-  const yesterdayDate = useMemo(
-    () => new Date(currentDate.setDate(currentDate.getDate() - 1)),
-    [currentDate]
-  );
+  const yesterdayDate = useMemo(() => new Date(currentDate.setDate(currentDate.getDate() - 1)), []);
+
+  useEffect(() => {
+    if (!dateValue) {
+      setDateValue(currentDate);
+    }
+  }, [dateValue, setDateValue, currentDate]);
 
   return (
     <DatePicker
@@ -36,9 +37,7 @@ export default function Calendar({ dateValue, setDateValue }: CalendarProps) {
       renderCustomHeader={({ date, decreaseMonth, increaseMonth }) => (
         <Flex align="center">
           <p className="text-subtitle-1">
-            {lng === 'ko'
-              ? format(date, 'yyyy년 MM월', { locale: ko })
-              : format(date, 'MMMM yyyy', { locale: enUS })}
+            {getYear(date)}년 {getMonth(date) + 1}월
           </p>
           <Spacing size={0} className="grow" />
           <IconButton size="medium" onClick={decreaseMonth}>

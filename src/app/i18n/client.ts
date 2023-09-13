@@ -6,7 +6,6 @@ import { getLocalCookie, setLocalCookie } from '@/utils/cookieController';
 import i18next from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import resourcesToBackend from 'i18next-resources-to-backend';
-import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { initReactI18next, useTranslation as useTranslationOrg } from 'react-i18next';
 // import LocizeBackend from 'i18next-locize-backend'
@@ -31,8 +30,7 @@ i18next
     preload: runsOnServerSide ? languages : [],
   });
 
-export function useTranslation(ns: string, options: { keyPrefix?: string } = {}) {
-  const { lng } = useParams() as { lng: string };
+export function useTranslation(lng: string, ns: string, options: { keyPrefix?: string } = {}) {
   const i18next = getLocalCookie(cookieName);
   const ret = useTranslationOrg(ns, options);
   const { i18n } = ret;

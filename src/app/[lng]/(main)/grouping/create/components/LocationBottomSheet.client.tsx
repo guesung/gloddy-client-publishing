@@ -1,6 +1,5 @@
 import LocationItem from './LocationItem.client';
 import { CreateGroupContextValue } from '../type';
-import { useTranslation } from '@/app/i18n/client';
 import { Button, ButtonGroup } from '@/components/Button';
 import { Icon } from '@/components/Icon';
 import { Flex } from '@/components/Layout';
@@ -10,7 +9,6 @@ import { Spacing } from '@/components/Spacing';
 import { TextField } from '@/components/TextField';
 import { LatLng } from '@/types';
 import { GoogleMap, Marker } from '@react-google-maps/api';
-import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Control, useController } from 'react-hook-form';
 import usePlacesAutocomplete, { getGeocode, getLatLng } from 'use-places-autocomplete';
@@ -26,9 +24,6 @@ export default function LocationBottomSheet({
   onClose,
   isOpen,
 }: LocationBottomSheetProps) {
-  const { lng } = useParams() as { lng: string };
-  const { t } = useTranslation('grouping');
-
   const {
     ready,
     value,
@@ -38,7 +33,7 @@ export default function LocationBottomSheet({
   } = usePlacesAutocomplete({
     callbackName: 'initMap',
     requestOptions: {
-      language: lng,
+      language: 'en', // 언어설정
       region: 'KR',
     },
   });
@@ -98,14 +93,14 @@ export default function LocationBottomSheet({
     <BottomSheet
       snapPoints={[550, 0]}
       onClose={onClose}
-      title={t('create.place.label')}
+      title="모임 장소"
       isTapOutsideToClose
       disableDrag
       isOpen={isOpen}
     >
       <TextField
         as="input"
-        placeholder={t('create.place.placeholder')}
+        placeholder="모임 위치를 입력해주세요."
         leftIcon={<Icon id="24-search" width={24} height={24} />}
         value={value}
         onChange={(e) => handleChange(e as React.ChangeEvent<HTMLInputElement>)}
@@ -151,7 +146,7 @@ export default function LocationBottomSheet({
 
       <ButtonGroup>
         <Button onClick={onClose} disabled={!fieldState.isDirty}>
-          {t('create.continue')}
+          완료
         </Button>
       </ButtonGroup>
     </BottomSheet>

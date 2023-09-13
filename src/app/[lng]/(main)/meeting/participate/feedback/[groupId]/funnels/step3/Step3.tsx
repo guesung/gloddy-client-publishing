@@ -3,7 +3,6 @@ import { FeedbackRequestType, useFeedbackContext } from '../../components/Feedba
 import Membercard from '../../components/Membercard.client';
 import TitleSection from '../../components/TitleSection';
 import { type EstimateResponse, usePostEstimate } from '@/apis/groups';
-import { useTranslation } from '@/app/i18n/client';
 import { Button, ButtonGroup } from '@/components/Button';
 import { Divider } from '@/components/Divider';
 import { Spacing } from '@/components/Spacing';
@@ -18,7 +17,6 @@ export default function Step3({ groupMemberList }: Step3Props) {
   const { handleSubmit, watch } = useFeedbackContext();
   const { mutate } = usePostEstimate();
   const { groupId } = useNumberParams();
-  const { t } = useTranslation('meeting');
 
   const onSubmit = (data: FeedbackRequestType) => {
     // TODO : API 연결
@@ -38,10 +36,7 @@ export default function Step3({ groupMemberList }: Step3Props) {
 
   return (
     <>
-      <TitleSection
-        message={`${t('evaluation.reasonBestPartner1')}\n${t('evaluation.reasonBestPartner2')}')}`}
-        step={3}
-      />
+      <TitleSection message={`최고의 짝꿍으로\n선정한 이유는 무엇인가요?`} step={3} />
       <Divider thickness="thick" />
       <Spacing size={16} />
       <div className="px-20">
@@ -56,7 +51,7 @@ export default function Step3({ groupMemberList }: Step3Props) {
           as="textarea"
           hookForm={hookForm}
           register={register('mateInfo.selectionReason', { maxLength: 100 })}
-          placeholder={t('evaluation.leaveReview')}
+          placeholder="최고의 짝꿍에게 후기를 남겨주세요."
           maxCount={100}
         />
       </div>

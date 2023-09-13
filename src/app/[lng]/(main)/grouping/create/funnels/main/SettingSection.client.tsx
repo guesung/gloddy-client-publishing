@@ -1,7 +1,6 @@
 import { useCreateGroupContext } from '../../components/CreateGroupContext';
 import LocationBottomSheet from '../../components/LocationBottomSheet.client';
 import { displayDate } from '../../util';
-import { useTranslation } from '@/app/i18n/client';
 import { Icon } from '@/components/Icon';
 import { Spacing } from '@/components/Spacing';
 import { SpinBox } from '@/components/SpinBox';
@@ -14,7 +13,6 @@ interface SettingSectionProps {
 }
 
 export default function SettingSection({ onSelectMeetDate }: SettingSectionProps) {
-  const { t } = useTranslation('grouping');
   const { open: openLocationSheet, close: closeLocationSheet } = useModal();
   const { watch, control } = useCreateGroupContext();
 
@@ -29,11 +27,11 @@ export default function SettingSection({ onSelectMeetDate }: SettingSectionProps
   return (
     <section id="setting">
       <section className="px-20 pb-8 pt-20">
-        <p className="px-4 text-subtitle-3 text-sign-secondary">{t('create.meetDate.label')}</p>
+        <p className="px-4 text-subtitle-3 text-sign-secondary">모임 일시</p>
         <Spacing size={4} />
         <TextField
           value={displayDate(watch('meetDate'), watch('time'))}
-          placeholder={t('create.meetDate.placeholder')}
+          placeholder="모임 일시를 설정해주세요."
           rightIcon={<Icon id="24-calendar_month" />}
           onClick={onSelectMeetDate}
           readOnly
@@ -41,7 +39,7 @@ export default function SettingSection({ onSelectMeetDate }: SettingSectionProps
       </section>
 
       <section className="px-20 py-8">
-        <p className="px-4 text-subtitle-3 text-sign-secondary">{t('create.place.label')}</p>
+        <p className="px-4 text-subtitle-3 text-sign-secondary">모임 위치</p>
         <Spacing size={4} />
         <TextField
           onClick={() =>
@@ -50,14 +48,14 @@ export default function SettingSection({ onSelectMeetDate }: SettingSectionProps
             ))
           }
           value={watch('place.name')}
-          placeholder={t('create.place.placeholder')}
+          placeholder="모임 위치를 설정해주세요."
           rightIcon={<Icon id="24-location_on" />}
           readOnly
         />
       </section>
 
       <section className="px-20 py-8">
-        <p className="px-4 text-subtitle-3 text-sign-secondary">{t('create.maxUser.label')}</p>
+        <p className="px-4 text-subtitle-3 text-sign-secondary">모임 인원</p>
         <Spacing size={4} />
         <SpinBox value={maxUser.value} min={3} max={20} onChange={maxUser.onChange} />
       </section>
