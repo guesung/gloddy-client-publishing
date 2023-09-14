@@ -20,9 +20,17 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./*"],
+      "@/@types/*": ["./@types/*"],
+      "@/app/*": ["./app/*"],
+      "@/components/*": ["./components/*"],
+      "@/constants/*": ["./constants/*"],
+      "@/hooks/*": ["./hooks/*"],
+      "@/public/*": ["./public/*"],
+      "@/style/*": ["./style/*"],
+      "@/utils/*": ["./utils/*"]
     },
-    "types": ["@types/jest", "google.maps"]
+    "types": ["@types/jest"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", "mock-server", "eslint"]
