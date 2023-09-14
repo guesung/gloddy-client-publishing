@@ -70,7 +70,10 @@ export default function AgreeBottomSheet({ onClose, isOpen }: AgreeBottomSheetPr
           <div
             key={agree.name}
             className="flex h-40 items-center gap-8 bg-sub px-8 text-paragraph-2 text-sign-secondary"
-            onClick={() => handleAgreeCheckList(agree.name)}
+            onClick={() => {
+              console.log(1, agree.name, agree.isAgreed);
+              handleAgreeCheckList(agree.name);
+            }}
           >
             <CircleCheckbox key={agree.name} checked={agree.isAgreed} variant="outline" />
             <p className="">
