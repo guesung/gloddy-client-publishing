@@ -1,37 +1,70 @@
+'use client';
+import { cookieName } from '../i18n/settings';
 import { postReissue } from '@/apis/auth';
 import { AUTH_KEYS } from '@/constants/token';
+import { useDidMount } from '@/hooks/common/useDidMount';
 import { getTokenFromCookie } from '@/utils/auth/tokenController';
+import { setLocalCookie } from '@/utils/cookieController';
 import { afterDay60 } from '@/utils/date';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { NextResponse } from 'next/server';
+import { useCallback } from 'react';
 
-export default async function Home() {
-  const { accessToken, refreshToken } = (await getTokenFromCookie()) as {
-    accessToken: string;
-    refreshToken: string;
-  };
+export default function Home() {
+  const router = useRouter();
 
-  if (accessToken && refreshToken) return redirect('/grouping');
+  const listenRN = useCallback(() => {
+    const listener = (event: any) => {
+      const { data, type } = JSON.parse(event.data);
+      if (data === 'ko')
+        setLocalCookie(cookieName, 'ko', {
+          expires: afterDay60,
+        });
+      else
+        setLocalCookie(cookieName, 'en', {
+          expires: afterDay60,
+        });
+    };
 
-  try {
-    const {
-      token: { accessToken: reIssuedAccessToken, refreshToken: reIssuedRefreshToken },
-    } = await postReissue(
-      { accessToken, refreshToken },
-      { headers: { 'X-AUTH-TOKEN': accessToken } }
-    );
+    if (window.ReactNativeWebView) {
+      document.addEventListener('message', listener); /* Android */
+      window.addEventListener('message', listener); /* iOS */
+    }
+  }, []);
 
-    const response = NextResponse.next();
-    response.cookies.set(AUTH_KEYS.accessToken, reIssuedAccessToken, {
-      expires: afterDay60,
-    });
-    response.cookies.set(AUTH_KEYS.refreshToken, reIssuedRefreshToken, {
-      expires: afterDay60,
-    });
+  const checkToken = useCallback(async () => {
+    const { accessToken, refreshToken } = (await getTokenFromCookie()) as {
+      accessToken: string;
+      refreshToken: string;
+    };
 
-    redirect('/grouping');
-  } catch (e) {
-    console.log(e);
-    return redirect('/join');
-  }
+    if (accessToken && refreshToken) router.push('/grouping');
+
+    try {
+      const {
+        token: { accessToken: reIssuedAccessToken, refreshToken: reIssuedRefreshToken },
+      } = await postReissue(
+        { accessToken, refreshToken },
+        { headers: { 'X-AUTH-TOKEN': accessToken } }
+      );
+
+      const response = NextResponse.next();
+      response.cookies.set(AUTH_KEYS.accessToken, reIssuedAccessToken, {
+        expires: afterDay60,
+      });
+      response.cookies.set(AUTH_KEYS.refreshToken, reIssuedRefreshToken, {
+        expires: afterDay60,
+      });
+
+      router.push('/grouping');
+    } catch (e) {
+      console.log(e);
+      router.push('/join');
+    }
+  }, [router]);
+
+  useDidMount(() => {
+    listenRN();
+    checkToken();
+  });
 }
