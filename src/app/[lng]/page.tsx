@@ -15,7 +15,9 @@ export default function Home() {
 
   const listenRN = useCallback(() => {
     const listener = (event: any) => {
-      const { data } = JSON.parse(event.data);
+      const { data, type } = JSON.parse(event.data);
+      alert(data);
+      alert(type);
       setLocalCookie(cookieName, data, {
         expires: afterDay60,
       });
@@ -29,7 +31,8 @@ export default function Home() {
         window.removeEventListener('message', listener);
       };
     }
-  }, []);
+    router.push('/join');
+  }, [router]);
 
   const checkToken = useCallback(async () => {
     const { accessToken, refreshToken } = (await getTokenFromCookie()) as {
@@ -57,7 +60,6 @@ export default function Home() {
 
       router.push('/grouping');
     } catch (e) {
-      console.log(e);
       router.push('/join');
     }
   }, [router]);
