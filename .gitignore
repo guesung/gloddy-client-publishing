@@ -1,24 +1,35 @@
-# yarn berry
-.yarn/*
-!.yarn/releases
-!.yarn/patches
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
-!.yarn/cache
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
 
 # testing
 /coverage
 
-# etc
-/node_modules
-/.pnp
-.pnp.js
+# next.js
 /.next/
-/build
-.DS_Store
-.env
-coverage
+/out/
 
-# sentry
-.sentryclirc
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
