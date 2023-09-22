@@ -1,27 +1,21 @@
 'use client';
 import { cookieName } from '../i18n/settings';
-import { postReissue } from '@/apis/auth';
-import { AUTH_KEYS } from '@/constants/token';
 import { useDidMount } from '@/hooks/common/useDidMount';
 import { getTokenFromCookie } from '@/utils/auth/tokenController';
-import { getLocalCookie, setLocalCookie } from '@/utils/cookieController';
+import { setLocalCookie } from '@/utils/cookieController';
 import { afterDay60 } from '@/utils/date';
 import { useRouter } from 'next/navigation';
-import { NextResponse } from 'next/server';
-import { useCallback } from 'react';
 
 export default function Home() {
   const router = useRouter();
 
-  const listenRN = useCallback(() => {
-    const listener = (event: any) => {
-      const { data, type } = JSON.parse(event.data);
-      alert(data);
-      alert(type);
+  const checkLanguageCookie = () => {
+    const listener = async (event: any) => {
+      const response = await JSON.parse(event.data);
+      const { data } = response;
       setLocalCookie(cookieName, data, {
         expires: afterDay60,
       });
-      router.push(`/${data}/join?step=1`);
     };
 
     if (window.ReactNativeWebView) {
@@ -30,44 +24,17 @@ export default function Home() {
     } else {
       router.push('/join');
     }
-  }, [router]);
+  };
 
-  const checkToken = useCallback(async () => {
-    const { accessToken, refreshToken } = (await getTokenFromCookie()) as {
-      accessToken: string;
-      refreshToken: string;
-    };
+  const checkTokenCookie = async () => {
+    const { accessToken, refreshToken } = await getTokenFromCookie();
 
     if (accessToken && refreshToken) router.push('/grouping');
+    else router.push('/join?step=1');
+  };
 
-    try {
-      const {
-        token: { accessToken: reIssuedAccessToken, refreshToken: reIssuedRefreshToken },
-      } = await postReissue(
-        { accessToken, refreshToken },
-        { headers: { 'X-AUTH-TOKEN': accessToken } }
-      );
-
-      const response = NextResponse.next();
-      response.cookies.set(AUTH_KEYS.accessToken, reIssuedAccessToken, {
-        expires: afterDay60,
-      });
-      response.cookies.set(AUTH_KEYS.refreshToken, reIssuedRefreshToken, {
-        expires: afterDay60,
-      });
-
-      router.push('/grouping');
-    } catch (e) {
-      router.push('/join?step=1');
-    }
-  }, [router]);
-
-  useDidMount(() => {
-    if (!!getLocalCookie(cookieName)) {
-      checkToken();
-      return;
-    }
-
-    listenRN();
+  useDidMount(async () => {
+    await checkLanguageCookie();
+    await checkTokenCookie();
   });
 }
