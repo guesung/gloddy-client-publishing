@@ -1,6 +1,23 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-}
+const { withSentryConfig } = require('@sentry/nextjs');
 
-module.exports = nextConfig
+/**
+ * @type {import('next').NextConfig}
+ */
+const nextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*',
+      },
+    ],
+  },
+};
+
+const sentryWebpackPluginOptions = {
+  silent: true,
+  org: 'gloddy',
+  project: 'javascript-nextjs',
+};
+
+module.exports = withSentryConfig(nextConfig, sentryWebpackPluginOptions);
