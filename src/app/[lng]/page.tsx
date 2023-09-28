@@ -1,34 +1,51 @@
 'use client';
+import { useTranslation } from '../i18n/client';
 import { cookieName } from '../i18n/settings';
-import { useDidMount } from '@/hooks/common/useDidMount';
-import { setLocalCookie } from '@/utils/cookieController';
+import { AUTH_KEYS } from '@/constants/token';
+import { getLocalCookie, setLocalCookie } from '@/utils/cookieController';
 import { afterDay60 } from '@/utils/date';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export default function Home() {
   const router = useRouter();
+  const { i18n } = useTranslation('common');
 
-  const checkLanguageCookie = async () => {
-    const listener = async (event: any) => {
-      const response = await JSON.parse(event.data);
-      const { data } = response;
-      setLocalCookie(cookieName, data, {
-        expires: afterDay60,
-      });
+  const checkTokenCookie = () => {
+    const accessToken = getLocalCookie(AUTH_KEYS.accessToken);
+    const refreshToken = getLocalCookie(AUTH_KEYS.refreshToken);
 
-      router.refresh();
-      router.push('/join');
-    };
-
-    if (window.ReactNativeWebView) {
-      document.addEventListener('message', listener); /* Android */
-      window.addEventListener('message', listener); /* iOS */
-    } else {
+    router.refresh();
+    if (accessToken || refreshToken) {
       router.push('/grouping');
+    } else {
+      router.push('/join?step=1');
     }
   };
 
-  useDidMount(() => {
-    checkLanguageCookie();
-  });
+  const listener = async (event: any) => {
+    const { data } = await JSON.parse(event.data);
+    setLocalCookie(cookieName, data, {
+      expires: afterDay60,
+    });
+
+    await i18n.changeLanguage(data);
+
+    checkTokenCookie();
+  };
+
+  useEffect(() => {
+    if (!window.ReactNativeWebView) {
+      router.push('/grouping');
+      return;
+    }
+
+    document.addEventListener('message', listener); /* Android */
+    window.addEventListener('message', listener); /* iOS */
+
+    return () => {
+      document.removeEventListener('message', listener); /* Android */
+      window.removeEventListener('message', listener); /* iOS */
+    };
+  }, []);
 }
