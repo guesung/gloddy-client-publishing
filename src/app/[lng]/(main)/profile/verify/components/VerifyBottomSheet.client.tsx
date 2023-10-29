@@ -4,7 +4,6 @@ import { Button, ButtonGroup } from '@/components/Button';
 import { BottomSheet, type ModalProps } from '@/components/Modal';
 import { TextFieldController } from '@/components/TextField';
 import { regexr } from '@/constants/regexr';
-import useAppRouter from '@/hooks/useAppRouter';
 import { useTimer } from '@/hooks/useTimer';
 import { t } from 'i18next';
 import { useRouter } from 'next/navigation';
@@ -25,7 +24,7 @@ export default memo(function VerifyBottomSheet({
 }: VerifyBottomSheetProps) {
   const { t } = useTranslation('join');
   const { register, handleSubmit, setError, resetField, watch } = hookForm;
-  const { back } = useAppRouter();
+  const router = useRouter();
   const { time: verifyTime } = useTimer({
     initialTime: 180,
     timerType: 'DECREMENTAL',
@@ -43,7 +42,7 @@ export default memo(function VerifyBottomSheet({
         authCode: +data.verifyEmailNumber,
       },
       {
-        onSuccess: () => back(),
+        onSuccess: () => router.back(),
         onError: () => {
           setError('verifyEmailNumber', {
             type: 'manual',
