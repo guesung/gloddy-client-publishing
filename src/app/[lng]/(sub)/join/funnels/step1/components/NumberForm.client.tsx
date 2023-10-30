@@ -1,6 +1,6 @@
 import { useJoinContext } from '../../../components/JoinContext.client';
 import { formatNumber, formatNumberBackSpace } from '../util';
-import { LoginResponse, useLoginMutation, useSMSMutation } from '@/apis/auth';
+import { useLoginMutation, useSMSMutation } from '@/apis/auth';
 import { useTranslation } from '@/app/i18n/client';
 import { Button, ButtonGroup } from '@/components/Button';
 import { Toast } from '@/components/Modal';
@@ -8,9 +8,8 @@ import { useTimerContext } from '@/components/Provider';
 import { Spacing } from '@/components/Spacing';
 import { TextFieldController } from '@/components/TextField';
 import { regexr } from '@/constants/regexr';
-import useAppRouter from '@/hooks/useAppRouter';
 import { useModal } from '@/hooks/useModal';
-import { setTokenAtCookie } from '@/utils/auth/tokenController';
+import { useRouter } from 'next/navigation';
 import { ElementType, KeyboardEventHandler } from 'react';
 
 import type { SignUpState } from '../../../type';
@@ -29,8 +28,6 @@ export default function NumberForm({ inputStatus, setInputStatus }: NumberSectio
   const { mutate: mutateSMS } = useSMSMutation();
   const { start: timerStart, status: timerStatus } = useTimerContext();
   const { open: openToast } = useModal({ delay: 2000 });
-  const { mutate: mutateLogin } = useLoginMutation();
-  const { refresh, replace } = useAppRouter();
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement> | React.KeyboardEvent<HTMLInputElement>
@@ -49,26 +46,15 @@ export default function NumberForm({ inputStatus, setInputStatus }: NumberSectio
     if (timerStatus === 'RUNNING') return;
     timerStart();
     const phoneNumberWithoutHyphen = data.phoneNumber.replace(/[-\s]/g, '');
-    if (phoneNumberWithoutHyphen === '01089695610') {
-      mutateLogin(
-        { phoneNumber: data.phoneNumber },
-        {
-          onSuccess: async (response: LoginResponse) => {
-            await setTokenAtCookie({
-              accessToken: response.token.accessToken,
-              refreshToken: response.token.refreshToken,
-              userId: response.userId,
-            });
-            refresh();
-            replace('/grouping');
-          },
-        }
-      );
-      return;
-    }
-    mutateSMS({ number: phoneNumberWithoutHyphen });
-    openToast(() => <Toast>인증 번호가 전송되었습니다.</Toast>);
-    setInputStatus('afterSend');
+    mutateSMS(
+      { number: phoneNumberWithoutHyphen },
+      {
+        onSuccess: () => {
+          openToast(() => <Toast>인증 번호가 전송되었습니다.</Toast>);
+          setInputStatus('afterSend');
+        },
+      }
+    );
   };
 
   return (

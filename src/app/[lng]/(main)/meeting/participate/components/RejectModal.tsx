@@ -2,20 +2,20 @@ import { usePostApply } from '@/apis/meeting';
 import { useTranslation } from '@/app/i18n/client';
 import { Modal } from '@/components/Modal';
 import { Spacing } from '@/components/Spacing';
-import useAppRouter from '@/hooks/useAppRouter';
+import { useRouter } from 'next/navigation';
 
 interface RejectModalProps {
   applyId: number;
 }
 
 export default function RejectModal({ applyId }: RejectModalProps) {
-  const { push } = useAppRouter();
+  const router = useRouter();
   const { mutate } = usePostApply();
   const { t } = useTranslation('meeting');
   const handleOkClick = () => {
     mutate(applyId, {
       onSuccess: () => {
-        push('/grouping');
+        router.push('/grouping');
       },
     });
   };
