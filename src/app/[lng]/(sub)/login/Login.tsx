@@ -2,13 +2,13 @@
 
 import { LoginResponse, useLoginMutation } from '@/apis/auth';
 import { Loading } from '@/components/Loading';
-import useAppRouter from '@/hooks/useAppRouter';
 import { setTokenAtCookie } from '@/utils/auth/tokenController';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function Login() {
   const { mutate: mutateLogin } = useLoginMutation();
-  const { refresh, replace } = useAppRouter();
+  const router = useRouter();
 
   const handlegetTokenFromCookie = () => {
     mutateLogin(
@@ -20,8 +20,8 @@ export default function Login() {
             refreshToken: response.token.refreshToken,
             userId: response.userId,
           }).then(() => {
-            replace('/grouping');
-            refresh();
+            router.replace('/grouping');
+            router.refresh();
           });
         },
       }

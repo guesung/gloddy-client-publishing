@@ -6,17 +6,16 @@ import { Avatar } from '@/components/Avatar';
 import { Icon } from '@/components/Icon';
 import { Flex } from '@/components/Layout';
 import { Spacing } from '@/components/Spacing';
-import useAppRouter from '@/hooks/useAppRouter';
 import { useNumberParams } from '@/hooks/useNumberParams';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface MemberSectionProps extends GroupDetailResponse {}
 
 export default function MemberSection({ memberCount, maxMemberCount }: MemberSectionProps) {
   const { t } = useTranslation('groupDetail');
   const { groupId } = useNumberParams<['groupId']>();
+  const router = useRouter();
   const pathname = usePathname();
-  const { push } = useAppRouter();
 
   const { data: groupMembersData } = useGetGroupMembers(groupId);
   const { groupMembers } = groupMembersData;
@@ -29,7 +28,7 @@ export default function MemberSection({ memberCount, maxMemberCount }: MemberSec
         </p>
         <div
           className="flex cursor-pointer items-center text-caption text-sign-caption"
-          onClick={() => push(`${pathname}/members`, false)}
+          onClick={() => router.push(`${pathname}/members`, { scroll: false })}
         >
           <p>{t('details.viewAll')}</p>
           <Icon id="24-navigate_next" />
@@ -41,8 +40,8 @@ export default function MemberSection({ memberCount, maxMemberCount }: MemberSec
           <Avatar
             key={member.userId}
             imageUrl={member.imageUrl ?? '/images/dummy_avatar.png'}
-            iconVariant={member.isCertifiedStudent ? 'education' : 'none'}
-            onClick={() => push(`${pathname}/members`)}
+            iconVariant="education"
+            onClick={() => router.prefetch(`${pathname}/members`)}
           >
             <Flex justify="center" align="center" className="w-full">
               {member.isCaptain && (
