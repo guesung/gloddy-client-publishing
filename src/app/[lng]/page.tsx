@@ -19,6 +19,7 @@ export default function Home() {
     if (!isapp) return;
     const listener = (event: any) => {
       const { data, type } = JSON.parse(event.data);
+      alert(data);
       switch (type) {
         case 'FCM_TOKEN':
           postFCMToken({ token: data }).then((res) => alert(1));
