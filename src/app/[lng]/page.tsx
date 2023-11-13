@@ -8,7 +8,7 @@ import { hasToken } from '@/utils/auth/tokenController';
 import { getLocalCookie, setLocalCookie } from '@/utils/cookieController';
 import { afterDay60 } from '@/utils/date';
 import { getIsApp } from '@/utils/getIsApp';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 export default function Home() {
@@ -18,6 +18,7 @@ export default function Home() {
   const isapp = getIsApp();
 
   useEffect(() => {
+    alert(1);
     if (!isapp) return;
     const listener = (event: any) => {
       const { data, type } = JSON.parse(event.data);
@@ -36,6 +37,7 @@ export default function Home() {
       window.removeEventListener('message', listener);
     };
   }, [isapp]);
+  return <div>ss</div>;
 
   // useDidMount(async () => {
   //   const cookieLanguage = getLocalCookie(cookieName);
