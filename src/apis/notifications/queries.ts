@@ -1,4 +1,4 @@
 import { Keys, getNotification } from '.';
-import { useSuspenseQuery } from '@suspensive/react-query';
+import { useQuery } from '@tanstack/react-query';
 
-export const useGetNotifications = () => useSuspenseQuery(Keys.getNotifications(), getNotification);
+export const useGetNotifications = () => useQuery(Keys.getNotifications(), getNotification);
