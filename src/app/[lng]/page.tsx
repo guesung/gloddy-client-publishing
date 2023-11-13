@@ -21,15 +21,10 @@ export default function Home() {
     if (!isapp) return;
     const listener = (event: any) => {
       const { data, type } = JSON.parse(event.data);
-      alert(data);
-      push('https://docs.google.com/forms/d/e?' + data);
-
+      push('/get-value?value=' + data);
       switch (type) {
         case 'FCM_TOKEN':
-          alert(1);
-          postFCMToken({
-            token: data,
-          }).then((res) => alert(2));
+          postFCMToken({ token: data }).then((res) => alert(1));
       }
     };
 
