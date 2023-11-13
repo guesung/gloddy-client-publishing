@@ -22,7 +22,10 @@ export default function Home() {
       alert(data);
       switch (type) {
         case 'FCM_TOKEN':
-          postFCMToken({ token: data }).then((res) => alert(1));
+          postFCMToken({
+            token:
+              'cnF8Ss5nD0hupdRkVAbASF:APA91bETKYICV2537ComQ4dJ5FMr5T8mbVVRZ1SaqBlnyN86rAxA7xLIXeXRNM7wU_M7ZtDzEARcv-8hg2ClMOnkiOVuhUX_ZMvqt_FacgE-UiKUsejoKTnO0ViC0cm8tdv-geb4uLTI',
+          }).then((res) => alert(1));
       }
     };
 
