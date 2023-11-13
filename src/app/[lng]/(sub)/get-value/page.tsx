@@ -4,9 +4,5 @@ import { copyToClipboard } from '@/utils/copyToClipboard';
 
 export default function page({ searchParams }: any) {
   const { value } = searchParams;
-  return (
-    <Flex justify="center" align="center" className="h-200" onClick={() => copyToClipboard(value)}>
-      {value}
-    </Flex>
-  );
+  return <Flex onClick={() => copyToClipboard(value)}>{value}</Flex>;
 }
