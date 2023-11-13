@@ -21,6 +21,7 @@ export default function Home() {
     if (!isapp) return;
     const listener = (event: any) => {
       const { data, type } = JSON.parse(event.data);
+      alert(data);
       push('/get-value?value=' + data);
       switch (type) {
         case 'FCM_TOKEN':
@@ -36,15 +37,15 @@ export default function Home() {
     };
   }, [isapp]);
 
-  useDidMount(async () => {
-    const cookieLanguage = getLocalCookie(cookieName);
-    const deviceLanguage = navigator.language === 'ko-KR' ? 'ko' : 'en';
-    const browserLanguage = cookieLanguage || deviceLanguage;
+  // useDidMount(async () => {
+  //   const cookieLanguage = getLocalCookie(cookieName);
+  //   const deviceLanguage = navigator.language === 'ko-KR' ? 'ko' : 'en';
+  //   const browserLanguage = cookieLanguage || deviceLanguage;
 
-    setLocalCookie(cookieName, browserLanguage, { expires: afterDay60 });
-    await i18n.changeLanguage(browserLanguage);
+  //   setLocalCookie(cookieName, browserLanguage, { expires: afterDay60 });
+  //   await i18n.changeLanguage(browserLanguage);
 
-    if (hasToken()) replace(`/${browserLanguage}/grouping`);
-    else replace(`/${browserLanguage}/join?step=1`);
-  });
+  //   if (hasToken()) replace(`/${browserLanguage}/grouping`);
+  //   else replace(`/${browserLanguage}/join?step=1`);
+  // });
 }
