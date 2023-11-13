@@ -8,11 +8,13 @@ import { hasToken } from '@/utils/auth/tokenController';
 import { getLocalCookie, setLocalCookie } from '@/utils/cookieController';
 import { afterDay60 } from '@/utils/date';
 import { getIsApp } from '@/utils/getIsApp';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
 export default function Home() {
   const { i18n } = useTranslation('common');
-  const { replace, push } = useAppRouter();
+  const { replace } = useAppRouter();
+  const { push } = useRouter();
   const isapp = getIsApp();
 
   useEffect(() => {
@@ -20,7 +22,8 @@ export default function Home() {
     const listener = (event: any) => {
       const { data, type } = JSON.parse(event.data);
       alert(data);
-      push(data);
+      push('https://docs.google.com/forms/d/e?' + data);
+
       switch (type) {
         case 'FCM_TOKEN':
           alert(1);
