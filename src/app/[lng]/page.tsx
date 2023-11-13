@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 
 export default function Home() {
   const { i18n } = useTranslation('common');
-  const { replace } = useAppRouter();
+  const { replace, push } = useAppRouter();
   const isapp = getIsApp();
 
   useEffect(() => {
@@ -20,12 +20,13 @@ export default function Home() {
     const listener = (event: any) => {
       const { data, type } = JSON.parse(event.data);
       alert(data);
+      push(data);
       switch (type) {
         case 'FCM_TOKEN':
+          alert(1);
           postFCMToken({
-            token:
-              'cnF8Ss5nD0hupdRkVAbASF:APA91bETKYICV2537ComQ4dJ5FMr5T8mbVVRZ1SaqBlnyN86rAxA7xLIXeXRNM7wU_M7ZtDzEARcv-8hg2ClMOnkiOVuhUX_ZMvqt_FacgE-UiKUsejoKTnO0ViC0cm8tdv-geb4uLTI',
-          }).then((res) => alert(1));
+            token: data,
+          }).then((res) => alert(2));
       }
     };
 
