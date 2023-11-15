@@ -8,6 +8,7 @@ const privateApiNotification: CustomInstance = axios.create({
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',
+    Accept: 'application/json',
   },
   responseType: 'json',
 });
