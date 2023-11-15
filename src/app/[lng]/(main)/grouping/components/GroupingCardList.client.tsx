@@ -19,8 +19,11 @@ export default function GroupingCardList() {
     alert(1);
     const fcmToken = getLocalCookie('fcm');
     alert(fcmToken);
-    const a = await postFCMToken({ token: fcmToken || '' });
-    alert(a);
+    try {
+      const a = await postFCMToken({ token: fcmToken || '' });
+    } catch (e) {
+      alert(e);
+    }
   });
 
   useEffect(() => {
