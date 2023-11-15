@@ -12,7 +12,7 @@ privateApiNotification.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     try {
       const { userId } = await getTokenFromCookie();
-      config.headers['USER_ID'] = userId;
+      config.headers['USER_ID'] = 64;
       return config;
     } catch (error) {
       return Promise.reject(error);
