@@ -6,6 +6,7 @@ import { ItemList } from '@/components/List';
 import { useDidMount } from '@/hooks/common/useDidMount';
 import { useBlockStore } from '@/store/useBlockStore';
 import { getLocalCookie } from '@/utils/cookieController';
+import axios from 'axios';
 import { useEffect, useLayoutEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -20,7 +21,18 @@ export default function GroupingCardList() {
     const fcmToken = getLocalCookie('fcm');
     alert(fcmToken);
 
-    postFCMToken({ token: fcmToken || '' })
+    axios
+      .post(
+        'https://api.gloddy.shop/api/v1/notifications/tokens',
+        {
+          token: fcmToken || '',
+        },
+        {
+          headers: {
+            USER_ID: 64,
+          },
+        }
+      )
       .then(() => {
         alert(fcmToken);
       })
