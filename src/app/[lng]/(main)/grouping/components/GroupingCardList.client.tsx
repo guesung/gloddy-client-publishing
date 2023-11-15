@@ -16,10 +16,16 @@ export default function GroupingCardList() {
   const { ref, inView } = useInView();
 
   useDidMount(async () => {
+    alert(1);
     const fcmToken = getLocalCookie('fcm');
-    await postFCMToken({ token: fcmToken || '' }).then(() => {
-      alert('grouping' + fcmToken);
-    });
+    alert(fcmToken);
+    await postFCMToken({ token: fcmToken || '' })
+      .then(() => {
+        alert('grouping' + fcmToken);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   });
 
   useEffect(() => {

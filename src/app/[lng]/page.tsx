@@ -17,16 +17,13 @@ export default function Home() {
   const isapp = getIsApp();
 
   useEffect(() => {
-    alert(1);
     if (!isapp) return;
     const listener = (event: any) => {
-      alert(2);
-
       const { data, type } = JSON.parse(event.data);
       copyToClipboard(data);
       switch (type) {
         case 'FCM_TOKEN':
-          alert(3);
+          alert(1 + data);
           setLocalCookie('fcm', data, { expires: afterDay60 });
           postFCMToken({ token: data }).then(() => {
             alert(data);
