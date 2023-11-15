@@ -6,7 +6,7 @@ import { ItemList } from '@/components/List';
 import { useDidMount } from '@/hooks/common/useDidMount';
 import { useBlockStore } from '@/store/useBlockStore';
 import { getLocalCookie } from '@/utils/cookieController';
-import { useEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 export default function GroupingCardList() {
@@ -15,16 +15,17 @@ export default function GroupingCardList() {
 
   const { ref, inView } = useInView();
 
-  useDidMount(async () => {
+  useEffect(() => {
     alert(1);
     const fcmToken = getLocalCookie('fcm');
     alert(fcmToken);
-    try {
-      const a = await postFCMToken({ token: fcmToken || '' });
-    } catch (e) {
-      alert(e);
-    }
-  });
+
+    postFCMToken({ token: fcmToken || '' })
+      .then(() => {
+        alert(fcmToken);
+      })
+      .catch((e) => alert(e));
+  }, []);
 
   useEffect(() => {
     if (inView) fetchNextPage();
