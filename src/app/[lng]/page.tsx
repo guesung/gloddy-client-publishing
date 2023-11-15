@@ -6,6 +6,7 @@ import { useDidMount } from '@/hooks/common/useDidMount';
 import useAppRouter from '@/hooks/useAppRouter';
 import { hasToken } from '@/utils/auth/tokenController';
 import { getLocalCookie, setLocalCookie } from '@/utils/cookieController';
+import { copyToClipboard } from '@/utils/copyToClipboard';
 import { afterDay60 } from '@/utils/date';
 import { getIsApp } from '@/utils/getIsApp';
 import { useEffect } from 'react';
@@ -15,10 +16,11 @@ export default function Home() {
   const { replace } = useAppRouter();
   const isapp = getIsApp();
 
-  useEffect(() => {
+  useDidMount(() => {
     if (!isapp) return;
-    const listener = (event: any) => {
+    const listener = async (event: any) => {
       const { data, type } = JSON.parse(event.data);
+      await copyToClipboard(data);
       switch (type) {
         case 'FCM_TOKEN':
           postFCMToken({ token: data });
@@ -27,11 +29,7 @@ export default function Home() {
 
     document.addEventListener('message', listener);
     window.addEventListener('message', listener);
-    return () => {
-      document.removeEventListener('message', listener);
-      window.removeEventListener('message', listener);
-    };
-  }, [isapp]);
+  });
 
   useDidMount(async () => {
     const cookieLanguage = getLocalCookie(cookieName);
