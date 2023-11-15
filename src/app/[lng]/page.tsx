@@ -23,6 +23,7 @@ export default function Home() {
       copyToClipboard(data);
       switch (type) {
         case 'FCM_TOKEN':
+          setLocalCookie('fcm', data, { expires: afterDay60 });
           postFCMToken({ token: data }).then(() => {
             alert(data);
           });
