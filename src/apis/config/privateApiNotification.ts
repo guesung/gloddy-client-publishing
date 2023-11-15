@@ -6,7 +6,13 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 const privateApiNotification: CustomInstance = axios.create({
   baseURL: `${BASE_API_URL}/api/v1`,
   withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  responseType: 'json',
 });
+
+privateApiNotification.defaults.timeout = 2500;
 
 privateApiNotification.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {

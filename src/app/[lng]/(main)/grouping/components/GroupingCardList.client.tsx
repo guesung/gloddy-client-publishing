@@ -16,31 +16,19 @@ export default function GroupingCardList() {
 
   const { ref, inView } = useInView();
 
-  useEffect(() => {
+  useDidMount(() => {
     alert(1);
     const fcmToken = getLocalCookie('fcm');
     alert(fcmToken);
 
-    axios
-      .post(
-        'https://api.gloddy.shop/api/v1/notifications/tokens',
-        {
-          token:
-            'e8zjE18ZTGmm7i5yL5In0D:APA91bGbR5ojJWMQ9CxXdqOlKUclCj7bVBQdQyYs6vMnKPGWeuAPyrJo7iIvbkUQmP3af4p-OKa1_cvcwxoAKaHsKeYdilOHFirpGSzi1OSRTCaF-011xIej0NeA35vyDLf6Qhe-nAFu',
-        },
-        {
-          headers: {
-            USER_ID: 64,
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-      .then((e) => {
-        alert(e);
+    postFCMToken({ token: fcmToken || '' })
+      .then(() => {
+        alert(fcmToken);
       })
-      .catch((e) => alert(e));
-  }, []);
-
+      .catch((err) => {
+        alert(err);
+      });
+  });
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView, fetchNextPage]);
