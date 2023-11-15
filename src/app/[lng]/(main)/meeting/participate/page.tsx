@@ -10,7 +10,6 @@ import {
 import { RejectedFallback } from '@/components/ErrorBoundary';
 import { Footer } from '@/components/Footer';
 import { Loading } from '@/components/Loading';
-import { PageAnimation } from '@/components/PageAnimation';
 import { HydrationProvider } from '@/components/Provider';
 import { QueryAsyncBoundary } from '@suspensive/react-query';
 
@@ -25,24 +24,22 @@ export default function MeetingPage({ params: { lng } }: MeetingPageProps) {
     <>
       <MeetingParticipateHeader />
       <QueryAsyncBoundary rejectedFallback={RejectedFallback} pendingFallback={<Loading />}>
-        <PageAnimation>
-          <HydrationProvider
-            queryMultipleFn={[
-              getMeetingParticipating,
-              getMeetingHosting,
-              getMeetingRejected,
-              getMeetingNotEstimated,
-            ]}
-            queryMultipleKey={[
-              Keys.getMeetingParticipating(),
-              Keys.getMeetingHosting(),
-              Keys.getMeetingRejected(),
-              Keys.getMeetingNotEstimated(),
-            ]}
-          >
-            <ContentSection />
-          </HydrationProvider>
-        </PageAnimation>
+        <HydrationProvider
+          queryMultipleFn={[
+            getMeetingParticipating,
+            getMeetingHosting,
+            getMeetingRejected,
+            getMeetingNotEstimated,
+          ]}
+          queryMultipleKey={[
+            Keys.getMeetingParticipating(),
+            Keys.getMeetingHosting(),
+            Keys.getMeetingRejected(),
+            Keys.getMeetingNotEstimated(),
+          ]}
+        >
+          <ContentSection />
+        </HydrationProvider>
       </QueryAsyncBoundary>
       <Footer page="meeting" lng={lng} />
     </>
