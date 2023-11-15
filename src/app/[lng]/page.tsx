@@ -9,6 +9,7 @@ import { getLocalCookie, setLocalCookie } from '@/utils/cookieController';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 import { afterDay60 } from '@/utils/date';
 import { getIsApp } from '@/utils/getIsApp';
+import { useEffect } from 'react';
 
 export default function Home() {
   const { i18n } = useTranslation('common');
