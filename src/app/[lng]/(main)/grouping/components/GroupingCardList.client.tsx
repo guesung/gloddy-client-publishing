@@ -24,7 +24,7 @@ export default function GroupingCardList() {
         alert('grouping' + fcmToken);
       })
       .catch((e) => {
-        console.log(e);
+        alert(e?.message || e);
       });
   });
 
