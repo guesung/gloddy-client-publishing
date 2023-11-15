@@ -16,7 +16,8 @@ export default function GroupingCardList() {
 
   const { ref, inView } = useInView();
 
-  useDidMount(() => {
+  useEffect(() => {
+    if (inView) fetchNextPage();
     alert(1);
     const fcmToken = getLocalCookie('fcm');
     alert(fcmToken);
@@ -28,9 +29,6 @@ export default function GroupingCardList() {
       .catch((err) => {
         alert(err);
       });
-  });
-  useEffect(() => {
-    if (inView) fetchNextPage();
   }, [inView, fetchNextPage]);
 
   return (
