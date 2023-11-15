@@ -1,5 +1,6 @@
 import Information from './components/Information';
 import InformationHeader from './components/InformationHeader';
+import { PageAnimation } from '@/components/PageAnimation';
 
 interface PageProps {
   params: {
@@ -10,8 +11,9 @@ export default function page({ params: { lng } }: PageProps) {
   return (
     <>
       <InformationHeader />
-
-      <Information lng={lng} />
+      <PageAnimation>
+        <Information lng={lng} />
+      </PageAnimation>
     </>
   );
 }

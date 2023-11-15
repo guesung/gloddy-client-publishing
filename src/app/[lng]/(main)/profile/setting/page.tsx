@@ -2,6 +2,7 @@ import LinkSection from './components/LinkSection.server';
 import ProfileSection from './components/ProfileSection.client';
 import SettingHeader from './components/SettingHeader.client';
 import { RejectedFallback } from '@/components/ErrorBoundary';
+import { PageAnimation } from '@/components/PageAnimation';
 import { QueryAsyncBoundary } from '@suspensive/react-query';
 
 interface PageParams {
@@ -15,8 +16,10 @@ export default function page({ params: { lng } }: PageParams) {
     <>
       <SettingHeader />
       <QueryAsyncBoundary rejectedFallback={RejectedFallback}>
-        <ProfileSection />
-        <LinkSection lng={lng} />
+        <PageAnimation>
+          <ProfileSection />
+          <LinkSection lng={lng} />
+        </PageAnimation>
       </QueryAsyncBoundary>
     </>
   );

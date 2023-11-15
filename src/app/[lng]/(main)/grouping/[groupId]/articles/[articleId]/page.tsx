@@ -4,6 +4,7 @@ import CommentForm from './components/CommentForm';
 import { Keys, getArticle } from '@/apis/groups';
 import { RejectedFallback } from '@/components/ErrorBoundary';
 import { Loading } from '@/components/Loading';
+import { PageAnimation } from '@/components/PageAnimation';
 import { HydrationProvider } from '@/components/Provider';
 import { Spacing } from '@/components/Spacing';
 import { QueryAsyncBoundary } from '@suspensive/react-query';
@@ -26,12 +27,14 @@ export default function ArticlePage({ params }: ArticleDetailPageProps) {
         rejectedFallback={RejectedFallback}
         pendingFallback={<Loading className="h-[calc(100dvh-250px)]" />}
       >
-        <HydrationProvider
-          queryFn={() => getArticle(groupId, articleId)}
-          queryKey={Keys.getArticle(groupId, articleId)}
-        >
-          <ArticleDetail />
-        </HydrationProvider>
+        <PageAnimation>
+          <HydrationProvider
+            queryFn={() => getArticle(groupId, articleId)}
+            queryKey={Keys.getArticle(groupId, articleId)}
+          >
+            <ArticleDetail />
+          </HydrationProvider>
+        </PageAnimation>
       </QueryAsyncBoundary>
       <Spacing size={100} />
       <CommentForm />

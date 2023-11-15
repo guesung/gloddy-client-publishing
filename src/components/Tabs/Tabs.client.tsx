@@ -1,4 +1,5 @@
 'use client';
+import { PageAnimation } from '../PageAnimation';
 import useAppRouter from '@/hooks/useAppRouter';
 import cn from '@/utils/cn';
 import { LayoutGroup, motion } from 'framer-motion';
@@ -129,7 +130,7 @@ function Panel({ value, children }: PropsWithChildren<Pick<TabProps, 'value'>>) 
   const searchParams = useSearchParams();
   const isActive = searchParams.get('tab') === value;
 
-  return isActive && <>{children}</>;
+  return isActive && <PageAnimation>{children}</PageAnimation>;
 }
 
 Tabs.List = List;
