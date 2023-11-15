@@ -1,8 +1,11 @@
 'use client';
 import { useGetGroups } from '@/apis/groups';
+import { postFCMToken } from '@/apis/notifications';
 import { GroupingCard } from '@/components/Card';
 import { ItemList } from '@/components/List';
+import { useDidMount } from '@/hooks/common/useDidMount';
 import { useBlockStore } from '@/store/useBlockStore';
+import { getLocalCookie } from '@/utils/cookieController';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -11,6 +14,13 @@ export default function GroupingCardList() {
   const { data, fetchNextPage } = useGetGroups();
 
   const { ref, inView } = useInView();
+
+  useDidMount(async () => {
+    const fcmToken = getLocalCookie('fcm');
+    await postFCMToken({ token: fcmToken || '' }).then(() => {
+      alert('grouping' + fcmToken);
+    });
+  });
 
   useEffect(() => {
     if (inView) fetchNextPage();
