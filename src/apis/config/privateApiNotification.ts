@@ -1,7 +1,7 @@
 import { CustomInstance } from './type';
 import { BASE_API_URL } from '@/constants';
 import { getTokenFromCookie } from '@/utils/auth/tokenController';
-import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 const privateApiNotification: CustomInstance = axios.create({
   baseURL: `${BASE_API_URL}/api/v1`,
@@ -29,5 +29,9 @@ privateApiNotification.interceptors.request.use(
     Promise.reject(error);
   }
 );
+
+privateApiNotification.interceptors.response.use((response: AxiosResponse) => {
+  return response.data;
+});
 
 export { privateApiNotification };
