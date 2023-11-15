@@ -1,20 +1,12 @@
 'use client';
-import { useGetGroups } from '@/apis/groups';
 import { postFCMToken } from '@/apis/notifications';
-import { GroupingCard } from '@/components/Card';
-import { ItemList } from '@/components/List';
-import { useDidMount } from '@/hooks/common/useDidMount';
-import { useBlockStore } from '@/store/useBlockStore';
 import { getLocalCookie } from '@/utils/cookieController';
-import axios from 'axios';
-import { useEffect, useLayoutEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
 
 export default function GroupingCardList() {
   // const { blockGroupIds } = useBlockStore();
   // const { data, fetchNextPage } = useGetGroups();
 
-  const { ref, inView } = useInView();
+  // const { ref, inView } = useInView();
 
   // useEffect(() => {
   //   if (inView) fetchNextPage();
@@ -49,7 +41,7 @@ export default function GroupingCardList() {
       >
         클릭해봐
       </button>
-      <div ref={ref} />
+      {/* <div ref={ref} /> */}
     </>
   );
 }
