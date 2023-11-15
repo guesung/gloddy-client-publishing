@@ -19,13 +19,8 @@ export default function GroupingCardList() {
     alert(1);
     const fcmToken = getLocalCookie('fcm');
     alert(fcmToken);
-    await postFCMToken({ token: fcmToken || '' })
-      .then(() => {
-        alert('grouping' + fcmToken);
-      })
-      .catch((e) => {
-        alert(e?.message || e);
-      });
+    const a = await postFCMToken({ token: fcmToken || '' });
+    alert(a);
   });
 
   useEffect(() => {
