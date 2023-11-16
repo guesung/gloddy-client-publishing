@@ -1,7 +1,7 @@
 'use client';
 import { useTranslation } from '../i18n/client';
 import { cookieName } from '../i18n/settings';
-import { postFCMToken } from '@/apis/notifications';
+import { postFCMToken, usePostFCMToken } from '@/apis/notifications';
 import { useDidMount } from '@/hooks/common/useDidMount';
 import useAppRouter from '@/hooks/useAppRouter';
 import { hasToken } from '@/utils/auth/tokenController';
@@ -23,10 +23,13 @@ export default function Home() {
       copyToClipboard(data);
       switch (type) {
         case 'FCM_TOKEN':
-          setLocalCookie('fcm', data, { expires: afterDay60 });
-          postFCMToken({ token: 'abc' }).then((a) => {
-            alert(JSON.stringify(a));
-          });
+          postFCMToken({ token: data })
+            .then((res) => {
+              alert(JSON.stringify(res));
+            })
+            .catch((err) => {
+              alert(JSON.stringify(err));
+            });
       }
     };
 

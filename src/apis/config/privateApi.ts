@@ -18,8 +18,6 @@ privateApi.interceptors.request.use(
   async (config: InternalAxiosRequestConfig) => {
     try {
       const { accessToken } = await getTokenFromCookie();
-      const { userId } = await getTokenFromCookie();
-      config.headers['USER_ID'] = userId;
       config.headers['X-AUTH-TOKEN'] = accessToken;
       return config;
     } catch (error) {
