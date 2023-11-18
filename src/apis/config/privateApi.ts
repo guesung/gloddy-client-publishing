@@ -49,6 +49,7 @@ privateApi.interceptors.response.use(
       }
       /* 토큰 재발급이 필요한 경우 */
       if (error.response.status === AUTH_ERROR_CODES.TOKEN_ERROR) {
+        return;
         try {
           const { refreshToken, accessToken } = await getTokenFromCookie();
           if (!refreshToken || !accessToken) {
