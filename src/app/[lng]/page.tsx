@@ -16,30 +16,19 @@ export default function Home() {
   const { replace } = useAppRouter();
   const isapp = getIsApp();
 
-  useEffect(() => {
+  useDidMount(() => {
     if (!isapp) return;
-    const listener = (event: any) => {
+    const listener = async (event: any) => {
       const { data, type } = JSON.parse(event.data);
-      copyToClipboard(data);
       switch (type) {
         case 'FCM_TOKEN':
-          postFCMToken({ token: data })
-            .then((res) => {
-              alert(JSON.stringify(res));
-            })
-            .catch((err) => {
-              alert(JSON.stringify(err));
-            });
+          postFCMToken({ token: data });
       }
     };
 
     document.addEventListener('message', listener);
     window.addEventListener('message', listener);
-    return () => {
-      document.removeEventListener('message', listener);
-      window.removeEventListener('message', listener);
-    };
-  }, [isapp]);
+  });
 
   useDidMount(async () => {
     const cookieLanguage = getLocalCookie(cookieName);
