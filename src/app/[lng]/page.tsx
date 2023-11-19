@@ -6,10 +6,8 @@ import { useDidMount } from '@/hooks/common/useDidMount';
 import useAppRouter from '@/hooks/useAppRouter';
 import { hasToken } from '@/utils/auth/tokenController';
 import { getLocalCookie, setLocalCookie } from '@/utils/cookieController';
-import { copyToClipboard } from '@/utils/copyToClipboard';
 import { afterDay60 } from '@/utils/date';
 import { getIsApp } from '@/utils/getIsApp';
-import { useEffect } from 'react';
 
 export default function Home() {
   const { i18n } = useTranslation('common');
@@ -22,7 +20,13 @@ export default function Home() {
       const { data, type } = JSON.parse(event.data);
       switch (type) {
         case 'FCM_TOKEN':
-          postFCMToken({ token: data });
+          postFCMToken({ token: data })
+            .then(() => {
+              alert('푸시 알림이 설정되었습니다.');
+            })
+            .catch(() => {
+              alert('푸시 알림 설정에 실패했습니다.');
+            });
       }
     };
 
