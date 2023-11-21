@@ -1,7 +1,7 @@
 'use client';
 import { useTranslation } from '../i18n/client';
 import { cookieName } from '../i18n/settings';
-import { postFCMToken, usePostFCMToken } from '@/apis/notifications';
+import { postFCMToken } from '@/apis/notifications';
 import { useDidMount } from '@/hooks/common/useDidMount';
 import useAppRouter from '@/hooks/useAppRouter';
 import { hasToken } from '@/utils/auth/tokenController';
@@ -20,18 +20,16 @@ export default function Home() {
       const { data, type } = JSON.parse(event.data);
       switch (type) {
         case 'FCM_TOKEN':
-          postFCMToken({ token: data })
-            .then(() => {
-              alert('푸시 알림이 설정되었습니다.');
-            })
-            .catch(() => {
-              alert('푸시 알림 설정에 실패했습니다.');
-            });
+          postFCMToken({ token: data });
       }
     };
 
     document.addEventListener('message', listener);
     window.addEventListener('message', listener);
+    return () => {
+      document.removeEventListener('message', listener);
+      window.removeEventListener('message', listener);
+    };
   });
 
   useDidMount(async () => {
