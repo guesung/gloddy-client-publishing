@@ -1,5 +1,5 @@
 import { usePostFiles } from '@/apis/common';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
 interface UseImageUploadProps {
   /**
@@ -23,7 +23,6 @@ export function useFileUpload(
   options?: UseImageUploadProps['options']
 ) {
   const { mutate, isLoading } = usePostFiles();
-  const [previewImageList, setPreviewImageList] = useState<string[]>([]);
 
   const handleFileUploadClick = useCallback(() => {
     const input = document.createElement('input');
@@ -33,11 +32,6 @@ export function useFileUpload(
     input.onchange = (event) => {
       const { files } = event.target as HTMLInputElement;
       if (!files) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        setPreviewImageList((prev) => [...prev, reader.result as string]);
-      };
-      reader.readAsDataURL(files[0]);
 
       mutate(
         { fileList: Array.from(files) },
@@ -54,6 +48,5 @@ export function useFileUpload(
   return {
     handleFileUploadClick,
     isLoading,
-    previewImageList,
   };
 }
