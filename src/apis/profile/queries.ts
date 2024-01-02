@@ -4,15 +4,9 @@ import { useSuspenseQuery } from '@suspensive/react-query';
 export const useGetProfile = () =>
   useSuspenseQuery(Keys.getProfile(), getProfile, {
     select: (data) => {
-      const { introduce, countryName, countryImage } = data;
-      return {
-        ...data,
-        introduce: introduce || '',
-        countryName: countryName || 'Korea',
-        countryImage:
-          countryImage ||
-          'https://opendata.mofa.go.kr:8444/fileDownload/images/country_images/flags/241/20220224_233513043.gif',
-      };
+      const { introduce } = data;
+      const defaultIntroduce = introduce ?? '';
+      return { ...data, introduce: defaultIntroduce };
     },
   });
 
