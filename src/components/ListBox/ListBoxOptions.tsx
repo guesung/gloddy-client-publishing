@@ -1,4 +1,5 @@
 import { useListBoxContext } from '@/components/ListBox/ListBoxController';
+import React, { Dispatch, SetStateAction } from 'react';
 
 interface ListBoxOptionsProps {
   options: string[];
