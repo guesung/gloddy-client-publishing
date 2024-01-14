@@ -1,13 +1,12 @@
 'use client';
 
-import { Suspense } from 'react';
-
 import AllContent from './AllContent.client';
-import KpopContent from './KpopContent';
+import DailyContent from './DailyContent.client';
 import LanguageContent from './LanguageContent.client';
 import QuestionContent from './QuestionContent.client';
 import { useTranslation } from '@/app/i18n/client';
 import { Tabs } from '@/components/Tabs';
+import { Suspense } from 'react';
 
 export default function ContentSection() {
   const { t } = useTranslation('community');
@@ -16,7 +15,7 @@ export default function ContentSection() {
     <Tabs>
       <Tabs.List>
         <Tabs.Tab text={t('all')} value="all" />
-        <Tabs.Tab text={t('kpop')} value="kpop" />
+        <Tabs.Tab text={t('daily')} value="daily" />
         <Tabs.Tab text={t('question')} value="question" />
         <Tabs.Tab text={t('language')} value="language" />
       </Tabs.List>
@@ -25,9 +24,9 @@ export default function ContentSection() {
           <AllContent />
         </Suspense>
       </Tabs.Panel>
-      <Tabs.Panel value="kpop">
+      <Tabs.Panel value="daily">
         <Suspense>
-          <KpopContent />
+          <DailyContent />
         </Suspense>
       </Tabs.Panel>
       <Tabs.Panel value="question">

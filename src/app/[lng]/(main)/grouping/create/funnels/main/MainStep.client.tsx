@@ -6,11 +6,10 @@ import CreateModal from '../../components/CreateModal.client';
 import { useTranslation } from '@/app/i18n/client';
 import { Button, ButtonGroup } from '@/components/Button';
 import { Divider } from '@/components/Divider';
+import { Toast } from '@/components/Modal';
 import { Spacing } from '@/components/Spacing';
-import { useDidMount } from '@/hooks/common/useDidMount';
 import useBrowser from '@/hooks/useBrowser';
-import { useModal, useToast } from '@/hooks/useModal';
-import sendMessageToReactNative from '@/utils/sendMessageToReactNative';
+import { useModal } from '@/hooks/useModal';
 import { format } from 'date-fns';
 
 import type { CreateGroupContextValue } from '../../type';
@@ -45,7 +44,7 @@ export default function MainStep({ onSelectMeetDate, onCreateSubmit }: MainStepP
 
   const { t } = useTranslation('grouping');
   const { open: openCreateModal, exit: exitCreateModal } = useModal();
-  const { openToast } = useToast();
+  const { open: openToast } = useModal({ delay: 2000 });
 
   const isAllInput = Object.values(hookForm.watch()).every((value) => {
     if (typeof value === 'object') {
@@ -56,7 +55,7 @@ export default function MainStep({ onSelectMeetDate, onCreateSubmit }: MainStepP
 
   const handleCreateClick = () => {
     if (!validateDate(watch('meetDate'), watch('time'), browser)) {
-      openToast(t('create.error.time'));
+      openToast(() => <Toast>{t('create.error.time')}</Toast>);
       return;
     }
 
@@ -70,13 +69,6 @@ export default function MainStep({ onSelectMeetDate, onCreateSubmit }: MainStepP
       />
     ));
   };
-
-  useDidMount(() => {
-    sendMessageToReactNative({
-      type: 'GET_PERMISSION',
-      data: 'IMAGE',
-    });
-  });
 
   return (
     <>

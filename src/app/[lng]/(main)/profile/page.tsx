@@ -3,6 +3,8 @@ import ProfileHeader from './components/ProfileHeader.client';
 import { Keys, getProfile } from '@/apis/profile';
 import { RejectedFallback } from '@/components/ErrorBoundary';
 import { Footer } from '@/components/Footer';
+import { Loading } from '@/components/Loading';
+
 import { HydrationProvider } from '@/components/Provider';
 import { Spacing } from '@/components/Spacing';
 import { QueryAsyncBoundary } from '@suspensive/react-query';

@@ -1,10 +1,12 @@
 import './globals.css';
 
+// import { readFileSync } from 'fs';
+
 import { languages } from '../i18n/settings';
 import { GoogleAnalytics } from '@/components/Analytics';
 import { InitMap } from '@/components/Map';
 import { QueryProvider } from '@/components/Provider';
-import ToastProvider from '@/components/Provider/ToastProvider';
+import QueryProviderWrapModal from '@/components/Provider/QueryProviderWrapModal.client';
 import { BASE_WEB_URL, GOOGLE_API_KEY } from '@/constants';
 import ModalProvider from '@/hooks/useModal/ModalProvider';
 import { dir } from 'i18next';
@@ -57,19 +59,19 @@ export default function RootLayout({
 }: StrictPropsWithChildren<RootLayoutProps>) {
   return (
     <Layout lng={lng}>
-      <ToastProvider>
-        <QueryProvider>
-          <ModalProvider>
+      <QueryProviderWrapModal>
+        <ModalProvider>
+          <QueryProvider>
             <GoogleAnalytics />
             {children}
-          </ModalProvider>
-        </QueryProvider>
-      </ToastProvider>
+          </QueryProvider>
+        </ModalProvider>
+      </QueryProviderWrapModal>
       <InitMap />
       <Script
         defer
         src={`https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&libraries=places&callback=initMap`}
-      />
+      ></Script>
     </Layout>
   );
 }
@@ -79,8 +81,14 @@ interface LayoutProps {
 }
 
 function Layout({ lng, children }: StrictPropsWithChildren<LayoutProps>) {
+  // const filePath = `src/style/tailwindSSR.css`;
+  // const styleSheetContent = readFileSync(filePath, 'utf8');
+
   return (
     <html lang={lng} dir={dir(lng)}>
+      {/* <head>
+        <style dangerouslySetInnerHTML={{ __html: styleSheetContent }} />
+      </head> */}
       <body className="flex h-full min-h-[100dvh] w-screen justify-center overflow-y-scroll bg-slate-50">
         <div className="relative min-h-[100dvh] w-full max-w-450 bg-white text-sign-primary">
           {children}

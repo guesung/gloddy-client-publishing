@@ -1,6 +1,7 @@
 import Service from './components/Service';
 import ServiceHeader from './components/ServiceHeader';
 
+
 interface PageProps {
   params: {
     lng: string;

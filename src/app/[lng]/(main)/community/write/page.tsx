@@ -1,11 +1,7 @@
-import InputSection from '@/app/[lng]/(main)/community/write/components/InputSection';
-import WriteHeader from '@/app/[lng]/(main)/community/write/components/WriteHeader';
-
 export default function CommunityWritePage() {
   return (
-    <>
-      <WriteHeader />
-      <InputSection />
-    </>
+    <div>
+      <h1>커뮤니티 글 작성 페이지</h1>
+    </div>
   );
 }

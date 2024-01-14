@@ -1,4 +1,5 @@
 import withPlaiceholder from '@plaiceholder/next';
+
 import { withSentryConfig } from '@sentry/nextjs';
 
 /**
@@ -10,10 +11,6 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'gloddy.s3.ap-northeast-2.amazonaws.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'opendata.mofa.go.kr',
       },
     ],
   },

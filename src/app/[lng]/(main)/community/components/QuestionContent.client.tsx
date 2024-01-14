@@ -5,12 +5,10 @@ import Empty from './Empty';
 import { ItemList } from '@/components/List';
 import { DUMMY_ARTICLES_DATA } from '@/constants/dummyData';
 
-import type { CommunityArticle } from '@/apis/groups';
+import type { Article } from '@/apis/groups';
 
 export default function QuestionContent() {
-  const articleData: CommunityArticle[] = [...DUMMY_ARTICLES_DATA].filter(
-    (article) => article.articleType === 'question'
-  );
+  const articleData: Article[] = [...DUMMY_ARTICLES_DATA];
 
   return (
     <ItemList

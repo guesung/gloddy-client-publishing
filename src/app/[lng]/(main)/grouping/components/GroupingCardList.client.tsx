@@ -1,7 +1,5 @@
 'use client';
-import NoMeeting from '../../meeting/components/NoMeeting';
 import { useGetGroups } from '@/apis/groups';
-import { useTranslation } from '@/app/i18n/client';
 import { GroupingCard } from '@/components/Card';
 import { ItemList } from '@/components/List';
 import { useBlockStore } from '@/store/useBlockStore';
@@ -10,8 +8,7 @@ import { useInView } from 'react-intersection-observer';
 
 export default function GroupingCardList() {
   const { blockGroupIds } = useBlockStore();
-  const { data: groupList, fetchNextPage } = useGetGroups();
-  const { t } = useTranslation('grouping');
+  const { data, fetchNextPage } = useGetGroups();
 
   const { ref, inView } = useInView();
 
@@ -22,11 +19,10 @@ export default function GroupingCardList() {
   return (
     <>
       <ItemList
-        data={groupList}
-        renderItem={(group) =>
-          !blockGroupIds.includes(group.groupId) && <GroupingCard groupingData={group} />
+        data={data}
+        renderItem={(grouping) =>
+          !blockGroupIds.includes(grouping.groupId) && <GroupingCard groupingData={grouping} />
         }
-        renderEmpty={() => <NoMeeting message={t('noGroup')} />}
       />
       <div ref={ref} />
     </>

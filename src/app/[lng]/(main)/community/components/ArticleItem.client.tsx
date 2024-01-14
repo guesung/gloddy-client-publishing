@@ -1,28 +1,24 @@
 'use client';
 
-import { formatDistanceStrict } from 'date-fns';
-import { enUS, ko } from 'date-fns/locale';
-import Image from 'next/image';
-
 import ArticleBadge from './ArticleBadge.client';
-import { CommunityArticle } from '@/apis/groups';
+import { Article } from '@/apis/groups';
 import { useTranslation } from '@/app/i18n/client';
 import { Avatar } from '@/components/Avatar';
 import { Divider } from '@/components/Divider';
 import { Icon } from '@/components/Icon';
 import { Flex } from '@/components/Layout';
 import { Spacing } from '@/components/Spacing';
-import useAppRouter from '@/hooks/useAppRouter';
 import { currentKoreaTime } from '@/utils/date';
+import { formatDistanceStrict } from 'date-fns';
+import { enUS, ko } from 'date-fns/locale';
+import Image from 'next/image';
 
 interface ArticleItemProps {
-  article: CommunityArticle;
-  onClick?: () => void;
+  article: Article;
 }
 
-export default function ArticleItem({ article, onClick }: ArticleItemProps) {
+export default function ArticleItem({ article }: ArticleItemProps) {
   const { t, i18n } = useTranslation('community');
-  const { push } = useAppRouter();
   const {
     content,
     images,
@@ -32,16 +28,15 @@ export default function ArticleItem({ article, onClick }: ArticleItemProps) {
     name,
     isWriterCertifiedStudent,
     writerReliabilityLevel,
-    articleId,
-    title,
-    articleType,
-    likeCount,
   } = article;
 
   const locale = i18n.language === 'ko' ? ko : enUS;
+  const title = '홍대가는 방법';
+  const likeCount = 0;
+  const articleType = 'question';
 
   return (
-    <div className="p-20" onClick={onClick || (() => push(`/community/${articleId}`, false))}>
+    <div className="p-20">
       <Flex justify="between" align="center">
         <ArticleBadge type={articleType}>{t(articleType)}</ArticleBadge>
         <p className="text-caption text-sign-tertiary">
