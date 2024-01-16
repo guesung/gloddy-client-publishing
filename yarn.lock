@@ -2752,11 +2752,11 @@ __metadata:
   linkType: hard
 
 "@suspensive/react@npm:^1.11.3":
-  version: 1.11.3
-  resolution: "@suspensive/react@npm:1.11.3"
+  version: 1.20.9
+  resolution: "@suspensive/react@npm:1.20.9"
   peerDependencies:
     react: ^16.8 || ^17 || ^18
-  checksum: 5ee039d6c12914c74b9860fe551e0c9b7b65b5b52d0af964ce79289f7cfa0c05530c619a543020e8f8e8fcd186330984aa790ffea6c6a86eed1dd4d5f1a3d838
+  checksum: ab8e0b191e93151084a152aceb76ba81f3d1336dac71616711b970db13f473fe897ab76dfd2212431c1d584f08280a772c4eb51fe324806e955ae273e5c58453
   languageName: node
   linkType: hard
 
@@ -4124,6 +4124,15 @@ __metadata:
   dependencies:
     fill-range: ^7.0.1
   checksum: e2a8e769a863f3d4ee887b5fe21f63193a891c68b612ddb4b68d82d1b5f3ff9073af066c343e9867a393fe4c2555dcb33e89b937195feb9c1613d259edfcd459
+  languageName: node
+  linkType: hard
+
+"browser-image-compression@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "browser-image-compression@npm:2.0.2"
+  dependencies:
+    uzip: 0.20201231.0
+  checksum: 16051f07b0ec3927d30600d244d07d46bd41de16d6c44b872efe89f4b2b22dbd9dfbb66e3d1ff2c6282057722456a53759996e1478774dc520843ffb48f7441e
   languageName: node
   linkType: hard
 
@@ -6751,6 +6760,7 @@ __metadata:
     autoprefixer: ^10.4.14
     axios: ^1.4.0
     babel-jest: ^29.6.2
+    browser-image-compression: ^2.0.2
     clsx: ^1.2.1
     cssnano: ^6.0.1
     date-fns: ^2.30.0
@@ -6785,7 +6795,6 @@ __metadata:
     react: 18.2.0
     react-datepicker: ^4.15.0
     react-dom: 18.2.0
-    react-error-boundary: ^4.0.10
     react-hook-form: ^7.45.0
     react-i18next: ^13.2.2
     react-intersection-observer: ^9.5.2
@@ -10552,17 +10561,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-error-boundary@npm:^4.0.10":
-  version: 4.0.10
-  resolution: "react-error-boundary@npm:4.0.10"
-  dependencies:
-    "@babel/runtime": ^7.12.5
-  peerDependencies:
-    react: ">=16.13.1"
-  checksum: 4ad4864d2a5fc2264a24d03e83176e6a70d7adbe3c1edbdc5b0bd452a695104bc59456e23b5aea1b9729220672fe46614221daa8b3bd59327968d4aa7eb8bc71
-  languageName: node
-  linkType: hard
-
 "react-fast-compare@npm:^3.0.1":
   version: 3.2.2
   resolution: "react-fast-compare@npm:3.2.2"
@@ -12623,6 +12621,13 @@ __metadata:
   bin:
     uuid: dist/bin/uuid
   checksum: 5575a8a75c13120e2f10e6ddc801b2c7ed7d8f3c8ac22c7ed0c7b2ba6383ec0abda88c905085d630e251719e0777045ae3236f04c812184b7c765f63a70e58df
+  languageName: node
+  linkType: hard
+
+"uzip@npm:0.20201231.0":
+  version: 0.20201231.0
+  resolution: "uzip@npm:0.20201231.0"
+  checksum: 34253f4c3d996571b10b659eea415bec952bde940e1fd44090ce19687b6dbaae411d8e6321b9028e44aa442379659d71bb39e95ba15de0626cfe970d90b24f40
   languageName: node
   linkType: hard
 
