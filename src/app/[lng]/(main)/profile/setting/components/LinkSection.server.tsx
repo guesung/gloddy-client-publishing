@@ -1,6 +1,7 @@
 import { serverTranslation } from '@/app/i18n';
 import { Divider } from '@/components/Divider';
 import { NavLink } from '@/components/NavLink';
+import Link from 'next/link';
 
 interface LinkSectionProps {
   lng: string;
@@ -26,7 +27,7 @@ export default async function LinkSection({ lng }: LinkSectionProps) {
       </div>
       <Divider thickness="thick" />
       <div className="px-20 py-12 ">
-        <NavLink href="/profile/setting/delete">{t('settings.deleteAccount')}</NavLink>
+        <Link href="/profile/setting/delete">{t('settings.deleteAccount')}</Link>
       </div>
     </section>
   );
