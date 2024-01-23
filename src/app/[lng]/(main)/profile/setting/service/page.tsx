@@ -1,7 +1,5 @@
 import Service from './components/Service';
 import ServiceHeader from './components/ServiceHeader';
-import { Loading } from '@/components/Loading';
-import { Suspense } from 'react';
 
 interface PageProps {
   params: {
@@ -14,9 +12,7 @@ export default function page({ params: { lng } }: PageProps) {
     <>
       <ServiceHeader />
 
-      <Suspense fallback={<Loading />}>
-        <Service lng={lng} />
-      </Suspense>
+      <Service lng={lng} />
     </>
   );
 }

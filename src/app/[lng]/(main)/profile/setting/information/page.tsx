@@ -1,6 +1,5 @@
 import Information from './components/Information';
 import InformationHeader from './components/InformationHeader';
-import { Suspense } from 'react';
 
 interface PageProps {
   params: {
@@ -12,9 +11,7 @@ export default function page({ params: { lng } }: PageProps) {
     <>
       <InformationHeader />
 
-      <Suspense>
-        <Information lng={lng} />
-      </Suspense>
+      <Information lng={lng} />
     </>
   );
 }
