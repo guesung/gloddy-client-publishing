@@ -33,11 +33,14 @@ export function useFileUpload(
     input.accept = options?.accept || 'image/*';
     input.multiple = options?.multiple || false;
     input.onchange = async (event) => {
+      alert(1);
       const { files } = event.target as HTMLInputElement;
       if (!files) return;
+      alert(2);
 
       const base64 = await getBase64FromImage(files[0]);
       setPreviewImage(base64);
+      alert(3);
 
       mutate(
         { fileList: Array.from(files) },
