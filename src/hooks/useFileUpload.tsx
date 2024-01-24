@@ -27,20 +27,17 @@ export function useFileUpload(
   const { mutate, isPending } = usePostFiles();
   const [previewImage, setPreviewImage] = useState<string | undefined>();
 
-  const handleFileUploadClick = useCallback(() => {
+  const handleFileUploadClick = async () => {
     const input = document.createElement('input');
     input.type = 'file';
     input.accept = options?.accept || 'image/*';
     input.multiple = options?.multiple || false;
     input.onchange = async (event) => {
-      alert(1);
       const { files } = event.target as HTMLInputElement;
       if (!files) return;
-      alert(2);
 
       const base64 = await getBase64FromImage(files[0]);
       setPreviewImage(base64);
-      alert(3);
 
       mutate(
         { fileList: Array.from(files) },
@@ -52,7 +49,7 @@ export function useFileUpload(
       );
     };
     input.click();
-  }, [handleFileChange, mutate, options?.accept, options?.multiple]);
+  };
 
   return {
     handleFileUploadClick,
