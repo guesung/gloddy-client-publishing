@@ -28,13 +28,15 @@ export default function Step1InputForm({ onPrev }: Step1InputFormProps) {
   const personalities = watch('personalities');
 
   const {
-    field: { value, onChange },
+    field: { value, onChange: onChangeImageUrl },
   } = useController({
     name: 'imageUrl',
     control,
   });
 
-  const { handleFileUploadClick, previewImage } = useFileUpload((files) => onChange(files[0]));
+  const { handleFileUploadClick, previewImage } = useFileUpload((files) =>
+    onChangeImageUrl(files[0])
+  );
 
   const isAllTyped = formState.isValid && !!watch('gender') && personalities.length;
 
@@ -66,7 +68,7 @@ export default function Step1InputForm({ onPrev }: Step1InputFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col px-20">
       <Flex justify="center">
         <Avatar
-          imageUrl={previewImage || value}
+          imageUrl={value}
           size="large"
           iconVariant="draft_orders"
           onClick={handleFileUploadClick}

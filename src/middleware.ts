@@ -71,7 +71,7 @@ const middleware = async (request: NextRequest) => {
 
   const lng = request.cookies.get(cookieName)?.value || 'en';
 
-  /* 새로운 페이지 접속 시m */
+  /* 새로운 페이지 접속 시 */
   if (
     !languages.some((loc: string) => request.nextUrl.pathname.startsWith(`/${loc}`)) &&
     !request.nextUrl.pathname.startsWith('/_next')

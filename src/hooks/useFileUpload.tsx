@@ -29,9 +29,11 @@ export function useFileUpload(
 
   const handleFileUploadClick = async () => {
     const input = document.createElement('input');
+    input.style.display = 'none';
     input.type = 'file';
     input.accept = options?.accept || 'image/*';
     input.multiple = options?.multiple || false;
+    document.body.appendChild(input);
     input.onchange = async (event) => {
       const { files } = event.target as HTMLInputElement;
       if (!files) return;
