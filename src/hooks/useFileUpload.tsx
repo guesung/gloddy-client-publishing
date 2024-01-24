@@ -1,6 +1,7 @@
+import { getBase64FromImage } from './getBase64FromImage';
 import { usePostFiles } from '@/apis/common';
-import { useCallback, useState } from 'react';
-import { ControllerRenderProps, Field } from 'react-hook-form';
+import { useCallback } from 'react';
+import { ControllerRenderProps } from 'react-hook-form';
 
 interface UseImageUploadProps {
   /**
@@ -32,14 +33,15 @@ export function useFileUpload(
     input.type = 'file';
     input.accept = options?.accept || 'image/*';
     input.multiple = options?.multiple || false;
-    input.onchange = (event) => {
+    input.onchange = async (event) => {
       const { files } = event.target as HTMLInputElement;
       if (!files) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        previewImageField && previewImageField.onChange(reader.result);
-      };
-      reader.readAsDataURL(files[0]);
+
+      if (previewImageField) {
+        const base64 = await getBase64FromImage(files[0]);
+        console.log(base64);
+        previewImageField.onChange(base64);
+      }
 
       mutate(
         { fileList: Array.from(files) },
