@@ -1,6 +1,6 @@
 import { getBase64FromImage } from './getBase64FromImage';
 import { usePostFiles } from '@/apis/common';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { ControllerRenderProps } from 'react-hook-form';
 
 interface UseImageUploadProps {
@@ -8,7 +8,6 @@ interface UseImageUploadProps {
    * 파일 업로드가 완료되었을 때 실행할 함수를 지정합니다.
    */
   handleFileChange: (fileUrlList: string[]) => void;
-  previewImageField: ControllerRenderProps<any, any>;
   options?: {
     /**
      * 업로드할 파일의 타입을 지정합니다. (default: image/*)
@@ -23,10 +22,10 @@ interface UseImageUploadProps {
 
 export function useFileUpload(
   handleFileChange: UseImageUploadProps['handleFileChange'],
-  previewImageField?: UseImageUploadProps['previewImageField'],
   options?: UseImageUploadProps['options']
 ) {
   const { mutate, isPending } = usePostFiles();
+  const [previewImage, setPreviewImage] = useState<string | undefined>();
 
   const handleFileUploadClick = useCallback(() => {
     const input = document.createElement('input');
@@ -37,11 +36,8 @@ export function useFileUpload(
       const { files } = event.target as HTMLInputElement;
       if (!files) return;
 
-      if (previewImageField) {
-        const base64 = await getBase64FromImage(files[0]);
-        console.log(base64);
-        previewImageField.onChange(base64);
-      }
+      const base64 = await getBase64FromImage(files[0]);
+      setPreviewImage(base64);
 
       mutate(
         { fileList: Array.from(files) },
@@ -53,10 +49,11 @@ export function useFileUpload(
       );
     };
     input.click();
-  }, [handleFileChange, mutate, options?.accept, options?.multiple, previewImageField]);
+  }, [handleFileChange, mutate, options?.accept, options?.multiple]);
 
   return {
     handleFileUploadClick,
     isPending,
+    previewImage,
   };
 }
