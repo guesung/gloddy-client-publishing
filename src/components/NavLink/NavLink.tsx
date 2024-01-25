@@ -22,7 +22,7 @@ export default function NavLink({
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     if (isReplace) replace(href);
-    else push(href);
+    else push(href, scroll);
   };
 
   return (

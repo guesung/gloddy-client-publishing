@@ -64,7 +64,6 @@ export default function NumberVerifyForm({ setInputStatus }: NumberVerifyFormPro
       },
       {
         onSuccess: () => {
-          sendMessageToReactNative({ type: 'SIGN_IN', data: 'LOGIN_SUCCESS' });
           mutateLogin(
             { phoneNumber: data.phoneNumber },
             {
@@ -74,6 +73,7 @@ export default function NumberVerifyForm({ setInputStatus }: NumberVerifyFormPro
                   return;
                 }
 
+                sendMessageToReactNative({ type: 'SIGN_IN', data: 'LOGIN_SUCCESS' });
                 await setTokenAtCookie({
                   accessToken: response.token.accessToken,
                   refreshToken: response.token.refreshToken,

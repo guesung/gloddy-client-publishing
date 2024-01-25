@@ -13,7 +13,7 @@ export default function page() {
             imageUrl:
               'https://gloddy.s3.ap-northeast-2.amazonaws.com/file/eebb9660-216f-491c-902b-367dd5cc27be.JPG',
             maxUser: 3,
-            meetDate: '2024-01-25',
+            meetDate: '2023-12-10',
             placeAddress: '서울특별시',
             placeId: 'ChIJZTibxAqlfDURIeavJisLdqo',
             placeLatitude: 37.5131008,

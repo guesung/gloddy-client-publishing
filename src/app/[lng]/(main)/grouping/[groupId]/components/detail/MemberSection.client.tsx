@@ -29,7 +29,7 @@ export default function MemberSection({ memberCount, maxMemberCount }: MemberSec
         </p>
         <div
           className="flex cursor-pointer items-center text-caption text-sign-caption"
-          onClick={() => push(`${pathname}/members`)}
+          onClick={() => push(`${pathname}/members`, false)}
         >
           <p>{t('details.viewAll')}</p>
           <Icon id="24-navigate_next" />

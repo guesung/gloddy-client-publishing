@@ -34,7 +34,7 @@ export default function Step1InputForm({ onPrev }: Step1InputFormProps) {
     control,
   });
 
-  const { handleFileUploadClick, previewImage } = useFileUpload((files) =>
+  const { handleFileUploadClick, previewImage, isPending } = useFileUpload((files) =>
     onChangeImageUrl(files[0])
   );
 
@@ -68,10 +68,11 @@ export default function Step1InputForm({ onPrev }: Step1InputFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col px-20">
       <Flex justify="center">
         <Avatar
-          imageUrl={previewImage || value}
+          imageUrl={value}
           size="large"
           iconVariant="draft_orders"
           onClick={handleFileUploadClick}
+          isPending={isPending}
         />
       </Flex>
       <Spacing size={16} />

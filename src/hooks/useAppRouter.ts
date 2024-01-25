@@ -6,14 +6,13 @@ const useAppRouter = () => {
   const isApp = getIsApp();
   const router = useRouter();
 
-  const push = (path: string, title?: string, scroll?: boolean) => {
+  const push = (path: string, scroll?: boolean) => {
     if (isApp)
       return sendMessageToReactNative({
         type: 'ROUTER_EVENT',
         data: {
           path,
           type: 'PUSH',
-          title,
         },
       });
     return router.push(path, { scroll });

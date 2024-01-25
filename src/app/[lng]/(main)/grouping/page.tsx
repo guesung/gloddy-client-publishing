@@ -5,7 +5,10 @@ import { Keys, getGroups } from '@/apis/groups';
 import { Loading } from '@/components/Loading';
 import { HydrationProvider } from '@/components/Provider';
 import { Spacing } from '@/components/Spacing';
+import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
+
+const Footer = dynamic(() => import('@/components/Footer/Footer'), { ssr: false });
 
 interface GroupingPageProps {
   params: {
@@ -24,6 +27,7 @@ export default function GroupingPage({ params: { lng } }: GroupingPageProps) {
       </Suspense>
       <CreateGroupButton />
       <Spacing size={60} />
+      <Footer page="grouping" lng={lng} />
     </>
   );
 }
