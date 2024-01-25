@@ -10,6 +10,7 @@ import { TextFieldController } from '@/components/TextField';
 import { regexr } from '@/constants/regexr';
 import useAppRouter from '@/hooks/useAppRouter';
 import { setTokenAtCookie } from '@/utils/auth/tokenController';
+import sendMessageToReactNative from '@/utils/sendMessageToReactNative';
 
 import type { SignUpState } from '../../../type';
 import type { SubmitHandler } from 'react-hook-form';
@@ -63,6 +64,7 @@ export default function NumberVerifyForm({ setInputStatus }: NumberVerifyFormPro
       },
       {
         onSuccess: () => {
+          sendMessageToReactNative({ type: 'SIGN_IN', data: 'LOGIN_SUCCESS' });
           mutateLogin(
             { phoneNumber: data.phoneNumber },
             {
