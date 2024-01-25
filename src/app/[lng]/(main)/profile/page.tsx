@@ -1,7 +1,6 @@
 import ProfileDetail from './components/ProfileDetail.client';
 import ProfileHeader from './components/ProfileHeader.client';
 import { Keys, getProfile } from '@/apis/profile';
-import { Footer } from '@/components/Footer';
 import { Loading } from '@/components/Loading';
 import { HydrationProvider } from '@/components/Provider';
 import { Suspense } from 'react';
@@ -21,7 +20,6 @@ export default function Profile({ params: { lng } }: ProfilePageProps) {
           <ProfileDetail />
         </HydrationProvider>
       </Suspense>
-      <Footer page="profile" isSpacing={false} lng={lng} />
     </>
   );
 }

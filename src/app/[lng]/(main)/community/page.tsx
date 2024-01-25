@@ -1,12 +1,10 @@
-import { Suspense } from 'react';
-
 import CommunityHeader from './components/CommunityHeader';
 import ContentSection from './components/ContentSection.client';
 import { Keys, getCommunityArticles } from '@/apis/community';
-import { Footer } from '@/components/Footer';
 import { Loading } from '@/components/Loading';
 import { HydrationProvider } from '@/components/Provider';
 import { Spacing } from '@/components/Spacing';
+import { Suspense } from 'react';
 
 interface CommunityPageProps {
   params: {
@@ -38,7 +36,6 @@ export default function CommunityPage({ params: { lng } }: CommunityPageProps) {
         </HydrationProvider>
       </Suspense>
       <Spacing size={60} />
-      <Footer page="community" lng={lng} />
     </>
   );
 }

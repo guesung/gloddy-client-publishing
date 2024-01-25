@@ -2,7 +2,6 @@ import CreateGroupButton from './components/CreateGroupButton.client';
 import GroupingCardList from './components/GroupingCardList.client';
 import GroupingHeader from './components/GroupingHeader';
 import { Keys, getGroups } from '@/apis/groups';
-import { Footer } from '@/components/Footer';
 import { Loading } from '@/components/Loading';
 import { HydrationProvider } from '@/components/Provider';
 import { Spacing } from '@/components/Spacing';
@@ -25,7 +24,6 @@ export default function GroupingPage({ params: { lng } }: GroupingPageProps) {
       </Suspense>
       <CreateGroupButton />
       <Spacing size={60} />
-      <Footer page="grouping" lng={lng} />
     </>
   );
 }

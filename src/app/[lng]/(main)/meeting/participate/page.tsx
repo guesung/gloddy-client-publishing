@@ -8,7 +8,6 @@ import {
   getMeetingRejected,
   getMeetingWaiting,
 } from '@/apis/meeting';
-import { Footer } from '@/components/Footer';
 import { Loading } from '@/components/Loading';
 import { HydrationProvider } from '@/components/Provider';
 import { Suspense } from 'react';
@@ -43,7 +42,6 @@ export default function MeetingPage({ params: { lng } }: MeetingPageProps) {
           <ContentSection />
         </HydrationProvider>
       </Suspense>
-      <Footer page="meeting" lng={lng} />
     </>
   );
 }

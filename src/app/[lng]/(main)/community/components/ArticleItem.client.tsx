@@ -1,9 +1,5 @@
 'use client';
 
-import { formatDistanceStrict } from 'date-fns';
-import { enUS, ko } from 'date-fns/locale';
-import Image from 'next/image';
-
 import { CommunityArticle } from '@/apis/community';
 import ArticleBadge from '@/app/[lng]/(main)/community/components/ArticleBadge.client';
 import { useTranslation } from '@/app/i18n/client';
@@ -15,6 +11,9 @@ import { Spacing } from '@/components/Spacing';
 import useAppRouter from '@/hooks/useAppRouter';
 import cn from '@/utils/cn';
 import { currentKoreaTime } from '@/utils/date';
+import { formatDistanceStrict } from 'date-fns';
+import { enUS, ko } from 'date-fns/locale';
+import Image from 'next/image';
 
 interface ArticleItemProps {
   articleData: CommunityArticle;
@@ -54,7 +53,7 @@ export default function ArticleItem({ articleData, onClick }: ArticleItemProps) 
   const locale = i18n.language === 'ko' ? ko : enUS;
 
   return (
-    <div className="p-20" onClick={onClick || (() => push(`/community/${articleId}`, false))}>
+    <div className="p-20" onClick={onClick || (() => push(`/community/${articleId}`))}>
       <Flex justify="between" align="center">
         <ArticleBadge type={category.name}>{t(`category.${category.name}`)}</ArticleBadge>
         <p className="text-caption text-sign-tertiary">
