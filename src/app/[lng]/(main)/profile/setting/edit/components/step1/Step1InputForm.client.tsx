@@ -34,7 +34,7 @@ export default function Step1InputForm({ onPrev }: Step1InputFormProps) {
     control,
   });
 
-  const { handleFileUploadClick, previewImage } = useFileUpload((files) =>
+  const { handleFileUploadClick, previewImage, isPending } = useFileUpload((files) =>
     onChangeImageUrl(files[0])
   );
 
@@ -72,6 +72,7 @@ export default function Step1InputForm({ onPrev }: Step1InputFormProps) {
           size="large"
           iconVariant="draft_orders"
           onClick={handleFileUploadClick}
+          isPending={isPending}
         />
       </Flex>
       <Spacing size={16} />

@@ -1,7 +1,6 @@
 import { getBase64FromImage } from './getBase64FromImage';
 import { usePostFiles } from '@/apis/common';
-import { useCallback, useState } from 'react';
-import { ControllerRenderProps } from 'react-hook-form';
+import { useState } from 'react';
 
 interface UseImageUploadProps {
   /**
@@ -34,7 +33,7 @@ export function useFileUpload(
     input.accept = options?.accept || 'image/*';
     input.multiple = options?.multiple || false;
     document.body.appendChild(input);
-    input.onchange = async (event) => {
+    input.addEventListener('change', async (event) => {
       const { files } = event.target as HTMLInputElement;
       if (!files) return;
 
@@ -49,7 +48,7 @@ export function useFileUpload(
           },
         }
       );
-    };
+    });
     input.click();
   };
 
