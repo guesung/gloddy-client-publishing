@@ -1,17 +1,11 @@
+import ListBox from '@/components/ListBox/ListBox';
+import ListBoxOptions from '@/components/ListBox/ListBoxOptions';
 import React, { ReactNode, createContext, useContext, useState } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
 
-import ListBox from '@/components/ListBox/ListBox';
-import ListBoxOptions from '@/components/ListBox/ListBoxOptions';
-
-export type OptionType = {
-  id: number;
-  name: string;
-};
-
 interface ListBoxControllerProps {
   name: string;
-  options: OptionType[];
+  options: string[];
   register: UseFormRegisterReturn;
 }
 
@@ -33,22 +27,18 @@ const ListBoxProvider = ({ children }: ListBoxProviderProps) => {
 };
 
 export default function ListBoxController({ name, options, register }: ListBoxControllerProps) {
-  const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  const [selectedValue, setSelectedValue] = useState<string>(name);
 
-  const handleSelect = (id: number) => {
-    const selectedOption = options.find((option) => option.id === id);
-    if (selectedOption) {
-      setSelectedValue(selectedOption.name);
-
-      register.onChange({
-        target: { value: id.toString(), name: register.name },
-      } as React.ChangeEvent<HTMLInputElement>);
-    }
+  const handleSelect = (value: string) => {
+    setSelectedValue(value);
+    register.onChange({
+      target: { value, name: register.name },
+    } as React.ChangeEvent<HTMLInputElement>);
   };
 
   return (
     <ListBoxProvider>
-      <ListBox name={selectedValue || name}>
+      <ListBox name={selectedValue}>
         <ListBoxOptions options={options} onSelect={handleSelect} />
       </ListBox>
     </ListBoxProvider>

@@ -18,7 +18,7 @@ export default function UploadSection({ control }: ImageThumbnailProps) {
     control,
   });
 
-  const { handleFileUploadClick, previewImage } = useFileUpload(async (files) => {
+  const { handleFileUploadClick } = useFileUpload(async (files) => {
     field.onChange(files[0]);
   });
 

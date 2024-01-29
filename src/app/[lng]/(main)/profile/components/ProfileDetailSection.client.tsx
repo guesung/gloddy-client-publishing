@@ -222,7 +222,6 @@ export default function ProfileDetailSection({ profileData }: ProfileDetailProps
           placeholder={!introduce ? t('home.noSelfIntro') : ''}
         />
       </section>
-      <Spacing size={70} />
     </>
   );
 }

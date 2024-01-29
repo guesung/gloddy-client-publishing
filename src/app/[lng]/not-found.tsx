@@ -1,7 +1,5 @@
 import NoMeeting from './(main)/meeting/components/NoMeeting';
-import dynamic from 'next/dynamic';
-
-const Footer = dynamic(() => import('@/components/Footer/Footer'), { ssr: false });
+import { Footer } from '@/components/Footer';
 
 export default function NotFound() {
   return (

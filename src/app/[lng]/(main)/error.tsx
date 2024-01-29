@@ -1,9 +1,7 @@
 'use client';
 
 import BaseError, { BaseErrorProps } from '@/components/Error/BaseError';
-import dynamic from 'next/dynamic';
-
-const Footer = dynamic(() => import('@/components/Footer/Footer'), { ssr: false });
+import { Footer } from '@/components/Footer';
 
 interface ErrorProps extends BaseErrorProps {}
 

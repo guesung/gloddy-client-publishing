@@ -2,9 +2,8 @@ import ProfileDetail from './components/ProfileDetail.client';
 import ProfileHeader from './components/ProfileHeader.client';
 import { Keys, getProfile } from '@/apis/profile';
 import { Footer } from '@/components/Footer';
-import { Loading } from '@/components/Loading';
 import { HydrationProvider } from '@/components/Provider';
-import { Suspense } from 'react';
+import { Spacing } from '@/components/Spacing';
 
 interface ProfilePageProps {
   params: {
@@ -16,11 +15,10 @@ export default function Profile({ params: { lng } }: ProfilePageProps) {
   return (
     <>
       <ProfileHeader />
-      <Suspense fallback={<Loading />}>
-        <HydrationProvider queryFn={getProfile} queryKey={Keys.getProfile()}>
-          <ProfileDetail />
-        </HydrationProvider>
-      </Suspense>
+      <HydrationProvider queryFn={getProfile} queryKey={Keys.getProfile()}>
+        <ProfileDetail />
+        <Spacing size={70} />
+      </HydrationProvider>
       <Footer page="profile" isSpacing={false} lng={lng} />
     </>
   );

@@ -1,6 +1,6 @@
 export interface WriteFormType {
   title: string;
   content: string;
-  categoryId: number;
+  category: string;
   images: string[];
 }

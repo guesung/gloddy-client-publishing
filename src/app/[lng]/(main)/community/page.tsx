@@ -1,13 +1,10 @@
 import CommunityHeader from './components/CommunityHeader';
 import ContentSection from './components/ContentSection.client';
-import { Keys, getCommunityArticles } from '@/apis/community';
-import { Loading } from '@/components/Loading';
-import { HydrationProvider } from '@/components/Provider';
+import { FloatAddButton } from '@/components/Button';
+import { Footer } from '@/components/Footer';
+import { NavLink } from '@/components/NavLink';
 import { Spacing } from '@/components/Spacing';
-import dynamic from 'next/dynamic';
-import { Suspense } from 'react';
 
-const Footer = dynamic(() => import('@/components/Footer/Footer'), { ssr: false });
 interface CommunityPageProps {
   params: {
     lng: string;
@@ -18,25 +15,12 @@ export default function CommunityPage({ params: { lng } }: CommunityPageProps) {
   return (
     <>
       <CommunityHeader lng={lng} />
-      <Suspense fallback={<Loading />}>
-        <HydrationProvider
-          queryMultipleFn={[
-            () => getCommunityArticles({ categoryId: 0, pageParam: 0 }),
-            () => getCommunityArticles({ categoryId: 1, pageParam: 0 }),
-            () => getCommunityArticles({ categoryId: 2, pageParam: 0 }),
-            () => getCommunityArticles({ categoryId: 3, pageParam: 0 }),
-          ]}
-          queryMultipleKey={[
-            Keys.getCommunityArticles(0),
-            Keys.getCommunityArticles(1),
-            Keys.getCommunityArticles(2),
-            Keys.getCommunityArticles(3),
-          ]}
-          isInfiniteQuery
-        >
-          <ContentSection />
-        </HydrationProvider>
-      </Suspense>
+      <ContentSection />
+      <div className="fixed inset-x-0 bottom-0 mx-auto h-70 max-w-450">
+        <NavLink href="/community/write">
+          <FloatAddButton className="absolute bottom-90 right-20 ml-auto" />
+        </NavLink>
+      </div>
       <Spacing size={60} />
       <Footer page="community" lng={lng} />
     </>

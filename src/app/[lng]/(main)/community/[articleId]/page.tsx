@@ -1,29 +1,35 @@
-import { Suspense } from 'react';
-
-import { Keys, getCommunityArticleDetail } from '@/apis/community';
+'use client';
+import { CommunityArticle } from '@/apis/groups';
 import ArticleDetail from '@/app/[lng]/(main)/community/[articleId]/components/ArticleDetail';
 import ArticleDetailHeader from '@/app/[lng]/(main)/community/[articleId]/components/ArticleDetailHeader';
-import { Loading } from '@/components/Loading';
-import { HydrationProvider } from '@/components/Provider';
+import CommentForm from '@/app/[lng]/(main)/community/[articleId]/components/CommentForm';
+import { useTranslation } from '@/app/i18n/client';
+import { DUMMY_ARTICLES_DATA } from '@/constants/dummyData';
 
 interface CommunityArticlePageProps {
   params: {
-    articleId: number;
+    articleId: string;
   };
 }
 
+const useDummyDetailData = (id: string): CommunityArticle => {
+  const articleData: CommunityArticle[] = [...DUMMY_ARTICLES_DATA];
+
+  return articleData.filter((article) => article.articleId === Number(id))[0];
+};
+
 export default function CommunityArticlePage({ params }: CommunityArticlePageProps) {
-  const articleId = Number(params.articleId);
+  const { t } = useTranslation('community');
+
+  const dummyData = useDummyDetailData(params.articleId);
+
+  const { articleType } = dummyData;
 
   return (
-    <Suspense fallback={<Loading className="h-[calc(100dvh-48px)]" />}>
-      <HydrationProvider
-        queryFn={() => getCommunityArticleDetail(articleId)}
-        queryKey={Keys.getCommunityArticleDetail(articleId)}
-      >
-        <ArticleDetailHeader />
-        <ArticleDetail articleId={articleId} />
-      </HydrationProvider>
-    </Suspense>
+    <>
+      <ArticleDetailHeader title={t(articleType)} />
+      <ArticleDetail articleData={dummyData} />
+      <CommentForm />
+    </>
   );
 }

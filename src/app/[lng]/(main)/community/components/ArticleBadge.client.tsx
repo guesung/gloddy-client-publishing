@@ -1,5 +1,4 @@
 'use client';
-import { CategoryType } from '@/apis/community';
 import { Flex } from '@/components/Layout';
 import { StrictPropsWithChildren } from '@/types';
 import cn from '@/utils/cn';
@@ -7,13 +6,13 @@ import cn from '@/utils/cn';
 const badgeColor: {
   [key in ArticleBadgeProps['type']]: string;
 } = {
-  'K-POP': 'bg-warning-color border-warning text-warning',
-  'Q&A': 'bg-brand-color border-sign-brand text-sign-brand',
-  Language: 'bg-sub border-sign-tertiary text-sign-tertiary',
+  kpop: 'bg-warning-color border-warning text-warning',
+  question: 'bg-brand-color border-sign-brand text-sign-brand',
+  language: 'bg-sub border-sign-tertiary text-sign-tertiary',
 } as const;
 
 interface ArticleBadgeProps {
-  type: CategoryType;
+  type: 'kpop' | 'question' | 'language';
 }
 
 export default function ArticleBadge({

@@ -1,29 +1,19 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useInView } from 'react-intersection-observer';
-
-import { useGetCommunityArticles } from '@/apis/community/queries';
-import ArticleItem from '@/app/[lng]/(main)/community/components/ArticleItem.client';
-import Empty from '@/app/[lng]/(main)/community/components/Empty';
+import ArticleItem from './ArticleItem.client';
+import Empty from './Empty';
+import { CommunityArticle } from '@/apis/groups';
 import { ItemList } from '@/components/List';
+import { DUMMY_ARTICLES_DATA } from '@/constants/dummyData';
 
 export default function AllContent() {
-  const { ref, inView } = useInView();
-  const { data: articleList, fetchNextPage } = useGetCommunityArticles(0);
-
-  useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView, fetchNextPage]);
+  const articleData: CommunityArticle[] = [...DUMMY_ARTICLES_DATA];
 
   return (
-    <>
-      <ItemList
-        data={articleList}
-        renderItem={(articleData) => <ArticleItem articleData={articleData} />}
-        renderEmpty={() => <Empty />}
-      />
-      <div ref={ref} />
-    </>
+    <ItemList
+      data={articleData}
+      renderItem={(article) => <ArticleItem article={article} />}
+      renderEmpty={() => <Empty />}
+    />
   );
 }

@@ -20,29 +20,20 @@ export default async function HydrationProvider({
   queryMultipleFn,
   isInfiniteQuery = false,
 }: StrictPropsWithChildren<HydrationProviderProps>) {
-  const queryClient = new QueryClient();
+  const getQueryClient = cache(() => new QueryClient());
+
+  const queryClient = getQueryClient();
 
   if (queryMultipleFn && queryMultipleKey) {
-    if (isInfiniteQuery)
-      await Promise.all(
-        queryMultipleFn.map((queryFn, index) => {
-          return queryClient.prefetchInfiniteQuery({
-            queryKey: queryMultipleKey[index],
-            initialPageParam: 0,
-          });
-        })
-      );
-    else
-      await Promise.all(
-        queryMultipleFn.map((queryFn, index) => {
-          return queryClient.prefetchQuery({ queryKey: queryMultipleKey[index], queryFn });
-        })
-      );
+    await Promise.all(
+      queryMultipleFn.map((queryFn, index) => {
+        return queryClient.prefetchQuery({ queryKey: queryMultipleKey[index], queryFn });
+      })
+    );
   }
 
   if (queryFn && queryKey) {
-    if (isInfiniteQuery)
-      await queryClient.prefetchInfiniteQuery({ queryKey, queryFn, initialPageParam: 0 as never });
+    if (isInfiniteQuery) await queryClient.prefetchInfiniteQuery({ queryKey, initialPageParam: 0 });
     else await queryClient.prefetchQuery({ queryKey, queryFn });
   }
 
