@@ -41,7 +41,10 @@ function IconButtonAction() {
   const { t } = useTranslation('community');
   const { articleId } = useNumberParams<['articleId']>();
   const { data: articleData } = useGetCommunityArticleDetail(articleId);
-  const { mutate: mutateDelete } = usePostDeleteCommunityArticle(articleId);
+  const { mutate: mutateDelete } = usePostDeleteCommunityArticle(
+    articleId,
+    articleData.data.article.category.id
+  );
 
   const handleBlockArticle = () => {
     console.log('block');
