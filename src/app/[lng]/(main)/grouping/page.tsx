@@ -1,10 +1,14 @@
 import CreateGroupButton from './components/CreateGroupButton.client';
 import GroupingCardList from './components/GroupingCardList.client';
 import GroupingHeader from './components/GroupingHeader';
-import { Footer } from '@/components/Footer';
+import { Keys, getGroups } from '@/apis/groups';
 import { Loading } from '@/components/Loading';
+import { HydrationProvider } from '@/components/Provider';
 import { Spacing } from '@/components/Spacing';
+import dynamic from 'next/dynamic';
 import { Suspense } from 'react';
+
+const Footer = dynamic(() => import('@/components/Footer/Footer'), { ssr: false });
 
 interface GroupingPageProps {
   params: {
@@ -17,7 +21,9 @@ export default function GroupingPage({ params: { lng } }: GroupingPageProps) {
     <>
       <GroupingHeader />
       <Suspense fallback={<Loading />}>
-        <GroupingCardList />
+        <HydrationProvider queryFn={() => getGroups(0)} queryKey={Keys.getGroups()} isInfiniteQuery>
+          <GroupingCardList />
+        </HydrationProvider>
       </Suspense>
       <CreateGroupButton />
       <Spacing size={60} />
