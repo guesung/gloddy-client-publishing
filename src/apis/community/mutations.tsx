@@ -34,6 +34,8 @@ export const usePostCommunityArticleLike = (articleId: number, categoryId: numbe
   return useMutation({
     mutationFn: () => postCommunityArticleLike(articleId),
     onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: Keys.getCommunityArticleDetail(articleId) });
+
       // 이전 상태를 저장
       const previousArticle = queryClient.getQueryData(Keys.getCommunityArticleDetail(articleId));
 
@@ -56,7 +58,7 @@ export const usePostCommunityArticleLike = (articleId: number, categoryId: numbe
         );
       } else throw new Error('No previous Data');
     },
-    onSuccess: () => {
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: Keys.getCommunityArticleDetail(articleId) });
       queryClient.invalidateQueries({ queryKey: Keys.getCommunityArticles(0) });
       queryClient.invalidateQueries({ queryKey: Keys.getCommunityArticles(categoryId) });
