@@ -1,5 +1,4 @@
 import {
-  LoginResponse,
   SignUpResponse,
   postEmail,
   postEmailVerify,
@@ -9,23 +8,12 @@ import {
   postSMSVerify,
   postSignUp,
 } from '.';
-import useLogin from '@/hooks/token/useLogin';
+import useAppRouter from '@/hooks/useAppRouter';
+import { setTokenAtCookie } from '@/utils/auth/tokenController';
+import sendMessageToReactNative from '@/utils/sendMessageToReactNative';
 import { useMutation } from '@tanstack/react-query';
 
-export const useLoginMutation = () => {
-  const { login } = useLogin();
-
-  return useMutation({
-    mutationFn: postLogin,
-    onSuccess: async (response: LoginResponse) => {
-      await login({
-        accessToken: response.token.accessToken,
-        refreshToken: response.token.refreshToken,
-        userId: response.userId,
-      });
-    },
-  });
-};
+export const useLoginMutation = () => useMutation({ mutationFn: postLogin });
 
 export const useReissueMutation = () => useMutation({ mutationFn: postReissue });
 
@@ -38,16 +26,17 @@ export const useEmailMutation = () => useMutation({ mutationFn: postEmail });
 export const useEmailVerifyMutation = () => useMutation({ mutationFn: postEmailVerify });
 
 export const useSignUpMutation = () => {
-  const { login } = useLogin();
-
+  const { push } = useAppRouter();
   return useMutation({
     mutationFn: postSignUp,
-    onSuccess: async (data: SignUpResponse) => {
+    onSuccess: (data: SignUpResponse) => {
+      sendMessageToReactNative({ type: 'SIGN_IN', data: 'LOGIN_SUCCESS' });
       const {
         userId,
         token: { accessToken, refreshToken },
       } = data;
-      await login({ accessToken, refreshToken, userId });
+      setTokenAtCookie({ accessToken, refreshToken, userId });
+      push('/grouping');
     },
   });
 };
