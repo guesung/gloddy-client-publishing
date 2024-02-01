@@ -1,24 +1,17 @@
 {
-  "extends":"../../tsconfig.json",
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "target": "es5",
+    "lib": ["ES5", "ES6", "ESNext", "DOM"],
     "skipLibCheck": true,
-    "noEmit": true,
-    "moduleResolution": "node",
-    "jsx": "preserve",
-    "incremental": true,
     "baseUrl": ".",
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "types": ["@types/jest", "google.maps"]
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "isolatedModules": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "mock-server", "eslint"]
+  "exclude": ["packages/**/dist/**"]
 }
