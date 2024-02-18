@@ -1,0 +1,63 @@
+{
+  "category": {
+    "All": "All",
+    "K-POP": "K-POP",
+    "Q&A": "Q&A",
+    "Language": "Language"
+  },
+
+  "create": {
+    "headerTitle": "Create Post",
+    "category": {
+      "name": "Category",
+      "K-POP": "K-POP",
+      "Q&A": "Q&A",
+      "Language": "Language"
+    },
+    "title": {
+      "placeholder": "Post Title"
+    },
+    "content": {
+      "placeholder": "Write a post of at least 20 characters."
+    },
+    "submit": {
+      "label": "Post",
+      "content": "Do you want to submit the post?"
+    },
+    "cancel": {
+      "content": "Cancel post creation?"
+    }
+  },
+
+  "detail": {
+    "likeCount": "",
+    "commentCount": "Comments {{commentCount}}",
+
+    "block": "Block post",
+    "block_content": "Do you want to block this post?",
+    "report": "Report post",
+    "report_content": "Do you want to report this post?",
+    "delete": "Delete post",
+    "delete_content": "Do you want to delete this post?"
+  },
+
+  "comment": {
+    "placeholder_comment": "Write a comment",
+    "placeholder_reply": "Write a Reply",
+    "commentLengthError": "* Comments are limited to 150 characters.",
+    "firstComment": "Be the first to leave a comment!",
+    "blockComment": "It's a blocked comment.",
+    "delete": {
+      "label": "Delete",
+      "content": "Would you like to delete this comment?"
+    },
+    "report": {
+      "label": "Report",
+      "content": "Do you want to report this comment?"
+    },
+    "block": {
+      "label": "Block",
+      "content": "Would you like to block this comment?"
+    }
+  }
+}

@@ -1,29 +1,17 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
+    "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "types": ["@types/jest", "google.maps"]
+    "esModuleInterop": true,
+    "strict": true,
+    "target": "es5",
+    "lib": ["ES5", "ES6", "ESNext", "DOM"],
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "isolatedModules": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "mock-server", "eslint"]
+  "exclude": ["packages/**/dist/**"]
 }
